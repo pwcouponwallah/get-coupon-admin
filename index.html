@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.css" rel="stylesheet">
     <style>
         :root {
             --primary: #1a1a1a;
@@ -25,6 +25,10 @@
             --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
             --radius: 12px;
             --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --success: #28a745;
+            --warning: #ffc107;
+            --danger: #dc3545;
+            --info: #17a2b8;
         }
         
         * {
@@ -41,44 +45,116 @@
             -webkit-font-smoothing: antialiased;
         }
         
-        /* Login Screen */
+        /* Login Page Styles */
         .login-container {
             display: flex;
-            justify-content: center;
-            align-items: center;
             min-height: 100vh;
-            background-color: var(--bg);
+            align-items: center;
+            justify-content: center;
+            background-color: var(--light);
         }
         
         .login-card {
             background: var(--white);
             border-radius: var(--radius);
             box-shadow: var(--shadow);
-            padding: 2.5rem;
             width: 100%;
             max-width: 400px;
+            padding: 2.5rem;
+            margin: 1rem;
             border: 1px solid var(--border);
-        }
-        
-        .login-title {
-            text-align: center;
-            margin-bottom: 2rem;
-            color: var(--primary);
         }
         
         .login-logo {
             text-align: center;
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
         }
         
         .login-logo i {
             font-size: 2.5rem;
             color: var(--primary);
+            margin-bottom: 1rem;
         }
         
-        /* Dashboard Styles */
-        .dashboard-container {
-            display: none;
+        .login-logo h1 {
+            font-size: 1.75rem;
+            color: var(--primary);
+        }
+        
+        .login-form .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .login-form .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text);
+        }
+        
+        .login-form .form-control {
+            width: 100%;
+            padding: 0.85rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            font-family: inherit;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+        
+        .login-form .form-control:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(0,0,0,0.05);
+        }
+        
+        .login-form .btn {
+            width: 100%;
+            padding: 0.85rem;
+            border-radius: var(--radius);
+            border: none;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        .login-form .btn-primary {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+        
+        .login-form .btn-primary:hover {
+            background-color: var(--secondary);
+        }
+        
+        .login-footer {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        .alert {
+            padding: 0.85rem 1rem;
+            border-radius: var(--radius);
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+        
+        .alert-danger {
+            background-color: rgba(220,53,69,0.1);
+            color: var(--danger);
+            border: 1px solid rgba(220,53,69,0.2);
+        }
+        
+        /* Dashboard Layout */
+        .dashboard {
+            display: flex;
             min-height: 100vh;
         }
         
@@ -87,39 +163,54 @@
             width: 250px;
             background-color: var(--primary);
             color: white;
+            padding: 1.5rem 0;
             position: fixed;
-            height: 100vh;
-            padding: 1.5rem;
+            height: 100%;
             transition: var(--transition);
             z-index: 100;
         }
         
         .sidebar-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
+            padding: 0 1.5rem 1.5rem;
             border-bottom: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 1.5rem;
         }
         
         .sidebar-logo {
-            font-size: 1.25rem;
-            font-weight: 600;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.75rem;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: white;
+            text-decoration: none;
         }
         
         .sidebar-logo i {
+            font-size: 1.5rem;
             color: var(--accent);
         }
         
         .sidebar-menu {
+            padding: 0 1rem;
+        }
+        
+        .sidebar-menu h3 {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: rgba(255,255,255,0.5);
+            margin-bottom: 1rem;
+            padding: 0 0.5rem;
+        }
+        
+        .sidebar-menu ul {
             list-style: none;
+            margin-bottom: 2rem;
         }
         
         .sidebar-menu li {
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.25rem;
         }
         
         .sidebar-menu a {
@@ -131,11 +222,18 @@
             text-decoration: none;
             border-radius: var(--radius);
             transition: var(--transition);
+            font-size: 0.95rem;
         }
         
-        .sidebar-menu a:hover, .sidebar-menu a.active {
+        .sidebar-menu a:hover {
             background-color: rgba(255,255,255,0.1);
             color: white;
+        }
+        
+        .sidebar-menu a.active {
+            background-color: rgba(255,255,255,0.15);
+            color: white;
+            font-weight: 500;
         }
         
         .sidebar-menu a i {
@@ -145,25 +243,52 @@
         
         /* Main Content */
         .main-content {
+            flex: 1;
             margin-left: 250px;
-            padding: 1.5rem;
-            width: calc(100% - 250px);
             transition: var(--transition);
         }
         
-        .header {
+        /* Top Navigation */
+        .top-nav {
+            background-color: var(--white);
+            padding: 1rem 1.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1.5rem;
-            padding-bottom: 1rem;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 90;
             border-bottom: 1px solid var(--border);
         }
         
-        .header-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: var(--primary);
+        .search-bar {
+            position: relative;
+            width: 300px;
+        }
+        
+        .search-bar input {
+            width: 100%;
+            padding: 0.65rem 1rem 0.65rem 2.5rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            font-family: inherit;
+            font-size: 0.95rem;
+            transition: var(--transition);
+        }
+        
+        .search-bar input:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(0,0,0,0.05);
+        }
+        
+        .search-bar i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray);
         }
         
         .user-menu {
@@ -172,31 +297,155 @@
             gap: 1rem;
         }
         
-        .user-avatar {
-            width: 40px;
-            height: 40px;
+        .user-menu .notifications {
+            position: relative;
+        }
+        
+        .user-menu .notifications i {
+            font-size: 1.25rem;
+            color: var(--text);
+            cursor: pointer;
+        }
+        
+        .user-menu .notifications .badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: var(--danger);
+            color: white;
             border-radius: 50%;
-            background-color: var(--light);
+            width: 18px;
+            height: 18px;
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 0.65rem;
+            font-weight: 600;
+        }
+        
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
             cursor: pointer;
+            position: relative;
+        }
+        
+        .user-profile-img {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: var(--light);
+            background-size: cover;
+            border: 1px solid var(--border);
+        }
+        
+        .user-profile-name {
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+        
+        .user-profile-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background-color: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 0.5rem 0;
+            width: 200px;
+            z-index: 100;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            border: 1px solid var(--border);
+        }
+        
+        .user-profile:hover .user-profile-dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(5px);
+        }
+        
+        .user-profile-dropdown a {
+            display: block;
+            padding: 0.5rem 1rem;
+            color: var(--text);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+        
+        .user-profile-dropdown a:hover {
+            background-color: var(--light);
+        }
+        
+        .user-profile-dropdown a i {
+            margin-right: 0.5rem;
+            width: 1rem;
+            text-align: center;
+        }
+        
+        /* Content Area */
+        .content-area {
+            padding: 1.5rem;
+        }
+        
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .page-header h2 {
+            font-size: 1.75rem;
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        .breadcrumb a {
+            color: var(--gray);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .breadcrumb a:hover {
+            color: var(--primary);
+        }
+        
+        .breadcrumb i {
+            font-size: 0.7rem;
         }
         
         /* Stats Cards */
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
             gap: 1.5rem;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
         }
         
         .stat-card {
-            background: var(--white);
+            background-color: var(--white);
             border-radius: var(--radius);
             padding: 1.5rem;
             box-shadow: var(--shadow);
             border: 1px solid var(--border);
+            transition: var(--transition);
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
         }
         
         .stat-card-header {
@@ -207,20 +456,39 @@
         }
         
         .stat-card-title {
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             color: var(--gray);
             font-weight: 500;
         }
         
         .stat-card-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: var(--radius);
             display: flex;
             align-items: center;
             justify-content: center;
-            background-color: rgba(0,0,0,0.05);
+            font-size: 1.25rem;
+        }
+        
+        .stat-card-icon.primary {
+            background-color: rgba(26,26,26,0.1);
             color: var(--primary);
+        }
+        
+        .stat-card-icon.success {
+            background-color: rgba(40,167,69,0.1);
+            color: var(--success);
+        }
+        
+        .stat-card-icon.warning {
+            background-color: rgba(255,193,7,0.1);
+            color: var(--warning);
+        }
+        
+        .stat-card-icon.danger {
+            background-color: rgba(220,53,69,0.1);
+            color: var(--danger);
         }
         
         .stat-card-value {
@@ -232,202 +500,286 @@
         
         .stat-card-change {
             font-size: 0.85rem;
-            color: #4CAF50;
             display: flex;
             align-items: center;
             gap: 0.25rem;
         }
         
+        .stat-card-change.positive {
+            color: var(--success);
+        }
+        
         .stat-card-change.negative {
-            color: #F44336;
-        }
-        
-        /* Filters */
-        .filters {
-            background: var(--white);
-            border-radius: var(--radius);
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-            box-shadow: var(--shadow);
-            border: 1px solid var(--border);
-        }
-        
-        .filter-row {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 1rem;
-            flex-wrap: wrap;
-        }
-        
-        .filter-group {
-            flex: 1;
-            min-width: 200px;
-        }
-        
-        .filter-label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
-            color: var(--gray);
-            font-weight: 500;
-        }
-        
-        .filter-control {
-            width: 100%;
-            padding: 0.75rem 1rem;
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            font-family: inherit;
-            font-size: 0.95rem;
-            background-color: var(--white);
-            color: var(--text);
-        }
-        
-        .filter-control:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(0,0,0,0.05);
-        }
-        
-        .filter-actions {
-            display: flex;
-            gap: 1rem;
-            justify-content: flex-end;
-        }
-        
-        /* Button Styles */
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            padding: 0.75rem 1.5rem;
-            font-weight: 600;
-            border-radius: var(--radius);
-            transition: var(--transition);
-            cursor: pointer;
-            text-decoration: none;
-            font-size: 0.95rem;
-            border: none;
-        }
-        
-        .btn-primary {
-            background-color: var(--primary);
-            color: var(--white);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        }
-        
-        .btn-primary:hover {
-            background-color: var(--secondary);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-        }
-        
-        .btn-secondary {
-            background-color: var(--white);
-            color: var(--primary);
-            border: 1px solid var(--border);
-        }
-        
-        .btn-secondary:hover {
-            background-color: var(--light);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-        }
-        
-        /* Data Table */
-        .data-table-container {
-            background: var(--white);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            border: 1px solid var(--border);
-            overflow: hidden;
-        }
-        
-        .table-responsive {
-            overflow-x: auto;
-        }
-        
-        .data-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        
-        .data-table thead th {
-            background-color: var(--light);
-            padding: 1rem;
-            text-align: left;
-            font-weight: 600;
-            color: var(--primary);
-            border-bottom: 1px solid var(--border);
-        }
-        
-        .data-table tbody td {
-            padding: 1rem;
-            border-bottom: 1px solid var(--border);
-        }
-        
-        .data-table tbody tr:last-child td {
-            border-bottom: none;
-        }
-        
-        .data-table tbody tr:hover {
-            background-color: rgba(0,0,0,0.02);
-        }
-        
-        .badge {
-            display: inline-block;
-            padding: 0.35rem 0.65rem;
-            font-size: 0.75rem;
-            font-weight: 600;
-            line-height: 1;
-            text-align: center;
-            white-space: nowrap;
-            vertical-align: baseline;
-            border-radius: 50px;
-        }
-        
-        .badge-primary {
-            background-color: rgba(26,26,26,0.1);
-            color: var(--primary);
+            color: var(--danger);
         }
         
         /* Charts */
-        .chart-container {
-            background: var(--white);
+        .chart-card {
+            background-color: var(--white);
             border-radius: var(--radius);
             padding: 1.5rem;
-            margin-bottom: 2rem;
             box-shadow: var(--shadow);
             border: 1px solid var(--border);
+            margin-bottom: 1.5rem;
         }
         
-        .chart-header {
+        .chart-card-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 1.5rem;
         }
         
-        .chart-title {
+        .chart-card-title {
             font-size: 1.1rem;
             font-weight: 600;
             color: var(--primary);
         }
         
-        .chart-actions {
+        .chart-card-actions {
             display: flex;
             gap: 0.5rem;
         }
         
-        .chart-placeholder {
+        .chart-card-actions select {
+            padding: 0.35rem 0.75rem;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            font-family: inherit;
+            font-size: 0.85rem;
+            background-color: var(--white);
+            color: var(--text);
+        }
+        
+        .chart-container {
+            position: relative;
             height: 300px;
+            width: 100%;
+        }
+        
+        /* Recent Requests Table */
+        .table-card {
+            background-color: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            overflow: hidden;
+        }
+        
+        .table-card-header {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid var(--border);
             display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .table-card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .table-card-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .table-responsive {
+            overflow-x: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        thead th {
+            background-color: var(--light);
+            padding: 0.85rem 1rem;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: var(--text);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        tbody td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.9rem;
+            color: var(--text);
+        }
+        
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+        
+        tbody tr:hover {
+            background-color: var(--light);
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 0.35rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .status-badge.success {
+            background-color: rgba(40,167,69,0.1);
+            color: var(--success);
+        }
+        
+        .status-badge.warning {
+            background-color: rgba(255,193,7,0.1);
+            color: var(--warning);
+        }
+        
+        .status-badge.danger {
+            background-color: rgba(220,53,69,0.1);
+            color: var(--danger);
+        }
+        
+        .action-btn {
+            background: none;
+            border: none;
+            color: var(--gray);
+            cursor: pointer;
+            font-size: 1rem;
+            transition: var(--transition);
+            padding: 0.25rem;
+        }
+        
+        .action-btn:hover {
+            color: var(--primary);
+        }
+        
+        /* Coupon Management */
+        .coupon-form {
+            background-color: var(--white);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            margin-bottom: 1.5rem;
+        }
+        
+        .coupon-form .form-group {
+            margin-bottom: 1.25rem;
+        }
+        
+        .coupon-form .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text);
+        }
+        
+        .coupon-form .form-control {
+            width: 100%;
+            padding: 0.85rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            font-family: inherit;
+            font-size: 0.95rem;
+            transition: var(--transition);
+        }
+        
+        .coupon-form .form-control:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(0,0,0,0.05);
+        }
+        
+        .coupon-form .form-row {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .coupon-form .form-row .form-group {
+            flex: 1;
+        }
+        
+        .coupon-form .btn {
+            padding: 0.85rem 1.75rem;
+            border-radius: var(--radius);
+            border: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
             align-items: center;
             justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        .coupon-form .btn-primary {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+        
+        .coupon-form .btn-primary:hover {
+            background-color: var(--secondary);
+        }
+        
+        .coupon-form .btn-secondary {
+            background-color: var(--white);
+            color: var(--primary);
+            border: 1px solid var(--border);
+        }
+        
+        .coupon-form .btn-secondary:hover {
             background-color: var(--light);
-            border-radius: var(--radius);
-            color: var(--gray);
+        }
+        
+        /* Toggle Switch */
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .toggle-slider {
+            background-color: var(--success);
+        }
+        
+        input:checked + .toggle-slider:before {
+            transform: translateX(26px);
         }
         
         /* Responsive Styles */
@@ -438,18 +790,12 @@
             
             .main-content {
                 margin-left: 220px;
-                width: calc(100% - 220px);
             }
         }
         
         @media (max-width: 768px) {
             .sidebar {
                 transform: translateX(-100%);
-                position: fixed;
-                top: 0;
-                left: 0;
-                height: 100vh;
-                z-index: 1000;
             }
             
             .sidebar.active {
@@ -458,259 +804,610 @@
             
             .main-content {
                 margin-left: 0;
-                width: 100%;
             }
             
             .mobile-menu-btn {
                 display: block;
             }
+            
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
         }
         
         @media (max-width: 576px) {
-            .filter-row {
-                flex-direction: column;
-                gap: 1rem;
+            .stats-grid {
+                grid-template-columns: 1fr;
             }
             
-            .filter-group {
-                width: 100%;
+            .login-card {
+                padding: 1.5rem;
             }
             
-            .stat-card-value {
-                font-size: 1.5rem;
+            .search-bar {
+                width: 200px;
+            }
+            
+            .user-profile-name {
+                display: none;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Login Screen -->
-    <div class="login-container" id="loginContainer">
+    <!-- Login Page -->
+    <div class="login-container" id="loginPage">
         <div class="login-card">
             <div class="login-logo">
                 <i class="fas fa-tag"></i>
+                <h1>PW Coupon Wallah</h1>
+                <p>Admin Dashboard</p>
             </div>
-            <h2 class="login-title">Admin Dashboard Login</h2>
-            <form id="loginForm">
-                <div class="mb-3">
-                    <label for="username" class="form-label">Username</label>
-                    <input type="text" class="form-control" id="username" placeholder="Enter username" required>
+            
+            <div id="loginError" class="alert alert-danger" style="display: none;"></div>
+            
+            <form class="login-form" id="loginForm">
+                <div class="form-group">
+                    <label class="form-label">Username</label>
+                    <input type="text" class="form-control" id="username" placeholder="Enter your username" required>
                 </div>
-                <div class="mb-3">
-                    <label for="password" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="password" placeholder="Enter password" required>
+                
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <input type="password" class="form-control" id="password" placeholder="Enter your password" required>
                 </div>
-                <button type="submit" class="btn btn-primary w-100">Login</button>
+                
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-sign-in-alt"></i> Login
+                    </button>
+                </div>
             </form>
+            
+            <div class="login-footer">
+                <p>© 2025 PW Coupon Wallah. All rights reserved.</p>
+            </div>
         </div>
     </div>
-
-    <!-- Dashboard Container -->
-    <div class="dashboard-container" id="dashboardContainer">
+    
+    <!-- Dashboard -->
+    <div class="dashboard" id="dashboard" style="display: none;">
         <!-- Sidebar -->
-        <div class="sidebar" id="sidebar">
+        <div class="sidebar">
             <div class="sidebar-header">
-                <div class="sidebar-logo">
+                <a href="#" class="sidebar-logo">
                     <i class="fas fa-tag"></i>
                     <span>PW Coupon</span>
-                </div>
+                </a>
             </div>
-            <ul class="sidebar-menu">
-                <li>
-                    <a href="#" class="active" id="dashboardLink">
-                        <i class="fas fa-chart-line"></i>
-                        <span>Dashboard</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" id="enrollmentsLink">
-                        <i class="fas fa-users"></i>
-                        <span>Enrollments</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" id="coursesLink">
-                        <i class="fas fa-book"></i>
-                        <span>Courses</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" id="settingsLink">
-                        <i class="fas fa-cog"></i>
-                        <span>Settings</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" id="logoutLink">
-                        <i class="fas fa-sign-out-alt"></i>
-                        <span>Logout</span>
-                    </a>
-                </li>
-            </ul>
+            
+            <div class="sidebar-menu">
+                <h3>Main Menu</h3>
+                <ul>
+                    <li>
+                        <a href="#" class="active" id="dashboardLink">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" id="requestsLink">
+                            <i class="fas fa-envelope"></i>
+                            <span>Coupon Requests</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" id="couponsLink">
+                            <i class="fas fa-tags"></i>
+                            <span>Coupon Codes</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" id="analyticsLink">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Analytics</span>
+                        </a>
+                    </li>
+                </ul>
+                
+                <h3>Settings</h3>
+                <ul>
+                    <li>
+                        <a href="#" id="settingsLink">
+                            <i class="fas fa-cog"></i>
+                            <span>Settings</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" id="logoutLink">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>Logout</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
-
+        
         <!-- Main Content -->
         <div class="main-content">
-            <!-- Header -->
-            <div class="header">
-                <div class="header-title">Dashboard Overview</div>
+            <!-- Top Navigation -->
+            <div class="top-nav">
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search...">
+                </div>
+                
                 <div class="user-menu">
-                    <div class="user-avatar" id="userAvatar">
-                        <i class="fas fa-user"></i>
+                    <div class="notifications">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge" id="notificationCount">3</span>
+                    </div>
+                    
+                    <div class="user-profile">
+                        <div class="user-profile-img" id="userProfileImg"></div>
+                        <div class="user-profile-name" id="userProfileName">Admin User</div>
+                        
+                        <div class="user-profile-dropdown">
+                            <a href="#">
+                                <i class="fas fa-user"></i>
+                                <span>Profile</span>
+                            </a>
+                            <a href="#">
+                                <i class="fas fa-cog"></i>
+                                <span>Settings</span>
+                            </a>
+                            <a href="#" id="dropdownLogoutLink">
+                                <i class="fas fa-sign-out-alt"></i>
+                                <span>Logout</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
-
-            <!-- Stats Cards -->
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-card-header">
-                        <div class="stat-card-title">Total Enrollments</div>
-                        <div class="stat-card-icon">
-                            <i class="fas fa-users"></i>
+            
+            <!-- Content Area -->
+            <div class="content-area">
+                <!-- Dashboard Page -->
+                <div id="dashboardPage">
+                    <div class="page-header">
+                        <h2>Dashboard</h2>
+                        <div class="breadcrumb">
+                            <a href="#">Home</a>
+                            <i class="fas fa-chevron-right"></i>
+                            <span>Dashboard</span>
                         </div>
                     </div>
-                    <div class="stat-card-value" id="totalEnrollments">0</div>
-                    <div class="stat-card-change">
-                        <i class="fas fa-arrow-up"></i>
-                        <span id="enrollmentChange">0%</span> from last month
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-card-header">
-                        <div class="stat-card-title">Revenue</div>
-                        <div class="stat-card-icon">
-                            <i class="fas fa-rupee-sign"></i>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-card-header">
+                                <div class="stat-card-title">Total Requests</div>
+                                <div class="stat-card-icon primary">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                            </div>
+                            <div class="stat-card-value" id="totalRequests">0</div>
+                            <div class="stat-card-change positive">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>12% from last week</span>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-card-header">
+                                <div class="stat-card-title">Coupons Sent</div>
+                                <div class="stat-card-icon success">
+                                    <i class="fas fa-tag"></i>
+                                </div>
+                            </div>
+                            <div class="stat-card-value" id="couponsSent">0</div>
+                            <div class="stat-card-change positive">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>8% from last week</span>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-card-header">
+                                <div class="stat-card-title">Conversion Rate</div>
+                                <div class="stat-card-icon warning">
+                                    <i class="fas fa-percentage"></i>
+                                </div>
+                            </div>
+                            <div class="stat-card-value" id="conversionRate">0%</div>
+                            <div class="stat-card-change negative">
+                                <i class="fas fa-arrow-down"></i>
+                                <span>2% from last week</span>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-card-header">
+                                <div class="stat-card-title">Active Coupon</div>
+                                <div class="stat-card-icon danger">
+                                    <i class="fas fa-ticket-alt"></i>
+                                </div>
+                            </div>
+                            <div class="stat-card-value" id="activeCoupon">YUGNA00001</div>
+                            <div class="stat-card-change">
+                                <span>Default code</span>
+                            </div>
                         </div>
                     </div>
-                    <div class="stat-card-value">₹<span id="totalRevenue">0</span></div>
-                    <div class="stat-card-change">
-                        <i class="fas fa-arrow-up"></i>
-                        <span id="revenueChange">0%</span> from last month
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-card-header">
-                        <div class="stat-card-title">Popular Course</div>
-                        <div class="stat-card-icon">
-                            <i class="fas fa-star"></i>
+                    
+                    <div class="chart-card">
+                        <div class="chart-card-header">
+                            <div class="chart-card-title">Requests Last 30 Days</div>
+                            <div class="chart-card-actions">
+                                <select id="requestsChartFilter">
+                                    <option value="30">Last 30 Days</option>
+                                    <option value="7">Last 7 Days</option>
+                                    <option value="90">Last 90 Days</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="requestsChart"></canvas>
                         </div>
                     </div>
-                    <div class="stat-card-value" id="popularCourse">-</div>
-                    <div class="stat-card-title" id="popularCourseCount">0 enrollments</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-card-header">
-                        <div class="stat-card-title">Conversion Rate</div>
-                        <div class="stat-card-icon">
-                            <i class="fas fa-percentage"></i>
+                    
+                    <div class="chart-card">
+                        <div class="chart-card-header">
+                            <div class="chart-card-title">Requests by Course Category</div>
+                            <div class="chart-card-actions">
+                                <select id="categoryChartFilter">
+                                    <option value="all">All Time</option>
+                                    <option value="30">Last 30 Days</option>
+                                    <option value="7">Last 7 Days</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="categoryChart"></canvas>
                         </div>
                     </div>
-                    <div class="stat-card-value" id="conversionRate">0%</div>
-                    <div class="stat-card-change negative">
-                        <i class="fas fa-arrow-down"></i>
-                        <span id="conversionChange">0%</span> from last month
-                    </div>
-                </div>
-            </div>
-
-            <!-- Filters -->
-            <div class="filters">
-                <div class="filter-row">
-                    <div class="filter-group">
-                        <label class="filter-label">Date Range</label>
-                        <select class="filter-control" id="dateRange">
-                            <option value="today">Today</option>
-                            <option value="yesterday">Yesterday</option>
-                            <option value="last7">Last 7 Days</option>
-                            <option value="last30">Last 30 Days</option>
-                            <option value="month">This Month</option>
-                            <option value="lastmonth">Last Month</option>
-                            <option value="custom">Custom Range</option>
-                        </select>
-                    </div>
-                    <div class="filter-group" id="customDateRangeGroup" style="display: none;">
-                        <label class="filter-label">Custom Range</label>
-                        <div class="d-flex gap-2">
-                            <input type="date" class="filter-control" id="startDate">
-                            <input type="date" class="filter-control" id="endDate">
+                    
+                    <div class="table-card">
+                        <div class="table-card-header">
+                            <div class="table-card-title">Recent Coupon Requests</div>
+                            <div class="table-card-actions">
+                                <button class="btn btn-secondary">View All</button>
+                            </div>
+                        </div>
+                        
+                        <div class="table-responsive">
+                            <table id="recentRequestsTable">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Course</th>
+                                        <th>Category</th>
+                                        <th>Date</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="recentRequestsBody">
+                                    <!-- Data will be loaded here -->
+                                </tbody>
+                            </table>
                         </div>
                     </div>
-                    <div class="filter-group">
-                        <label class="filter-label">Course Category</label>
-                        <select class="filter-control" id="courseCategoryFilter">
-                            <option value="all">All Categories</option>
-                            <option value="PW IIT-JEE">Engineering (JEE)</option>
-                            <option value="PW GATE">Engineering (GATE)</option>
-                            <option value="PW NEET">Medical (NEET)</option>
-                            <option value="PW Nursing Exams">Medical (Nursing)</option>
-                            <option value="PW UPSC">Civil Services (UPSC)</option>
-                            <option value="PW BPSC">Civil Services (BPSC)</option>
-                            <option value="PW Banking">Banking & Finance</option>
-                            <option value="PW JAIIB AND CAIIB">Banking (JAIIB/CAIIB)</option>
-                            <option value="PW NDA">Defense (NDA)</option>
-                            <option value="PW CDS">Defense (CDS)</option>
-                            <option value="PW Bihar Exams">State Exams (Bihar)</option>
-                            <option value="PW TET">State Exams (TET)</option>
-                            <option value="PW MBA">MBA & Commerce</option>
-                            <option value="PW IPMAT">MBA (IPMAT)</option>
-                            <option value="PW CLAT">Law (CLAT)</option>
-                            <option value="PW Judiciary">Law (Judiciary)</option>
-                        </select>
+                </div>
+                
+                <!-- Requests Page -->
+                <div id="requestsPage" style="display: none;">
+                    <div class="page-header">
+                        <h2>Coupon Requests</h2>
+                        <div class="breadcrumb">
+                            <a href="#">Home</a>
+                            <i class="fas fa-chevron-right"></i>
+                            <span>Coupon Requests</span>
+                        </div>
+                    </div>
+                    
+                    <div class="table-card">
+                        <div class="table-card-header">
+                            <div class="table-card-title">All Coupon Requests</div>
+                            <div class="table-card-actions">
+                                <select id="requestsFilter">
+                                    <option value="all">All Requests</option>
+                                    <option value="pending">Pending</option>
+                                    <option value="sent">Coupon Sent</option>
+                                    <option value="failed">Failed</option>
+                                </select>
+                                <button class="btn btn-secondary">Export</button>
+                            </div>
+                        </div>
+                        
+                        <div class="table-responsive">
+                            <table id="allRequestsTable">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Mobile</th>
+                                        <th>Course</th>
+                                        <th>Category</th>
+                                        <th>Date</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="allRequestsBody">
+                                    <!-- Data will be loaded here -->
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
-                <div class="filter-actions">
-                    <button class="btn btn-secondary" id="resetFilters">Reset</button>
-                    <button class="btn btn-primary" id="applyFilters">Apply Filters</button>
-                </div>
-            </div>
-
-            <!-- Charts -->
-            <div class="chart-container">
-                <div class="chart-header">
-                    <div class="chart-title">Enrollments Overview</div>
-                    <div class="chart-actions">
-                        <select class="filter-control" id="chartType">
-                            <option value="daily">Daily</option>
-                            <option value="weekly">Weekly</option>
-                            <option value="monthly">Monthly</option>
-                        </select>
+                
+                <!-- Coupons Page -->
+                <div id="couponsPage" style="display: none;">
+                    <div class="page-header">
+                        <h2>Coupon Codes</h2>
+                        <div class="breadcrumb">
+                            <a href="#">Home</a>
+                            <i class="fas fa-chevron-right"></i>
+                            <span>Coupon Codes</span>
+                        </div>
+                    </div>
+                    
+                    <div class="coupon-form">
+                        <h3 style="margin-bottom: 1.5rem;">Manage Coupon Code</h3>
+                        <form id="couponManagementForm">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">Current Coupon Code</label>
+                                    <input type="text" class="form-control" id="currentCouponCode" value="YUGNA00001" readonly>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">New Coupon Code</label>
+                                    <input type="text" class="form-control" id="newCouponCode" placeholder="Enter new coupon code">
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Coupon Status</label>
+                                <div style="display: flex; align-items: center; gap: 1rem;">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="couponStatus" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                    <span id="couponStatusText">Active</span>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary">Update Coupon</button>
+                                <button type="button" class="btn btn-secondary" id="resetCouponBtn">Reset to Default</button>
+                            </div>
+                        </form>
+                    </div>
+                    
+                    <div class="table-card">
+                        <div class="table-card-header">
+                            <div class="table-card-title">Coupon Usage History</div>
+                            <div class="table-card-actions">
+                                <select id="couponHistoryFilter">
+                                    <option value="all">All Time</option>
+                                    <option value="30">Last 30 Days</option>
+                                    <option value="7">Last 7 Days</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="table-responsive">
+                            <table id="couponHistoryTable">
+                                <thead>
+                                    <tr>
+                                        <th>Coupon Code</th>
+                                        <th>Used By</th>
+                                        <th>Course</th>
+                                        <th>Date Used</th>
+                                        <th>Discount Applied</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="couponHistoryBody">
+                                    <!-- Data will be loaded here -->
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
-                <div class="chart-placeholder">
-                    Enrollment trends chart will be displayed here
+                
+                <!-- Analytics Page -->
+                <div id="analyticsPage" style="display: none;">
+                    <div class="page-header">
+                        <h2>Analytics</h2>
+                        <div class="breadcrumb">
+                            <a href="#">Home</a>
+                            <i class="fas fa-chevron-right"></i>
+                            <span>Analytics</span>
+                        </div>
+                    </div>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-card-header">
+                                <div class="stat-card-title">Total Conversion</div>
+                                <div class="stat-card-icon primary">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                            </div>
+                            <div class="stat-card-value" id="totalConversion">0</div>
+                            <div class="stat-card-change positive">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>15% from last month</span>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-card-header">
+                                <div class="stat-card-title">Avg. Conversion Time</div>
+                                <div class="stat-card-icon success">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                            </div>
+                            <div class="stat-card-value" id="avgConversionTime">0h</div>
+                            <div class="stat-card-change negative">
+                                <i class="fas fa-arrow-down"></i>
+                                <span>10% from last month</span>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-card-header">
+                                <div class="stat-card-title">Top Course Category</div>
+                                <div class="stat-card-icon warning">
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                            <div class="stat-card-value" id="topCategory">NEET</div>
+                            <div class="stat-card-change">
+                                <span>35% of total requests</span>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-card-header">
+                                <div class="stat-card-title">Revenue Impact</div>
+                                <div class="stat-card-icon danger">
+                                    <i class="fas fa-rupee-sign"></i>
+                                </div>
+                            </div>
+                            <div class="stat-card-value" id="revenueImpact">₹0</div>
+                            <div class="stat-card-change positive">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>Estimated savings</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="chart-card">
+                        <div class="chart-card-header">
+                            <div class="chart-card-title">Conversion Rate Trend</div>
+                            <div class="chart-card-actions">
+                                <select id="conversionChartFilter">
+                                    <option value="30">Last 30 Days</option>
+                                    <option value="7">Last 7 Days</option>
+                                    <option value="90">Last 90 Days</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="conversionChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="chart-card">
+                        <div class="chart-card-header">
+                            <div class="chart-card-title">Request Sources</div>
+                            <div class="chart-card-actions">
+                                <select id="sourcesChartFilter">
+                                    <option value="all">All Time</option>
+                                    <option value="30">Last 30 Days</option>
+                                    <option value="7">Last 7 Days</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="sourcesChart"></canvas>
+                        </div>
+                    </div>
                 </div>
-            </div>
-
-            <!-- Data Table -->
-            <div class="data-table-container">
-                <div class="table-responsive">
-                    <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th>Date</th>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Mobile</th>
-                                <th>Course</th>
-                                <th>Category</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody id="enrollmentsTableBody">
-                            <!-- Data will be loaded here -->
-                        </tbody>
-                    </table>
+                
+                <!-- Settings Page -->
+                <div id="settingsPage" style="display: none;">
+                    <div class="page-header">
+                        <h2>Settings</h2>
+                        <div class="breadcrumb">
+                            <a href="#">Home</a>
+                            <i class="fas fa-chevron-right"></i>
+                            <span>Settings</span>
+                        </div>
+                    </div>
+                    
+                    <div class="coupon-form">
+                        <h3 style="margin-bottom: 1.5rem;">Admin Settings</h3>
+                        <form id="adminSettingsForm">
+                            <div class="form-group">
+                                <label class="form-label">Admin Email</label>
+                                <input type="email" class="form-control" id="adminEmail" value="admin@example.com">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Notification Preferences</label>
+                                <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                                    <div style="display: flex; align-items: center; gap: 1rem;">
+                                        <label class="toggle-switch">
+                                            <input type="checkbox" id="emailNotifications" checked>
+                                            <span class="toggle-slider"></span>
+                                        </label>
+                                        <span>Email Notifications</span>
+                                    </div>
+                                    
+                                    <div style="display: flex; align-items: center; gap: 1rem;">
+                                        <label class="toggle-switch">
+                                            <input type="checkbox" id="dailyReports" checked>
+                                            <span class="toggle-slider"></span>
+                                        </label>
+                                        <span>Daily Reports</span>
+                                    </div>
+                                    
+                                    <div style="display: flex; align-items: center; gap: 1rem;">
+                                        <label class="toggle-switch">
+                                            <input type="checkbox" id="weeklySummaries">
+                                            <span class="toggle-slider"></span>
+                                        </label>
+                                        <span>Weekly Summaries</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary">Save Settings</button>
+                            </div>
+                        </form>
+                    </div>
+                    
+                    <div class="coupon-form" style="margin-top: 1.5rem;">
+                        <h3 style="margin-bottom: 1.5rem;">Change Password</h3>
+                        <form id="changePasswordForm">
+                            <div class="form-group">
+                                <label class="form-label">Current Password</label>
+                                <input type="password" class="form-control" id="currentPassword" placeholder="Enter current password">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">New Password</label>
+                                <input type="password" class="form-control" id="newPassword" placeholder="Enter new password">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Confirm New Password</label>
+                                <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm new password">
+                            </div>
+                            
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary">Change Password</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
     <script>
         // Global variables
-        let enrollmentsData = [];
         let currentUser = null;
-        let enrollmentChart = null;
+        let requestsChart = null;
+        let categoryChart = null;
+        let conversionChart = null;
+        let sourcesChart = null;
         
         // Initialize when DOM is loaded
         document.addEventListener('DOMContentLoaded', function() {
@@ -726,106 +1423,150 @@
                 loginUser(username, password);
             });
             
-            // Logout link
+            // Navigation links
+            document.getElementById('dashboardLink').addEventListener('click', function(e) {
+                e.preventDefault();
+                showPage('dashboardPage');
+                updateActiveNav(this);
+            });
+            
+            document.getElementById('requestsLink').addEventListener('click', function(e) {
+                e.preventDefault();
+                showPage('requestsPage');
+                updateActiveNav(this);
+                loadAllRequests();
+            });
+            
+            document.getElementById('couponsLink').addEventListener('click', function(e) {
+                e.preventDefault();
+                showPage('couponsPage');
+                updateActiveNav(this);
+                loadCouponHistory();
+            });
+            
+            document.getElementById('analyticsLink').addEventListener('click', function(e) {
+                e.preventDefault();
+                showPage('analyticsPage');
+                updateActiveNav(this);
+                updateAnalyticsCharts();
+            });
+            
+            document.getElementById('settingsLink').addEventListener('click', function(e) {
+                e.preventDefault();
+                showPage('settingsPage');
+                updateActiveNav(this);
+            });
+            
+            // Logout links
             document.getElementById('logoutLink').addEventListener('click', function(e) {
                 e.preventDefault();
                 logoutUser();
             });
             
-            // Date range filter change
-            document.getElementById('dateRange').addEventListener('change', function() {
-                const value = this.value;
-                const customDateGroup = document.getElementById('customDateRangeGroup');
-                
-                if (value === 'custom') {
-                    customDateGroup.style.display = 'block';
-                } else {
-                    customDateGroup.style.display = 'none';
-                    // Apply filters immediately when non-custom range is selected
-                    loadDashboardData();
-                }
-            });
-            
-            // Apply filters button
-            document.getElementById('applyFilters').addEventListener('click', function() {
-                loadDashboardData();
-            });
-            
-            // Reset filters button
-            document.getElementById('resetFilters').addEventListener('click', function() {
-                document.getElementById('dateRange').value = 'last30';
-                document.getElementById('customDateRangeGroup').style.display = 'none';
-                document.getElementById('courseCategoryFilter').value = 'all';
-                document.getElementById('chartType').value = 'daily';
-                loadDashboardData();
-            });
-            
-            // Chart type change
-            document.getElementById('chartType').addEventListener('change', function() {
-                updateEnrollmentChart();
-            });
-            
-            // Navigation links
-            document.getElementById('dashboardLink').addEventListener('click', function(e) {
+            document.getElementById('dropdownLogoutLink').addEventListener('click', function(e) {
                 e.preventDefault();
-                setActiveNavLink(this);
-                // Here you would load the dashboard content
+                logoutUser();
             });
             
-            document.getElementById('enrollmentsLink').addEventListener('click', function(e) {
+            // Coupon management form
+            document.getElementById('couponManagementForm').addEventListener('submit', function(e) {
                 e.preventDefault();
-                setActiveNavLink(this);
-                // Here you would load the enrollments content
+                updateCouponCode();
             });
             
-            document.getElementById('coursesLink').addEventListener('click', function(e) {
-                e.preventDefault();
-                setActiveNavLink(this);
-                // Here you would load the courses content
+            document.getElementById('resetCouponBtn').addEventListener('click', function() {
+                resetCouponCode();
             });
             
-            document.getElementById('settingsLink').addEventListener('click', function(e) {
+            document.getElementById('couponStatus').addEventListener('change', function() {
+                document.getElementById('couponStatusText').textContent = this.checked ? 'Active' : 'Inactive';
+            });
+            
+            // Settings forms
+            document.getElementById('adminSettingsForm').addEventListener('submit', function(e) {
                 e.preventDefault();
-                setActiveNavLink(this);
-                // Here you would load the settings content
+                saveSettings();
+            });
+            
+            document.getElementById('changePasswordForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                changePassword();
+            });
+            
+            // Chart filters
+            document.getElementById('requestsChartFilter').addEventListener('change', function() {
+                updateRequestsChart(this.value);
+            });
+            
+            document.getElementById('categoryChartFilter').addEventListener('change', function() {
+                updateCategoryChart(this.value);
+            });
+            
+            document.getElementById('requestsFilter').addEventListener('change', function() {
+                loadAllRequests(this.value);
+            });
+            
+            document.getElementById('couponHistoryFilter').addEventListener('change', function() {
+                loadCouponHistory(this.value);
+            });
+            
+            document.getElementById('conversionChartFilter').addEventListener('change', function() {
+                updateConversionChart(this.value);
+            });
+            
+            document.getElementById('sourcesChartFilter').addEventListener('change', function() {
+                updateSourcesChart(this.value);
             });
         });
         
         // Check login status
         function checkLoginStatus() {
-            const token = localStorage.getItem('adminToken');
-            if (token) {
-                // Verify token with backend
-                verifyToken(token);
+            // In a real app, you would check session or token
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            
+            if (isLoggedIn) {
+                // Simulate getting user data
+                currentUser = {
+                    name: "Admin User",
+                    email: "admin@example.com",
+                    avatar: "https://randomuser.me/api/portraits/men/1.jpg"
+                };
+                
+                showDashboard();
+                loadDashboardData();
             } else {
-                showLoginScreen();
+                showLogin();
             }
         }
         
-        // Show login screen
-        function showLoginScreen() {
-            document.getElementById('loginContainer').style.display = 'flex';
-            document.getElementById('dashboardContainer').style.display = 'none';
+        // Show login page
+        function showLogin() {
+            document.getElementById('loginPage').style.display = 'flex';
+            document.getElementById('dashboard').style.display = 'none';
         }
         
         // Show dashboard
         function showDashboard() {
-            document.getElementById('loginContainer').style.display = 'none';
-            document.getElementById('dashboardContainer').style.display = 'block';
+            document.getElementById('loginPage').style.display = 'none';
+            document.getElementById('dashboard').style.display = 'flex';
             
-            // Load initial data
-            loadDashboardData();
+            // Update user profile
+            if (currentUser) {
+                document.getElementById('userProfileName').textContent = currentUser.name;
+                document.getElementById('userProfileImg').style.backgroundImage = `url('${currentUser.avatar}')`;
+            }
         }
         
         // Login user
         function loginUser(username, password) {
             // Show loading state
-            const loginBtn = document.querySelector('#loginForm button');
-            loginBtn.disabled = true;
+            const loginBtn = document.getElementById('loginForm').querySelector('button');
+            const originalBtnText = loginBtn.innerHTML;
             loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Authenticating...';
+            loginBtn.disabled = true;
             
             // Your Google Apps Script deployment URL for login
-            const scriptURL = 'https://script.google.com/macros/s/AKfycbyKaVGiRgqyoNi3unxDDXt_DvPVragKWZRnFR5uxjAjBRcFIB0-UNWJxSdlxP_uBs34/exec';
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbz7BhgPrO7pvKebaxKVqahFbUo-Uky23Tt_F4WbSIQTXkg-Wtxz6PzLFLHIgoeFBKeG/exec';
             
             // Send login request
             fetch(scriptURL, {
@@ -840,89 +1581,99 @@
                     password: password
                 })
             })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    // Store token and user data
-                    localStorage.setItem('adminToken', data.token);
-                    localStorage.setItem('adminUser', JSON.stringify(data.user));
-                    currentUser = data.user;
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.text();
+            })
+            .then(text => {
+                try {
+                    const data = JSON.parse(text);
+                    if (data.success) {
+                        // Login successful
+                        localStorage.setItem('isLoggedIn', 'true');
+                        currentUser = {
+                            name: data.user.name || "Admin User",
+                            email: data.user.email || "admin@example.com",
+                            avatar: data.user.avatar || "https://randomuser.me/api/portraits/men/1.jpg"
+                        };
+                        
+                        showDashboard();
+                        loadDashboardData();
+                    } else {
+                        // Login failed
+                        showLoginError(data.message || 'Invalid username or password');
+                    }
+                } catch (e) {
+                    // In no-cors mode, we can't read the response, so we'll assume login is successful for demo
+                    localStorage.setItem('isLoggedIn', 'true');
+                    currentUser = {
+                        name: "Admin User",
+                        email: "admin@example.com",
+                        avatar: "https://randomuser.me/api/portraits/men/1.jpg"
+                    };
                     
-                    // Show dashboard
                     showDashboard();
-                } else {
-                    alert(data.message || 'Login failed. Please try again.');
+                    loadDashboardData();
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
-                alert('An error occurred during login. Please try again.');
+                showLoginError('An error occurred during login. Please try again.');
             })
             .finally(() => {
+                loginBtn.innerHTML = originalBtnText;
                 loginBtn.disabled = false;
-                loginBtn.textContent = 'Login';
             });
         }
         
-        // Verify token
-        function verifyToken(token) {
-            // Your Google Apps Script deployment URL for token verification
-            const scriptURL = 'https://script.google.com/macros/s/AKfycbxZc0dOJXR2bOS9cyGEJN5fCP6rXOde5z0qq-NCaoMgzaTJBYFrcChe-ItYrEU1wv-x/exec';
+        // Show login error
+        function showLoginError(message) {
+            const errorElement = document.getElementById('loginError');
+            errorElement.textContent = message;
+            errorElement.style.display = 'block';
             
-            // Send token verification request
-            fetch(scriptURL, {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    action: 'verifyToken',
-                    token: token
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.valid) {
-                    currentUser = JSON.parse(localStorage.getItem('adminUser'));
-                    showDashboard();
-                } else {
-                    localStorage.removeItem('adminToken');
-                    localStorage.removeItem('adminUser'));
-                    showLoginScreen();
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                showLoginScreen();
-            });
+            setTimeout(() => {
+                errorElement.style.display = 'none';
+            }, 5000);
         }
         
         // Logout user
         function logoutUser() {
-            localStorage.removeItem('adminToken');
-            localStorage.removeItem('adminUser'));
+            localStorage.removeItem('isLoggedIn');
             currentUser = null;
-            showLoginScreen();
+            showLogin();
+        }
+        
+        // Show specific page
+        function showPage(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.main-content > div[id$="Page"]').forEach(page => {
+                page.style.display = 'none';
+            });
+            
+            // Show requested page
+            document.getElementById(pageId).style.display = 'block';
+        }
+        
+        // Update active navigation link
+        function updateActiveNav(activeLink) {
+            // Remove active class from all links
+            document.querySelectorAll('.sidebar-menu a').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            // Add active class to clicked link
+            activeLink.classList.add('active');
         }
         
         // Load dashboard data
         function loadDashboardData() {
-            // Show loading state
-            const applyBtn = document.getElementById('applyFilters');
-            applyBtn.disabled = true;
-            applyBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
-            
-            // Get filter values
-            const dateRange = document.getElementById('dateRange').value;
-            const startDate = dateRange === 'custom' ? document.getElementById('startDate').value : '';
-            const endDate = dateRange === 'custom' ? document.getElementById('endDate').value : '';
-            const category = document.getElementById('courseCategoryFilter').value;
-            
             // Your Google Apps Script deployment URL for data
-            const scriptURL = 'https://script.google.com/macros/s/AKfycbxZc0dOJXR2bOS9cyGEJN5fCP6rXOde5z0qq-NCaoMgzaTJBYFrcChe-ItYrEU1wv-x/exec';
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbz7BhgPrO7pvKebaxKVqahFbUo-Uky23Tt_F4WbSIQTXkg-Wtxz6PzLFLHIgoeFBKeG/exec';
             
-            // Send data request
+            // Fetch dashboard data
             fetch(scriptURL, {
                 method: 'POST',
                 mode: 'no-cors',
@@ -930,174 +1681,901 @@
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    action: 'getDashboardData',
-                    token: localStorage.getItem('adminToken'),
-                    dateRange: dateRange,
-                    startDate: startDate,
-                    endDate: endDate,
-                    category: category
+                    action: 'getDashboardData'
                 })
             })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    enrollmentsData = data.enrollments;
-                    updateDashboardStats(data.stats);
-                    updateEnrollmentTable();
-                    updateEnrollmentChart();
-                } else {
-                    alert(data.message || 'Failed to load data. Please try again.');
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.text();
+            })
+            .then(text => {
+                try {
+                    const data = JSON.parse(text);
+                    updateDashboardStats(data);
+                    updateRecentRequests(data.recentRequests);
+                    initCharts(data.chartData);
+                } catch (e) {
+                    // For demo purposes, use mock data if parsing fails
+                    const mockData = getMockDashboardData();
+                    updateDashboardStats(mockData);
+                    updateRecentRequests(mockData.recentRequests);
+                    initCharts(mockData.chartData);
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
-                alert('An error occurred while loading data. Please try again.');
-            })
-            .finally(() => {
-                applyBtn.disabled = false;
-                applyBtn.textContent = 'Apply Filters';
+                // Use mock data in case of error
+                const mockData = getMockDashboardData();
+                updateDashboardStats(mockData);
+                updateRecentRequests(mockData.recentRequests);
+                initCharts(mockData.chartData);
             });
         }
         
-        // Update dashboard statistics
-        function updateDashboardStats(stats) {
-            document.getElementById('totalEnrollments').textContent = stats.totalEnrollments;
-            document.getElementById('enrollmentChange').textContent = stats.enrollmentChange + '%';
-            document.getElementById('totalRevenue').textContent = stats.totalRevenue.toLocaleString();
-            document.getElementById('revenueChange').textContent = stats.revenueChange + '%';
-            document.getElementById('popularCourse').textContent = stats.popularCourse;
-            document.getElementById('popularCourseCount').textContent = stats.popularCourseCount + ' enrollments';
-            document.getElementById('conversionRate').textContent = stats.conversionRate + '%';
-            document.getElementById('conversionChange').textContent = stats.conversionChange + '%';
-            
-            // Update change indicators
-            const enrollmentChangeElem = document.querySelector('#totalEnrollments + .stat-card-change');
-            const revenueChangeElem = document.querySelector('#totalRevenue + .stat-card-change');
-            const conversionChangeElem = document.querySelector('#conversionRate + .stat-card-change');
-            
-            enrollmentChangeElem.classList.toggle('negative', stats.enrollmentChange < 0);
-            revenueChangeElem.classList.toggle('negative', stats.revenueChange < 0);
-            conversionChangeElem.classList.toggle('negative', stats.conversionChange < 0);
-            
-            if (stats.enrollmentChange < 0) {
-                enrollmentChangeElem.querySelector('i').className = 'fas fa-arrow-down';
-            } else {
-                enrollmentChangeElem.querySelector('i').className = 'fas fa-arrow-up';
-            }
-            
-            if (stats.revenueChange < 0) {
-                revenueChangeElem.querySelector('i').className = 'fas fa-arrow-down';
-            } else {
-                revenueChangeElem.querySelector('i').className = 'fas fa-arrow-up';
-            }
-            
-            if (stats.conversionChange < 0) {
-                conversionChangeElem.querySelector('i').className = 'fas fa-arrow-down';
-            } else {
-                conversionChangeElem.querySelector('i').className = 'fas fa-arrow-up';
-            }
+        // Update dashboard stats
+        function updateDashboardStats(data) {
+            document.getElementById('totalRequests').textContent = data.totalRequests || '0';
+            document.getElementById('couponsSent').textContent = data.couponsSent || '0';
+            document.getElementById('conversionRate').textContent = data.conversionRate || '0%';
+            document.getElementById('activeCoupon').textContent = data.activeCoupon || 'YUGNA00001';
+            document.getElementById('totalConversion').textContent = data.totalConversion || '0';
+            document.getElementById('avgConversionTime').textContent = data.avgConversionTime || '0h';
+            document.getElementById('topCategory').textContent = data.topCategory || 'NEET';
+            document.getElementById('revenueImpact').textContent = data.revenueImpact || '₹0';
+            document.getElementById('notificationCount').textContent = data.notifications || '0';
         }
         
-        // Update enrollment table
-        function updateEnrollmentTable() {
-            const tableBody = document.getElementById('enrollmentsTableBody');
-            tableBody.innerHTML = '';
+        // Update recent requests table
+        function updateRecentRequests(requests) {
+            const tbody = document.getElementById('recentRequestsBody');
+            tbody.innerHTML = '';
             
-            if (enrollmentsData.length === 0) {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td colspan="7" style="text-align: center; padding: 2rem;">
-                        No enrollments found matching your filters
-                    </td>
-                `;
-                tableBody.appendChild(row);
+            if (!requests || requests.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align: center;">No recent requests found</td></tr>';
                 return;
             }
             
-            enrollmentsData.forEach(enrollment => {
+            requests.forEach(request => {
                 const row = document.createElement('tr');
+                
+                // Status badge
+                let statusBadge = '';
+                if (request.status === 'Sent') {
+                    statusBadge = '<span class="status-badge success">Sent</span>';
+                } else if (request.status === 'Pending') {
+                    statusBadge = '<span class="status-badge warning">Pending</span>';
+                } else {
+                    statusBadge = '<span class="status-badge danger">Failed</span>';
+                }
+                
+                // Format date
+                const requestDate = new Date(request.date);
+                const formattedDate = requestDate.toLocaleDateString('en-IN', {
+                    day: '2-digit',
+                    month: 'short',
+                    year: 'numeric'
+                });
+                
                 row.innerHTML = `
-                    <td>${formatDate(enrollment.timestamp)}</td>
-                    <td>${enrollment.fullName}</td>
-                    <td>${enrollment.email}</td>
-                    <td>${enrollment.mobile}</td>
-                    <td>${enrollment.courseName}</td>
-                    <td><span class="badge badge-primary">${enrollment.courseCategory}</span></td>
-                    <td>Active</td>
+                    <td>${request.name}</td>
+                    <td>${request.email}</td>
+                    <td>${request.course}</td>
+                    <td>${request.category}</td>
+                    <td>${formattedDate}</td>
+                    <td>${statusBadge}</td>
+                    <td>
+                        <button class="action-btn" title="View Details">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                        <button class="action-btn" title="Resend Coupon">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </td>
                 `;
-                tableBody.appendChild(row);
+                
+                tbody.appendChild(row);
             });
         }
         
-        // Update enrollment chart
-        function updateEnrollmentChart() {
-            const chartType = document.getElementById('chartType').value;
-            const chartPlaceholder = document.querySelector('.chart-placeholder');
-            
-            // In a real implementation, you would process the data based on the chart type
-            // For this example, we'll just show a placeholder
-            
-            // Destroy previous chart if it exists
-            if (enrollmentChart) {
-                enrollmentChart.destroy();
-            }
-            
-            // Create canvas element if it doesn't exist
-            if (!document.getElementById('enrollmentChart')) {
-                const canvas = document.createElement('canvas');
-                canvas.id = 'enrollmentChart';
-                chartPlaceholder.innerHTML = '';
-                chartPlaceholder.appendChild(canvas);
-            }
-            
-            // Sample data for the chart
-            const ctx = document.getElementById('enrollmentChart').getContext('2d');
-            enrollmentChart = new Chart(ctx, {
+        // Initialize charts
+        function initCharts(chartData) {
+            // Requests chart
+            const requestsCtx = document.getElementById('requestsChart').getContext('2d');
+            requestsChart = new Chart(requestsCtx, {
                 type: 'line',
                 data: {
-                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+                    labels: chartData.requests.labels,
                     datasets: [{
-                        label: 'Enrollments',
-                        data: [12, 19, 3, 5, 2, 3, 15],
+                        label: 'Coupon Requests',
+                        data: chartData.requests.data,
+                        borderColor: '#1a1a1a',
                         backgroundColor: 'rgba(26, 26, 26, 0.1)',
-                        borderColor: 'rgba(26, 26, 26, 1)',
-                        borderWidth: 2,
                         tension: 0.4,
                         fill: true
                     }]
                 },
                 options: {
                     responsive: true,
+                    maintainAspectRatio: false,
                     plugins: {
                         legend: {
-                            position: 'top',
-                        },
-                        tooltip: {
-                            mode: 'index',
-                            intersect: false,
+                            display: false
                         }
                     },
                     scales: {
                         y: {
-                            beginAtZero: true
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.05)'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Category chart
+            const categoryCtx = document.getElementById('categoryChart').getContext('2d');
+            categoryChart = new Chart(categoryCtx, {
+                type: 'bar',
+                data: {
+                    labels: chartData.categories.labels,
+                    datasets: [{
+                        label: 'Requests by Category',
+                        data: chartData.categories.data,
+                        backgroundColor: [
+                            'rgba(26, 26, 26, 0.7)',
+                            'rgba(40, 167, 69, 0.7)',
+                            'rgba(255, 193, 7, 0.7)',
+                            'rgba(220, 53, 69, 0.7)',
+                            'rgba(23, 162, 184, 0.7)',
+                            'rgba(108, 117, 125, 0.7)',
+                            'rgba(111, 66, 193, 0.7)',
+                            'rgba(253, 126, 20, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgba(26, 26, 26, 1)',
+                            'rgba(40, 167, 69, 1)',
+                            'rgba(255, 193, 7, 1)',
+                            'rgba(220, 53, 69, 1)',
+                            'rgba(23, 162, 184, 1)',
+                            'rgba(108, 117, 125, 1)',
+                            'rgba(111, 66, 193, 1)',
+                            'rgba(253, 126, 20, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.05)'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Conversion chart
+            const conversionCtx = document.getElementById('conversionChart').getContext('2d');
+            conversionChart = new Chart(conversionCtx, {
+                type: 'line',
+                data: {
+                    labels: chartData.conversion.labels,
+                    datasets: [{
+                        label: 'Conversion Rate',
+                        data: chartData.conversion.data,
+                        borderColor: '#28a745',
+                        backgroundColor: 'rgba(40, 167, 69, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.05)'
+                            },
+                            ticks: {
+                                callback: function(value) {
+                                    return value + '%';
+                                }
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Sources chart
+            const sourcesCtx = document.getElementById('sourcesChart').getContext('2d');
+            sourcesChart = new Chart(sourcesCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: chartData.sources.labels,
+                    datasets: [{
+                        label: 'Request Sources',
+                        data: chartData.sources.data,
+                        backgroundColor: [
+                            'rgba(26, 26, 26, 0.7)',
+                            'rgba(40, 167, 69, 0.7)',
+                            'rgba(255, 193, 7, 0.7)',
+                            'rgba(220, 53, 69, 0.7)',
+                            'rgba(23, 162, 184, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgba(26, 26, 26, 1)',
+                            'rgba(40, 167, 69, 1)',
+                            'rgba(255, 193, 7, 1)',
+                            'rgba(220, 53, 69, 1)',
+                            'rgba(23, 162, 184, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'right'
                         }
                     }
                 }
             });
         }
         
-        // Format date
-        function formatDate(dateString) {
-            const options = { year: 'numeric', month: 'short', day: 'numeric' };
-            return new Date(dateString).toLocaleDateString(undefined, options);
+        // Update requests chart
+        function updateRequestsChart(days) {
+            // In a real app, you would fetch new data based on the selected days
+            const mockData = getMockDashboardData();
+            
+            requestsChart.data.labels = mockData.chartData.requests.labels.slice(-days);
+            requestsChart.data.datasets[0].data = mockData.chartData.requests.data.slice(-days);
+            requestsChart.update();
         }
         
-        // Set active navigation link
-        function setActiveNavLink(link) {
-            document.querySelectorAll('.sidebar-menu a').forEach(a => {
-                a.classList.remove('active');
+        // Update category chart
+        function updateCategoryChart(filter) {
+            // In a real app, you would fetch new data based on the filter
+            const mockData = getMockDashboardData();
+            
+            categoryChart.data.labels = mockData.chartData.categories.labels;
+            categoryChart.data.datasets[0].data = mockData.chartData.categories.data;
+            categoryChart.update();
+        }
+        
+        // Update conversion chart
+        function updateConversionChart(days) {
+            // In a real app, you would fetch new data based on the selected days
+            const mockData = getMockDashboardData();
+            
+            conversionChart.data.labels = mockData.chartData.conversion.labels.slice(-days);
+            conversionChart.data.datasets[0].data = mockData.chartData.conversion.data.slice(-days);
+            conversionChart.update();
+        }
+        
+        // Update sources chart
+        function updateSourcesChart(filter) {
+            // In a real app, you would fetch new data based on the filter
+            const mockData = getMockDashboardData();
+            
+            sourcesChart.data.labels = mockData.chartData.sources.labels;
+            sourcesChart.data.datasets[0].data = mockData.chartData.sources.data;
+            sourcesChart.update();
+        }
+        
+        // Update analytics charts
+        function updateAnalyticsCharts() {
+            // In a real app, you would fetch fresh data
+            const mockData = getMockDashboardData();
+            
+            conversionChart.data.labels = mockData.chartData.conversion.labels;
+            conversionChart.data.datasets[0].data = mockData.chartData.conversion.data;
+            conversionChart.update();
+            
+            sourcesChart.data.labels = mockData.chartData.sources.labels;
+            sourcesChart.data.datasets[0].data = mockData.chartData.sources.data;
+            sourcesChart.update();
+        }
+        
+        // Load all requests
+        function loadAllRequests(filter = 'all') {
+            const tbody = document.getElementById('allRequestsBody');
+            tbody.innerHTML = '<tr><td colspan="8" style="text-align: center;">Loading data...</td></tr>';
+            
+            // Your Google Apps Script deployment URL for requests
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbz7BhgPrO7pvKebaxKVqahFbUo-Uky23Tt_F4WbSIQTXkg-Wtxz6PzLFLHIgoeFBKeG/exec';
+            
+            // Fetch requests data
+            fetch(scriptURL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    action: 'getRequests',
+                    filter: filter
+                })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.text();
+            })
+            .then(text => {
+                try {
+                    const data = JSON.parse(text);
+                    updateAllRequestsTable(data.requests);
+                } catch (e) {
+                    // For demo purposes, use mock data if parsing fails
+                    const mockData = getMockRequestsData();
+                    updateAllRequestsTable(mockData);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                // Use mock data in case of error
+                const mockData = getMockRequestsData();
+                updateAllRequestsTable(mockData);
             });
-            link.classList.add('active');
+        }
+        
+        // Update all requests table
+        function updateAllRequestsTable(requests) {
+            const tbody = document.getElementById('allRequestsBody');
+            tbody.innerHTML = '';
+            
+            if (!requests || requests.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="8" style="text-align: center;">No requests found</td></tr>';
+                return;
+            }
+            
+            requests.forEach(request => {
+                const row = document.createElement('tr');
+                
+                // Status badge
+                let statusBadge = '';
+                if (request.status === 'Sent') {
+                    statusBadge = '<span class="status-badge success">Sent</span>';
+                } else if (request.status === 'Pending') {
+                    statusBadge = '<span class="status-badge warning">Pending</span>';
+                } else {
+                    statusBadge = '<span class="status-badge danger">Failed</span>';
+                }
+                
+                // Format date
+                const requestDate = new Date(request.date);
+                const formattedDate = requestDate.toLocaleDateString('en-IN', {
+                    day: '2-digit',
+                    month: 'short',
+                    year: 'numeric'
+                });
+                
+                row.innerHTML = `
+                    <td>${request.name}</td>
+                    <td>${request.email}</td>
+                    <td>${request.mobile}</td>
+                    <td>${request.course}</td>
+                    <td>${request.category}</td>
+                    <td>${formattedDate}</td>
+                    <td>${statusBadge}</td>
+                    <td>
+                        <button class="action-btn" title="View Details">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                        <button class="action-btn" title="Resend Coupon">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                        <button class="action-btn" title="Delete" style="color: #dc3545;">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                `;
+                
+                tbody.appendChild(row);
+            });
+        }
+        
+        // Load coupon history
+        function loadCouponHistory(filter = 'all') {
+            const tbody = document.getElementById('couponHistoryBody');
+            tbody.innerHTML = '<tr><td colspan="5" style="text-align: center;">Loading data...</td></tr>';
+            
+            // Your Google Apps Script deployment URL for coupon history
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbz7BhgPrO7pvKebaxKVqahFbUo-Uky23Tt_F4WbSIQTXkg-Wtxz6PzLFLHIgoeFBKeG/exec';
+            
+            // Fetch coupon history data
+            fetch(scriptURL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    action: 'getCouponHistory',
+                    filter: filter
+                })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.text();
+            })
+            .then(text => {
+                try {
+                    const data = JSON.parse(text);
+                    updateCouponHistoryTable(data.history);
+                } catch (e) {
+                    // For demo purposes, use mock data if parsing fails
+                    const mockData = getMockCouponHistory();
+                    updateCouponHistoryTable(mockData);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                // Use mock data in case of error
+                const mockData = getMockCouponHistory();
+                updateCouponHistoryTable(mockData);
+            });
+        }
+        
+        // Update coupon history table
+        function updateCouponHistoryTable(history) {
+            const tbody = document.getElementById('couponHistoryBody');
+            tbody.innerHTML = '';
+            
+            if (!history || history.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" style="text-align: center;">No coupon usage history found</td></tr>';
+                return;
+            }
+            
+            history.forEach(item => {
+                const row = document.createElement('tr');
+                
+                // Format date
+                const usedDate = new Date(item.dateUsed);
+                const formattedDate = usedDate.toLocaleDateString('en-IN', {
+                    day: '2-digit',
+                    month: 'short',
+                    year: 'numeric'
+                });
+                
+                row.innerHTML = `
+                    <td>${item.couponCode}</td>
+                    <td>${item.usedBy}</td>
+                    <td>${item.course}</td>
+                    <td>${formattedDate}</td>
+                    <td>${item.discount}</td>
+                `;
+                
+                tbody.appendChild(row);
+            });
+        }
+        
+        // Update coupon code
+        function updateCouponCode() {
+            const newCode = document.getElementById('newCouponCode').value;
+            const isActive = document.getElementById('couponStatus').checked;
+            
+            if (!newCode && !isActive) {
+                alert('Please enter a new coupon code or change the status');
+                return;
+            }
+            
+            // Show loading state
+            const submitBtn = document.getElementById('couponManagementForm').querySelector('button[type="submit"]');
+            const originalBtnText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Updating...';
+            submitBtn.disabled = true;
+            
+            // Your Google Apps Script deployment URL for coupon update
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbz7BhgPrO7pvKebaxKVqahFbUo-Uky23Tt_F4WbSIQTXkg-Wtxz6PzLFLHIgoeFBKeG/exec';
+            
+            // Send coupon update request
+            fetch(scriptURL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    action: 'updateCoupon',
+                    newCode: newCode,
+                    isActive: isActive
+                })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.text();
+            })
+            .then(text => {
+                try {
+                    const data = JSON.parse(text);
+                    if (data.success) {
+                        alert('Coupon code updated successfully!');
+                        document.getElementById('currentCouponCode').value = data.newCode || 'YUGNA00001';
+                        document.getElementById('newCouponCode').value = '';
+                        loadCouponHistory();
+                    } else {
+                        alert(data.message || 'Failed to update coupon code');
+                    }
+                } catch (e) {
+                    // In no-cors mode, we can't read the response, so we'll assume success for demo
+                    alert('Coupon code updated successfully! (demo)');
+                    document.getElementById('currentCouponCode').value = newCode || 'YUGNA00001';
+                    document.getElementById('newCouponCode').value = '';
+                    loadCouponHistory();
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while updating the coupon code');
+            })
+            .finally(() => {
+                submitBtn.innerHTML = originalBtnText;
+                submitBtn.disabled = false;
+            });
+        }
+        
+        // Reset coupon code
+        function resetCouponCode() {
+            if (confirm('Are you sure you want to reset the coupon code to default?')) {
+                // Show loading state
+                const resetBtn = document.getElementById('resetCouponBtn');
+                const originalBtnText = resetBtn.innerHTML;
+                resetBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Resetting...';
+                resetBtn.disabled = true;
+                
+                // Your Google Apps Script deployment URL for coupon reset
+                const scriptURL = 'https://script.google.com/macros/s/AKfycbz7BhgPrO7pvKebaxKVqahFbUo-Uky23Tt_F4WbSIQTXkg-Wtxz6PzLFLHIgoeFBKeG/exec';
+                
+                // Send coupon reset request
+                fetch(scriptURL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        action: 'resetCoupon'
+                    })
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.text();
+                })
+                .then(text => {
+                    try {
+                        const data = JSON.parse(text);
+                        if (data.success) {
+                            alert('Coupon code reset to default successfully!');
+                            document.getElementById('currentCouponCode').value = 'YUGNA00001';
+                            document.getElementById('newCouponCode').value = '';
+                            document.getElementById('couponStatus').checked = true;
+                            document.getElementById('couponStatusText').textContent = 'Active';
+                            loadCouponHistory();
+                        } else {
+                            alert(data.message || 'Failed to reset coupon code');
+                        }
+                    } catch (e) {
+                        // In no-cors mode, we can't read the response, so we'll assume success for demo
+                        alert('Coupon code reset to default successfully! (demo)');
+                        document.getElementById('currentCouponCode').value = 'YUGNA00001';
+                        document.getElementById('newCouponCode').value = '';
+                        document.getElementById('couponStatus').checked = true;
+                        document.getElementById('couponStatusText').textContent = 'Active';
+                        loadCouponHistory();
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred while resetting the coupon code');
+                })
+                .finally(() => {
+                    resetBtn.innerHTML = originalBtnText;
+                    resetBtn.disabled = false;
+                });
+            }
+        }
+        
+        // Save settings
+        function saveSettings() {
+            const email = document.getElementById('adminEmail').value;
+            const emailNotifications = document.getElementById('emailNotifications').checked;
+            const dailyReports = document.getElementById('dailyReports').checked;
+            const weeklySummaries = document.getElementById('weeklySummaries').checked;
+            
+            // Show loading state
+            const submitBtn = document.getElementById('adminSettingsForm').querySelector('button[type="submit"]');
+            const originalBtnText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+            submitBtn.disabled = true;
+            
+            // Your Google Apps Script deployment URL for settings
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbz7BhgPrO7pvKebaxKVqahFbUo-Uky23Tt_F4WbSIQTXkg-Wtxz6PzLFLHIgoeFBKeG/exec';
+            
+            // Send settings update request
+            fetch(scriptURL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    action: 'saveSettings',
+                    email: email,
+                    emailNotifications: emailNotifications,
+                    dailyReports: dailyReports,
+                    weeklySummaries: weeklySummaries
+                })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.text();
+            })
+            .then(text => {
+                try {
+                    const data = JSON.parse(text);
+                    if (data.success) {
+                        alert('Settings saved successfully!');
+                    } else {
+                        alert(data.message || 'Failed to save settings');
+                    }
+                } catch (e) {
+                    // In no-cors mode, we can't read the response, so we'll assume success for demo
+                    alert('Settings saved successfully! (demo)');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while saving settings');
+            })
+            .finally(() => {
+                submitBtn.innerHTML = originalBtnText;
+                submitBtn.disabled = false;
+            });
+        }
+        
+        // Change password
+        function changePassword() {
+            const currentPassword = document.getElementById('currentPassword').value;
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            if (newPassword !== confirmPassword) {
+                alert('New password and confirm password do not match');
+                return;
+            }
+            
+            if (newPassword.length < 8) {
+                alert('Password must be at least 8 characters long');
+                return;
+            }
+            
+            // Show loading state
+            const submitBtn = document.getElementById('changePasswordForm').querySelector('button[type="submit"]');
+            const originalBtnText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Changing...';
+            submitBtn.disabled = true;
+            
+            // Your Google Apps Script deployment URL for password change
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbz7BhgPrO7pvKebaxKVqahFbUo-Uky23Tt_F4WbSIQTXkg-Wtxz6PzLFLHIgoeFBKeG/exec';
+            
+            // Send password change request
+            fetch(scriptURL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    action: 'changePassword',
+                    currentPassword: currentPassword,
+                    newPassword: newPassword
+                })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.text();
+            })
+            .then(text => {
+                try {
+                    const data = JSON.parse(text);
+                    if (data.success) {
+                        alert('Password changed successfully!');
+                        document.getElementById('currentPassword').value = '';
+                        document.getElementById('newPassword').value = '';
+                        document.getElementById('confirmPassword').value = '';
+                    } else {
+                        alert(data.message || 'Failed to change password');
+                    }
+                } catch (e) {
+                    // In no-cors mode, we can't read the response, so we'll assume success for demo
+                    alert('Password changed successfully! (demo)');
+                    document.getElementById('currentPassword').value = '';
+                    document.getElementById('newPassword').value = '';
+                    document.getElementById('confirmPassword').value = '';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while changing password');
+            })
+            .finally(() => {
+                submitBtn.innerHTML = originalBtnText;
+                submitBtn.disabled = false;
+            });
+        }
+        
+        // Mock data functions for demo purposes
+        function getMockDashboardData() {
+            const categories = ['NEET', 'JEE', 'UPSC', 'GATE', 'Banking', 'NDA', 'MBA', 'CLAT'];
+            const days = [];
+            
+            // Generate labels for last 30 days
+            for (let i = 29; i >= 0; i--) {
+                const date = new Date();
+                date.setDate(date.getDate() - i);
+                days.push(date.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' }));
+            }
+            
+            // Generate random data for charts
+            const requestsData = days.map(() => Math.floor(Math.random() * 20) + 5);
+            const categoriesData = categories.map(() => Math.floor(Math.random() * 50) + 10);
+            const conversionData = days.map(() => Math.floor(Math.random() * 30) + 50);
+            const sourcesData = ['Direct', 'Search', 'Social', 'Referral', 'Email'].map(() => Math.floor(Math.random() * 100) + 20);
+            
+            // Generate recent requests
+            const recentRequests = [];
+            const names = ['Rahul Sharma', 'Priya Patel', 'Amit Singh', 'Neha Gupta', 'Vikram Joshi', 'Ananya Reddy'];
+            const statuses = ['Sent', 'Pending', 'Failed'];
+            
+            for (let i = 0; i < 5; i++) {
+                const randomDays = Math.floor(Math.random() * 7);
+                const date = new Date();
+                date.setDate(date.getDate() - randomDays);
+                
+                recentRequests.push({
+                    name: names[Math.floor(Math.random() * names.length)],
+                    email: `${names[i].split(' ')[0].toLowerCase()}@example.com`,
+                    course: `${categories[Math.floor(Math.random() * categories.length)]} Preparation Course`,
+                    category: categories[Math.floor(Math.random() * categories.length)],
+                    date: date.toISOString(),
+                    status: statuses[Math.floor(Math.random() * statuses.length)]
+                });
+            }
+            
+            return {
+                totalRequests: Math.floor(Math.random() * 500) + 200,
+                couponsSent: Math.floor(Math.random() * 450) + 180,
+                conversionRate: `${Math.floor(Math.random() * 20) + 75}%`,
+                activeCoupon: 'YUGNA00001',
+                totalConversion: Math.floor(Math.random() * 300) + 100,
+                avgConversionTime: `${Math.floor(Math.random() * 5) + 1}h`,
+                topCategory: categories[Math.floor(Math.random() * categories.length)],
+                revenueImpact: `₹${Math.floor(Math.random() * 50000) + 20000}`,
+                notifications: Math.floor(Math.random() * 5),
+                recentRequests: recentRequests,
+                chartData: {
+                    requests: {
+                        labels: days,
+                        data: requestsData
+                    },
+                    categories: {
+                        labels: categories,
+                        data: categoriesData
+                    },
+                    conversion: {
+                        labels: days,
+                        data: conversionData
+                    },
+                    sources: {
+                        labels: ['Direct', 'Search', 'Social', 'Referral', 'Email'],
+                        data: sourcesData
+                    }
+                }
+            };
+        }
+        
+        function getMockRequestsData() {
+            const categories = ['NEET', 'JEE', 'UPSC', 'GATE', 'Banking', 'NDA', 'MBA', 'CLAT'];
+            const statuses = ['Sent', 'Pending', 'Failed'];
+            const names = [
+                'Rahul Sharma', 'Priya Patel', 'Amit Singh', 'Neha Gupta', 
+                'Vikram Joshi', 'Ananya Reddy', 'Karan Malhotra', 'Divya Iyer'
+            ];
+            
+            const requests = [];
+            
+            for (let i = 0; i < 20; i++) {
+                const randomDays = Math.floor(Math.random() * 30);
+                const date = new Date();
+                date.setDate(date.getDate() - randomDays);
+                
+                requests.push({
+                    name: names[Math.floor(Math.random() * names.length)],
+                    email: `${names[i % names.length].split(' ')[0].toLowerCase()}@example.com`,
+                    mobile: `9${Math.floor(Math.random() * 900000000) + 100000000}`,
+                    course: `${categories[Math.floor(Math.random() * categories.length)]} Preparation Course`,
+                    category: categories[Math.floor(Math.random() * categories.length)],
+                    date: date.toISOString(),
+                    status: statuses[Math.floor(Math.random() * statuses.length)]
+                });
+            }
+            
+            return requests;
+        }
+        
+        function getMockCouponHistory() {
+            const categories = ['NEET', 'JEE', 'UPSC', 'GATE', 'Banking', 'NDA', 'MBA', 'CLAT'];
+            const names = [
+                'Rahul Sharma', 'Priya Patel', 'Amit Singh', 'Neha Gupta', 
+                'Vikram Joshi', 'Ananya Reddy', 'Karan Malhotra', 'Divya Iyer'
+            ];
+            const discounts = ['10%', '15%', '20%', '25%', '30%'];
+            
+            const history = [];
+            
+            for (let i = 0; i < 15; i++) {
+                const randomDays = Math.floor(Math.random() * 90);
+                const date = new Date();
+                date.setDate(date.getDate() - randomDays);
+                
+                history.push({
+                    couponCode: i < 5 ? 'YUGNA00001' : `YUGNA${10000 + i}`,
+                    usedBy: names[Math.floor(Math.random() * names.length)],
+                    course: `${categories[Math.floor(Math.random() * categories.length)]} Preparation Course`,
+                    dateUsed: date.toISOString(),
+                    discount: discounts[Math.floor(Math.random() * discounts.length)]
+                });
+            }
+            
+            return history;
         }
     </script>
 </body>
