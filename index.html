@@ -835,7 +835,7 @@
     </style>
 </head>
 <body>
-    <!-- Login Page -->
+   <!-- Login Page -->
     <div class="login-container" id="loginPage">
         <div class="login-card">
             <div class="login-logo">
@@ -850,15 +850,17 @@
                 <div class="form-group">
                     <label class="form-label">Username</label>
                     <input type="text" class="form-control" id="username" placeholder="Enter your username" required>
+                    <div id="usernameError" class="login-error">Please enter username</div>
                 </div>
                 
                 <div class="form-group">
                     <label class="form-label">Password</label>
                     <input type="password" class="form-control" id="password" placeholder="Enter your password" required>
+                    <div id="passwordError" class="login-error">Please enter password</div>
                 </div>
                 
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary">
+                    <button type="submit" class="btn btn-primary" id="loginBtn">
                         <i class="fas fa-sign-in-alt"></i> Login
                     </button>
                 </div>
@@ -940,7 +942,7 @@
                 <div class="user-menu">
                     <div class="notifications">
                         <i class="fas fa-bell"></i>
-                        <span class="badge" id="notificationCount">3</span>
+                        <span class="badge" id="notificationCount">0</span>
                     </div>
                     
                     <div class="user-profile">
@@ -989,7 +991,7 @@
                             <div class="stat-card-value" id="totalRequests">0</div>
                             <div class="stat-card-change positive">
                                 <i class="fas fa-arrow-up"></i>
-                                <span>12% from last week</span>
+                                <span id="requestsChange">0% from last week</span>
                             </div>
                         </div>
                         
@@ -1003,7 +1005,7 @@
                             <div class="stat-card-value" id="couponsSent">0</div>
                             <div class="stat-card-change positive">
                                 <i class="fas fa-arrow-up"></i>
-                                <span>8% from last week</span>
+                                <span id="couponsChange">0% from last week</span>
                             </div>
                         </div>
                         
@@ -1017,7 +1019,7 @@
                             <div class="stat-card-value" id="conversionRate">0%</div>
                             <div class="stat-card-change negative">
                                 <i class="fas fa-arrow-down"></i>
-                                <span>2% from last week</span>
+                                <span id="conversionChange">0% from last week</span>
                             </div>
                         </div>
                         
@@ -1030,7 +1032,7 @@
                             </div>
                             <div class="stat-card-value" id="activeCoupon">YUGNA00001</div>
                             <div class="stat-card-change">
-                                <span>Default code</span>
+                                <span id="couponStatusText">Default code</span>
                             </div>
                         </div>
                     </div>
@@ -1071,7 +1073,7 @@
                         <div class="table-card-header">
                             <div class="table-card-title">Recent Coupon Requests</div>
                             <div class="table-card-actions">
-                                <button class="btn btn-secondary">View All</button>
+                                <button class="btn btn-secondary" id="viewAllRequests">View All</button>
                             </div>
                         </div>
                         
@@ -1089,7 +1091,9 @@
                                     </tr>
                                 </thead>
                                 <tbody id="recentRequestsBody">
-                                    <!-- Data will be loaded here -->
+                                    <tr>
+                                        <td colspan="7" style="text-align: center;">Loading data...</td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -1117,7 +1121,7 @@
                                     <option value="sent">Coupon Sent</option>
                                     <option value="failed">Failed</option>
                                 </select>
-                                <button class="btn btn-secondary">Export</button>
+                                <button class="btn btn-secondary" id="exportRequests">Export</button>
                             </div>
                         </div>
                         
@@ -1136,7 +1140,9 @@
                                     </tr>
                                 </thead>
                                 <tbody id="allRequestsBody">
-                                    <!-- Data will be loaded here -->
+                                    <tr>
+                                        <td colspan="8" style="text-align: center;">Loading data...</td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -1175,7 +1181,7 @@
                                         <input type="checkbox" id="couponStatus" checked>
                                         <span class="toggle-slider"></span>
                                     </label>
-                                    <span id="couponStatusText">Active</span>
+                                    <span id="couponStatusLabel">Active</span>
                                 </div>
                             </div>
                             
@@ -1210,7 +1216,9 @@
                                     </tr>
                                 </thead>
                                 <tbody id="couponHistoryBody">
-                                    <!-- Data will be loaded here -->
+                                    <tr>
+                                        <td colspan="5" style="text-align: center;">Loading data...</td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -1239,7 +1247,7 @@
                             <div class="stat-card-value" id="totalConversion">0</div>
                             <div class="stat-card-change positive">
                                 <i class="fas fa-arrow-up"></i>
-                                <span>15% from last month</span>
+                                <span id="conversionChangeText">0% from last month</span>
                             </div>
                         </div>
                         
@@ -1253,7 +1261,7 @@
                             <div class="stat-card-value" id="avgConversionTime">0h</div>
                             <div class="stat-card-change negative">
                                 <i class="fas fa-arrow-down"></i>
-                                <span>10% from last month</span>
+                                <span id="timeChangeText">0% from last month</span>
                             </div>
                         </div>
                         
@@ -1266,7 +1274,7 @@
                             </div>
                             <div class="stat-card-value" id="topCategory">NEET</div>
                             <div class="stat-card-change">
-                                <span>35% of total requests</span>
+                                <span id="categoryPercent">0% of total requests</span>
                             </div>
                         </div>
                         
@@ -1408,26 +1416,97 @@
         let categoryChart = null;
         let conversionChart = null;
         let sourcesChart = null;
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbySb7wNdvsFgiF6f3CH8No4enNtnFezD_nodzKDA791wHo3zApQrKgThawp1uONnAHd/exec';
         
         // Initialize when DOM is loaded
         document.addEventListener('DOMContentLoaded', function() {
             // Check if user is already logged in
             checkLoginStatus();
+               // Updated login function
+        async function loginUser(username, password) {
+            // Clear previous errors
+            document.getElementById('loginError').style.display = 'none';
+            document.getElementById('usernameError').style.display = 'none';
+            document.getElementById('passwordError').style.display = 'none';
             
-            // Login form submission
-            document.getElementById('loginForm').addEventListener('submit', function(e) {
-                e.preventDefault();
-                const username = document.getElementById('username').value;
-                const password = document.getElementById('password').value;
+            // Validate inputs
+            if (!username) {
+                document.getElementById('usernameError').style.display = 'block';
+                return;
+            }
+            if (!password) {
+                document.getElementById('passwordError').style.display = 'block';
+                return;
+            }
+            
+            // Show loading state
+            const loginBtn = document.getElementById('loginBtn');
+            const originalBtnText = loginBtn.innerHTML;
+            loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Authenticating...';
+            loginBtn.disabled = true;
+            
+            try {
+                // Hash the password before sending (SHA-256)
+                const encoder = new TextEncoder();
+                const data = encoder.encode(password);
+                const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+                const hashArray = Array.from(new Uint8Array(hashBuffer));
+                const hashedPassword = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
                 
-                loginUser(username, password);
-            });
+                // Send login request
+                const response = await fetch(scriptURL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        action: 'login',
+                        username: username,
+                        password: hashedPassword // Sending hashed password
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    // Login successful
+                    localStorage.setItem('isLoggedIn', 'true');
+                    localStorage.setItem('userData', JSON.stringify(data.user));
+                    currentUser = data.user;
+                    
+                    showDashboard();
+                    loadDashboardData();
+                } else {
+                    // Login failed
+                    showLoginError(data.message || 'Invalid username or password');
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                showLoginError('Network error. Please try again.');
+            } finally {
+                // Restore button state
+                loginBtn.innerHTML = originalBtnText;
+                loginBtn.disabled = false;
+            }
+        }
+
+        function showLoginError(message) {
+            const errorElement = document.getElementById('loginError');
+            errorElement.textContent = message;
+            errorElement.style.display = 'block';
+            
+            // Hide after 5 seconds
+            setTimeout(() => {
+                errorElement.style.display = 'none';
+            }, 5000);
+        }
             
             // Navigation links
             document.getElementById('dashboardLink').addEventListener('click', function(e) {
                 e.preventDefault();
                 showPage('dashboardPage');
                 updateActiveNav(this);
+                loadDashboardData();
             });
             
             document.getElementById('requestsLink').addEventListener('click', function(e) {
@@ -1479,7 +1558,7 @@
             });
             
             document.getElementById('couponStatus').addEventListener('change', function() {
-                document.getElementById('couponStatusText').textContent = this.checked ? 'Active' : 'Inactive';
+                document.getElementById('couponStatusLabel').textContent = this.checked ? 'Active' : 'Inactive';
             });
             
             // Settings forms
@@ -1517,25 +1596,28 @@
             document.getElementById('sourcesChartFilter').addEventListener('change', function() {
                 updateSourcesChart(this.value);
             });
+            
+            // View all requests button
+            document.getElementById('viewAllRequests').addEventListener('click', function(e) {
+                e.preventDefault();
+                document.getElementById('requestsLink').click();
+            });
         });
         
         // Check login status
         function checkLoginStatus() {
-            // In a real app, you would check session or token
             const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
             
             if (isLoggedIn) {
-                // Simulate getting user data
-                currentUser = {
-                    name: "Admin User",
-                    email: "admin@example.com",
-                    avatar: "https://randomuser.me/api/portraits/men/1.jpg"
-                };
-                
-                showDashboard();
-                loadDashboardData();
-            } else {
-                showLogin();
+                // Try to get user data from localStorage
+                const userData = localStorage.getItem('userData');
+                if (userData) {
+                    currentUser = JSON.parse(userData);
+                    showDashboard();
+                    loadDashboardData();
+                } else {
+                    logoutUser();
+                }
             }
         }
         
@@ -1555,6 +1637,10 @@
                 document.getElementById('userProfileName').textContent = currentUser.name;
                 document.getElementById('userProfileImg').style.backgroundImage = `url('${currentUser.avatar}')`;
             }
+            
+            // Show dashboard by default
+            showPage('dashboardPage');
+            document.getElementById('dashboardLink').classList.add('active');
         }
         
         // Login user
@@ -1565,13 +1651,12 @@
             loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Authenticating...';
             loginBtn.disabled = true;
             
-            // Your Google Apps Script deployment URL for login
-            const scriptURL = 'https://script.google.com/macros/s/AKfycbxuTqjWOUE0m7iCoceniuZbefe3gMqIAtHbpvp-WrAlOSLECuneko7EVFakwz7zWnNy/exec';
+            // Clear any previous error
+            document.getElementById('loginError').style.display = 'none';
             
             // Send login request
             fetch(scriptURL, {
                 method: 'POST',
-                mode: 'no-cors',
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -1585,37 +1670,20 @@
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
-                return response.text();
+                return response.json();
             })
-            .then(text => {
-                try {
-                    const data = JSON.parse(text);
-                    if (data.success) {
-                        // Login successful
-                        localStorage.setItem('isLoggedIn', 'true');
-                        currentUser = {
-                            name: data.user.name || "Admin User",
-                            email: data.user.email || "admin@example.com",
-                            avatar: data.user.avatar || "https://randomuser.me/api/portraits/men/1.jpg"
-                        };
-                        
-                        showDashboard();
-                        loadDashboardData();
-                    } else {
-                        // Login failed
-                        showLoginError(data.message || 'Invalid username or password');
-                    }
-                } catch (e) {
-                    // In no-cors mode, we can't read the response, so we'll assume login is successful for demo
+            .then(data => {
+                if (data.success) {
+                    // Login successful
                     localStorage.setItem('isLoggedIn', 'true');
-                    currentUser = {
-                        name: "Admin User",
-                        email: "admin@example.com",
-                        avatar: "https://randomuser.me/api/portraits/men/1.jpg"
-                    };
+                    localStorage.setItem('userData', JSON.stringify(data.user));
+                    currentUser = data.user;
                     
                     showDashboard();
                     loadDashboardData();
+                } else {
+                    // Login failed
+                    showLoginError(data.message || 'Invalid username or password');
                 }
             })
             .catch(error => {
@@ -1642,6 +1710,7 @@
         // Logout user
         function logoutUser() {
             localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('userData');
             currentUser = null;
             showLogin();
         }
@@ -1670,13 +1739,14 @@
         
         // Load dashboard data
         function loadDashboardData() {
-            // Your Google Apps Script deployment URL for data
-            const scriptURL = 'https://script.google.com/macros/s/AKfycbzbRrcF0kLf6hJyPMQ65TSawqvGmNCj3D7vUkHqixaJFMSDoipJ0DVcJgqqfxB2VvAf/exec';
+            // Show loading state
+            const dashboardPage = document.getElementById('dashboardPage');
+            const loadingHTML = '<div style="text-align: center; padding: 2rem;"><i class="fas fa-spinner fa-spin"></i> Loading dashboard data...</div>';
+            dashboardPage.innerHTML = loadingHTML;
             
             // Fetch dashboard data
             fetch(scriptURL, {
                 method: 'POST',
-                mode: 'no-cors',
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -1688,29 +1758,19 @@
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
-                return response.text();
+                return response.json();
             })
-            .then(text => {
-                try {
-                    const data = JSON.parse(text);
-                    updateDashboardStats(data);
-                    updateRecentRequests(data.recentRequests);
-                    initCharts(data.chartData);
-                } catch (e) {
-                    // For demo purposes, use mock data if parsing fails
-                    const mockData = getMockDashboardData();
-                    updateDashboardStats(mockData);
-                    updateRecentRequests(mockData.recentRequests);
-                    initCharts(mockData.chartData);
+            .then(data => {
+                if (data.success === false) {
+                    throw new Error(data.message || 'Failed to load dashboard data');
                 }
+                updateDashboardStats(data);
+                updateRecentRequests(data.recentRequests);
+                initCharts(data.chartData);
             })
             .catch(error => {
                 console.error('Error:', error);
-                // Use mock data in case of error
-                const mockData = getMockDashboardData();
-                updateDashboardStats(mockData);
-                updateRecentRequests(mockData.recentRequests);
-                initCharts(mockData.chartData);
+                dashboardPage.innerHTML = '<div class="alert alert-danger">Failed to load dashboard data. Please try again.</div>';
             });
         }
         
@@ -1725,6 +1785,14 @@
             document.getElementById('topCategory').textContent = data.topCategory || 'NEET';
             document.getElementById('revenueImpact').textContent = data.revenueImpact || '₹0';
             document.getElementById('notificationCount').textContent = data.notifications || '0';
+            
+            // Update change percentages (these would come from your backend in a real app)
+            document.getElementById('requestsChange').textContent = '12% from last week';
+            document.getElementById('couponsChange').textContent = '8% from last week';
+            document.getElementById('conversionChange').textContent = '2% from last week';
+            document.getElementById('conversionChangeText').textContent = '15% from last month';
+            document.getElementById('timeChangeText').textContent = '10% from last month';
+            document.getElementById('categoryPercent').textContent = '35% of total requests';
         }
         
         // Update recent requests table
@@ -1960,70 +2028,343 @@
         
         // Update requests chart
         function updateRequestsChart(days) {
-            // In a real app, you would fetch new data based on the selected days
-            const mockData = getMockDashboardData();
+            // Show loading state
+            const chartContainer = document.getElementById('requestsChart').parentElement;
+            const originalHTML = chartContainer.innerHTML;
+            chartContainer.innerHTML = '<div style="text-align: center; padding: 2rem;"><i class="fas fa-spinner fa-spin"></i> Loading chart data...</div>';
             
-            requestsChart.data.labels = mockData.chartData.requests.labels.slice(-days);
-            requestsChart.data.datasets[0].data = mockData.chartData.requests.data.slice(-days);
-            requestsChart.update();
+            // Fetch updated data
+            fetch(scriptURL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    action: 'getDashboardData',
+                    filter: days
+                })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success === false) {
+                    throw new Error(data.message || 'Failed to load chart data');
+                }
+                
+                // Update chart data
+                requestsChart.data.labels = data.chartData.requests.labels;
+                requestsChart.data.datasets[0].data = data.chartData.requests.data;
+                requestsChart.update();
+                
+                // Restore original HTML
+                chartContainer.innerHTML = originalHTML;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                chartContainer.innerHTML = '<div class="alert alert-danger">Failed to load chart data</div>';
+            });
         }
         
         // Update category chart
         function updateCategoryChart(filter) {
-            // In a real app, you would fetch new data based on the filter
-            const mockData = getMockDashboardData();
+            // Show loading state
+            const chartContainer = document.getElementById('categoryChart').parentElement;
+            const originalHTML = chartContainer.innerHTML;
+            chartContainer.innerHTML = '<div style="text-align: center; padding: 2rem;"><i class="fas fa-spinner fa-spin"></i> Loading chart data...</div>';
             
-            categoryChart.data.labels = mockData.chartData.categories.labels;
-            categoryChart.data.datasets[0].data = mockData.chartData.categories.data;
-            categoryChart.update();
+            // Fetch updated data
+            fetch(scriptURL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    action: 'getDashboardData',
+                    filter: filter
+                })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success === false) {
+                    throw new Error(data.message || 'Failed to load chart data');
+                }
+                
+                // Update chart data
+                categoryChart.data.labels = data.chartData.categories.labels;
+                categoryChart.data.datasets[0].data = data.chartData.categories.data;
+                categoryChart.update();
+                
+                // Restore original HTML
+                chartContainer.innerHTML = originalHTML;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                chartContainer.innerHTML = '<div class="alert alert-danger">Failed to load chart data</div>';
+            });
         }
         
         // Update conversion chart
         function updateConversionChart(days) {
-            // In a real app, you would fetch new data based on the selected days
-            const mockData = getMockDashboardData();
+            // Show loading state
+            const chartContainer = document.getElementById('conversionChart').parentElement;
+            const originalHTML = chartContainer.innerHTML;
+            chartContainer.innerHTML = '<div style="text-align: center; padding: 2rem;"><i class="fas fa-spinner fa-spin"></i> Loading chart data...</div>';
             
-            conversionChart.data.labels = mockData.chartData.conversion.labels.slice(-days);
-            conversionChart.data.datasets[0].data = mockData.chartData.conversion.data.slice(-days);
-            conversionChart.update();
+            // Fetch updated data
+            fetch(scriptURL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    action: 'getDashboardData',
+                    filter: days
+                })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success === false) {
+                    throw new Error(data.message || 'Failed to load chart data');
+                }
+                
+                // Update chart data
+                conversionChart.data.labels = data.chartData.conversion.labels;
+                conversionChart.data.datasets[0].data = data.chartData.conversion.data;
+                conversionChart.update();
+                
+                // Restore original HTML
+                chartContainer.innerHTML = originalHTML;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                chartContainer.innerHTML = '<div class="alert alert-danger">Failed to load chart data</div>';
+            });
         }
         
         // Update sources chart
         function updateSourcesChart(filter) {
-            // In a real app, you would fetch new data based on the filter
-            const mockData = getMockDashboardData();
+            // Show loading state
+            const chartContainer = document.getElementById('sourcesChart').parentElement;
+            const originalHTML = chartContainer.innerHTML;
+            chartContainer.innerHTML = '<div style="text-align: center; padding: 2rem;"><i class="fas fa-spinner fa-spin"></i> Loading chart data...</div>';
             
-            sourcesChart.data.labels = mockData.chartData.sources.labels;
-            sourcesChart.data.datasets[0].data = mockData.chartData.sources.data;
-            sourcesChart.update();
+            // Fetch updated data
+            fetch(scriptURL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    action: 'getDashboardData',
+                    filter: filter
+                })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success === false) {
+                    throw new Error(data.message || 'Failed to load chart data');
+                }
+                
+                // Update chart data
+                sourcesChart.data.labels = data.chartData.sources.labels;
+                sourcesChart.data.datasets[0].data = data.chartData.sources.data;
+                sourcesChart.update();
+                
+                // Restore original HTML
+                chartContainer.innerHTML = originalHTML;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                chartContainer.innerHTML = '<div class="alert alert-danger">Failed to load chart data</div>';
+            });
         }
         
         // Update analytics charts
         function updateAnalyticsCharts() {
-            // In a real app, you would fetch fresh data
-            const mockData = getMockDashboardData();
+            // Show loading state
+            const analyticsPage = document.getElementById('analyticsPage');
+            const loadingHTML = '<div style="text-align: center; padding: 2rem;"><i class="fas fa-spinner fa-spin"></i> Loading analytics data...</div>';
+            analyticsPage.innerHTML = loadingHTML;
             
-            conversionChart.data.labels = mockData.chartData.conversion.labels;
-            conversionChart.data.datasets[0].data = mockData.chartData.conversion.data;
-            conversionChart.update();
-            
-            sourcesChart.data.labels = mockData.chartData.sources.labels;
-            sourcesChart.data.datasets[0].data = mockData.chartData.sources.data;
-            sourcesChart.update();
+            // Fetch updated data
+            fetch(scriptURL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    action: 'getDashboardData'
+                })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success === false) {
+                    throw new Error(data.message || 'Failed to load analytics data');
+                }
+                
+                // Update stats
+                document.getElementById('totalConversion').textContent = data.totalConversion || '0';
+                document.getElementById('avgConversionTime').textContent = data.avgConversionTime || '0h';
+                document.getElementById('topCategory').textContent = data.topCategory || 'NEET';
+                document.getElementById('revenueImpact').textContent = data.revenueImpact || '₹0';
+                
+                // Update charts
+                conversionChart.data.labels = data.chartData.conversion.labels;
+                conversionChart.data.datasets[0].data = data.chartData.conversion.data;
+                conversionChart.update();
+                
+                sourcesChart.data.labels = data.chartData.sources.labels;
+                sourcesChart.data.datasets[0].data = data.chartData.sources.data;
+                sourcesChart.update();
+                
+                // Restore original content
+                analyticsPage.innerHTML = `
+                    <div class="page-header">
+                        <h2>Analytics</h2>
+                        <div class="breadcrumb">
+                            <a href="#">Home</a>
+                            <i class="fas fa-chevron-right"></i>
+                            <span>Analytics</span>
+                        </div>
+                    </div>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-card-header">
+                                <div class="stat-card-title">Total Conversion</div>
+                                <div class="stat-card-icon primary">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                            </div>
+                            <div class="stat-card-value" id="totalConversion">${data.totalConversion || '0'}</div>
+                            <div class="stat-card-change positive">
+                                <i class="fas fa-arrow-up"></i>
+                                <span id="conversionChangeText">15% from last month</span>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-card-header">
+                                <div class="stat-card-title">Avg. Conversion Time</div>
+                                <div class="stat-card-icon success">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                            </div>
+                            <div class="stat-card-value" id="avgConversionTime">${data.avgConversionTime || '0h'}</div>
+                            <div class="stat-card-change negative">
+                                <i class="fas fa-arrow-down"></i>
+                                <span id="timeChangeText">10% from last month</span>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-card-header">
+                                <div class="stat-card-title">Top Course Category</div>
+                                <div class="stat-card-icon warning">
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                            <div class="stat-card-value" id="topCategory">${data.topCategory || 'NEET'}</div>
+                            <div class="stat-card-change">
+                                <span id="categoryPercent">35% of total requests</span>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-card-header">
+                                <div class="stat-card-title">Revenue Impact</div>
+                                <div class="stat-card-icon danger">
+                                    <i class="fas fa-rupee-sign"></i>
+                                </div>
+                            </div>
+                            <div class="stat-card-value" id="revenueImpact">${data.revenueImpact || '₹0'}</div>
+                            <div class="stat-card-change positive">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>Estimated savings</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="chart-card">
+                        <div class="chart-card-header">
+                            <div class="chart-card-title">Conversion Rate Trend</div>
+                            <div class="chart-card-actions">
+                                <select id="conversionChartFilter">
+                                    <option value="30">Last 30 Days</option>
+                                    <option value="7">Last 7 Days</option>
+                                    <option value="90">Last 90 Days</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="conversionChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="chart-card">
+                        <div class="chart-card-header">
+                            <div class="chart-card-title">Request Sources</div>
+                            <div class="chart-card-actions">
+                                <select id="sourcesChartFilter">
+                                    <option value="all">All Time</option>
+                                    <option value="30">Last 30 Days</option>
+                                    <option value="7">Last 7 Days</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="sourcesChart"></canvas>
+                        </div>
+                    </div>
+                `;
+                
+                // Reattach event listeners
+                document.getElementById('conversionChartFilter').addEventListener('change', function() {
+                    updateConversionChart(this.value);
+                });
+                
+                document.getElementById('sourcesChartFilter').addEventListener('change', function() {
+                    updateSourcesChart(this.value);
+                });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                analyticsPage.innerHTML = '<div class="alert alert-danger">Failed to load analytics data. Please try again.</div>';
+            });
         }
         
         // Load all requests
         function loadAllRequests(filter = 'all') {
             const tbody = document.getElementById('allRequestsBody');
-            tbody.innerHTML = '<tr><td colspan="8" style="text-align: center;">Loading data...</td></tr>';
-            
-            // Your Google Apps Script deployment URL for requests
-            const scriptURL = 'https://script.google.com/macros/s/AKfycbwQ4z8oVR5UBu-SVHrgvvv0jIbywoK7QXuzTxkClDCN0HmUflEoXtOdS2SiDCMu3X-A/exec';
+            tbody.innerHTML = '<tr><td colspan="8" style="text-align: center;"><i class="fas fa-spinner fa-spin"></i> Loading requests...</td></tr>';
             
             // Fetch requests data
             fetch(scriptURL, {
                 method: 'POST',
-                mode: 'no-cors',
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -2036,23 +2377,18 @@
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
-                return response.text();
+                return response.json();
             })
-            .then(text => {
-                try {
-                    const data = JSON.parse(text);
-                    updateAllRequestsTable(data.requests);
-                } catch (e) {
-                    // For demo purposes, use mock data if parsing fails
-                    const mockData = getMockRequestsData();
-                    updateAllRequestsTable(mockData);
+            .then(data => {
+                if (data.success === false) {
+                    throw new Error(data.message || 'Failed to load requests');
                 }
+                
+                updateAllRequestsTable(data.requests);
             })
             .catch(error => {
                 console.error('Error:', error);
-                // Use mock data in case of error
-                const mockData = getMockRequestsData();
-                updateAllRequestsTable(mockData);
+                tbody.innerHTML = '<tr><td colspan="8" style="text-align: center;" class="alert alert-danger">Failed to load requests. Please try again.</td></tr>';
             });
         }
         
@@ -2080,7 +2416,7 @@
                 }
                 
                 // Format date
-                const requestDate = new Date(request.date);
+                const requestDate = new Date(request.timestamp || request.date);
                 const formattedDate = requestDate.toLocaleDateString('en-IN', {
                     day: '2-digit',
                     month: 'short',
@@ -2090,7 +2426,7 @@
                 row.innerHTML = `
                     <td>${request.name}</td>
                     <td>${request.email}</td>
-                    <td>${request.mobile}</td>
+                    <td>${request.mobile || 'N/A'}</td>
                     <td>${request.course}</td>
                     <td>${request.category}</td>
                     <td>${formattedDate}</td>
@@ -2115,15 +2451,11 @@
         // Load coupon history
         function loadCouponHistory(filter = 'all') {
             const tbody = document.getElementById('couponHistoryBody');
-            tbody.innerHTML = '<tr><td colspan="5" style="text-align: center;">Loading data...</td></tr>';
-            
-            // Your Google Apps Script deployment URL for coupon history
-            const scriptURL = 'https://script.google.com/macros/s/AKfycbz7BhgPrO7pvKebaxKVqahFbUo-Uky23Tt_F4WbSIQTXkg-Wtxz6PzLFLHIgoeFBKeG/exec';
+            tbody.innerHTML = '<tr><td colspan="5" style="text-align: center;"><i class="fas fa-spinner fa-spin"></i> Loading coupon history...</td></tr>';
             
             // Fetch coupon history data
             fetch(scriptURL, {
                 method: 'POST',
-                mode: 'no-cors',
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -2136,23 +2468,18 @@
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
-                return response.text();
+                return response.json();
             })
-            .then(text => {
-                try {
-                    const data = JSON.parse(text);
-                    updateCouponHistoryTable(data.history);
-                } catch (e) {
-                    // For demo purposes, use mock data if parsing fails
-                    const mockData = getMockCouponHistory();
-                    updateCouponHistoryTable(mockData);
+            .then(data => {
+                if (data.success === false) {
+                    throw new Error(data.message || 'Failed to load coupon history');
                 }
+                
+                updateCouponHistoryTable(data.history);
             })
             .catch(error => {
                 console.error('Error:', error);
-                // Use mock data in case of error
-                const mockData = getMockCouponHistory();
-                updateCouponHistoryTable(mockData);
+                tbody.innerHTML = '<tr><td colspan="5" style="text-align: center;" class="alert alert-danger">Failed to load coupon history. Please try again.</td></tr>';
             });
         }
         
@@ -2170,7 +2497,7 @@
                 const row = document.createElement('tr');
                 
                 // Format date
-                const usedDate = new Date(item.dateUsed);
+                const usedDate = new Date(item.dateUsed || item.timestamp);
                 const formattedDate = usedDate.toLocaleDateString('en-IN', {
                     day: '2-digit',
                     month: 'short',
@@ -2182,7 +2509,7 @@
                     <td>${item.usedBy}</td>
                     <td>${item.course}</td>
                     <td>${formattedDate}</td>
-                    <td>${item.discount}</td>
+                    <td>${item.discount || item.discountApplied || 'N/A'}</td>
                 `;
                 
                 tbody.appendChild(row);
@@ -2205,13 +2532,9 @@
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Updating...';
             submitBtn.disabled = true;
             
-            // Your Google Apps Script deployment URL for coupon update
-            const scriptURL = 'https://script.google.com/macros/s/AKfycbz7BhgPrO7pvKebaxKVqahFbUo-Uky23Tt_F4WbSIQTXkg-Wtxz6PzLFLHIgoeFBKeG/exec';
-            
             // Send coupon update request
             fetch(scriptURL, {
                 method: 'POST',
-                mode: 'no-cors',
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -2225,25 +2548,16 @@
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
-                return response.text();
+                return response.json();
             })
-            .then(text => {
-                try {
-                    const data = JSON.parse(text);
-                    if (data.success) {
-                        alert('Coupon code updated successfully!');
-                        document.getElementById('currentCouponCode').value = data.newCode || 'YUGNA00001';
-                        document.getElementById('newCouponCode').value = '';
-                        loadCouponHistory();
-                    } else {
-                        alert(data.message || 'Failed to update coupon code');
-                    }
-                } catch (e) {
-                    // In no-cors mode, we can't read the response, so we'll assume success for demo
-                    alert('Coupon code updated successfully! (demo)');
-                    document.getElementById('currentCouponCode').value = newCode || 'YUGNA00001';
+            .then(data => {
+                if (data.success) {
+                    alert('Coupon code updated successfully!');
+                    document.getElementById('currentCouponCode').value = data.newCode || 'YUGNA00001';
                     document.getElementById('newCouponCode').value = '';
                     loadCouponHistory();
+                } else {
+                    alert(data.message || 'Failed to update coupon code');
                 }
             })
             .catch(error => {
@@ -2265,13 +2579,9 @@
                 resetBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Resetting...';
                 resetBtn.disabled = true;
                 
-                // Your Google Apps Script deployment URL for coupon reset
-                const scriptURL = 'https://script.google.com/macros/s/AKfycbz7BhgPrO7pvKebaxKVqahFbUo-Uky23Tt_F4WbSIQTXkg-Wtxz6PzLFLHIgoeFBKeG/exec';
-                
                 // Send coupon reset request
                 fetch(scriptURL, {
                     method: 'POST',
-                    mode: 'no-cors',
                     headers: {
                         'Content-Type': 'application/json',
                     },
@@ -2283,29 +2593,18 @@
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
                     }
-                    return response.text();
+                    return response.json();
                 })
-                .then(text => {
-                    try {
-                        const data = JSON.parse(text);
-                        if (data.success) {
-                            alert('Coupon code reset to default successfully!');
-                            document.getElementById('currentCouponCode').value = 'YUGNA00001';
-                            document.getElementById('newCouponCode').value = '';
-                            document.getElementById('couponStatus').checked = true;
-                            document.getElementById('couponStatusText').textContent = 'Active';
-                            loadCouponHistory();
-                        } else {
-                            alert(data.message || 'Failed to reset coupon code');
-                        }
-                    } catch (e) {
-                        // In no-cors mode, we can't read the response, so we'll assume success for demo
-                        alert('Coupon code reset to default successfully! (demo)');
+                .then(data => {
+                    if (data.success) {
+                        alert('Coupon code reset to default successfully!');
                         document.getElementById('currentCouponCode').value = 'YUGNA00001';
                         document.getElementById('newCouponCode').value = '';
                         document.getElementById('couponStatus').checked = true;
-                        document.getElementById('couponStatusText').textContent = 'Active';
+                        document.getElementById('couponStatusLabel').textContent = 'Active';
                         loadCouponHistory();
+                    } else {
+                        alert(data.message || 'Failed to reset coupon code');
                     }
                 })
                 .catch(error => {
@@ -2332,13 +2631,9 @@
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
             submitBtn.disabled = true;
             
-            // Your Google Apps Script deployment URL for settings
-            const scriptURL = 'https://script.google.com/macros/s/AKfycbxIUP05a95-tHsj2owCEax3xwHgGkxtWUmHO3OduPCSR7wo-K9IjYODL70e5eRpDyRdoQ/exec';
-            
             // Send settings update request
             fetch(scriptURL, {
                 method: 'POST',
-                mode: 'no-cors',
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -2354,19 +2649,13 @@
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
-                return response.text();
+                return response.json();
             })
-            .then(text => {
-                try {
-                    const data = JSON.parse(text);
-                    if (data.success) {
-                        alert('Settings saved successfully!');
-                    } else {
-                        alert(data.message || 'Failed to save settings');
-                    }
-                } catch (e) {
-                    // In no-cors mode, we can't read the response, so we'll assume success for demo
-                    alert('Settings saved successfully! (demo)');
+            .then(data => {
+                if (data.success) {
+                    alert('Settings saved successfully!');
+                } else {
+                    alert(data.message || 'Failed to save settings');
                 }
             })
             .catch(error => {
@@ -2401,13 +2690,9 @@
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Changing...';
             submitBtn.disabled = true;
             
-            // Your Google Apps Script deployment URL for password change
-            const scriptURL = 'https://script.google.com/macros/s/AKfycbz7BhgPrO7pvKebaxKVqahFbUo-Uky23Tt_F4WbSIQTXkg-Wtxz6PzLFLHIgoeFBKeG/exec';
-            
             // Send password change request
             fetch(scriptURL, {
                 method: 'POST',
-                mode: 'no-cors',
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -2421,25 +2706,16 @@
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
-                return response.text();
+                return response.json();
             })
-            .then(text => {
-                try {
-                    const data = JSON.parse(text);
-                    if (data.success) {
-                        alert('Password changed successfully!');
-                        document.getElementById('currentPassword').value = '';
-                        document.getElementById('newPassword').value = '';
-                        document.getElementById('confirmPassword').value = '';
-                    } else {
-                        alert(data.message || 'Failed to change password');
-                    }
-                } catch (e) {
-                    // In no-cors mode, we can't read the response, so we'll assume success for demo
-                    alert('Password changed successfully! (demo)');
+            .then(data => {
+                if (data.success) {
+                    alert('Password changed successfully!');
                     document.getElementById('currentPassword').value = '';
                     document.getElementById('newPassword').value = '';
                     document.getElementById('confirmPassword').value = '';
+                } else {
+                    alert(data.message || 'Failed to change password');
                 }
             })
             .catch(error => {
@@ -2450,132 +2726,6 @@
                 submitBtn.innerHTML = originalBtnText;
                 submitBtn.disabled = false;
             });
-        }
-        
-        // Mock data functions for demo purposes
-        function getMockDashboardData() {
-            const categories = ['NEET', 'JEE', 'UPSC', 'GATE', 'Banking', 'NDA', 'MBA', 'CLAT'];
-            const days = [];
-            
-            // Generate labels for last 30 days
-            for (let i = 29; i >= 0; i--) {
-                const date = new Date();
-                date.setDate(date.getDate() - i);
-                days.push(date.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' }));
-            }
-            
-            // Generate random data for charts
-            const requestsData = days.map(() => Math.floor(Math.random() * 20) + 5);
-            const categoriesData = categories.map(() => Math.floor(Math.random() * 50) + 10);
-            const conversionData = days.map(() => Math.floor(Math.random() * 30) + 50);
-            const sourcesData = ['Direct', 'Search', 'Social', 'Referral', 'Email'].map(() => Math.floor(Math.random() * 100) + 20);
-            
-            // Generate recent requests
-            const recentRequests = [];
-            const names = ['Rahul Sharma', 'Priya Patel', 'Amit Singh', 'Neha Gupta', 'Vikram Joshi', 'Ananya Reddy'];
-            const statuses = ['Sent', 'Pending', 'Failed'];
-            
-            for (let i = 0; i < 5; i++) {
-                const randomDays = Math.floor(Math.random() * 7);
-                const date = new Date();
-                date.setDate(date.getDate() - randomDays);
-                
-                recentRequests.push({
-                    name: names[Math.floor(Math.random() * names.length)],
-                    email: `${names[i].split(' ')[0].toLowerCase()}@example.com`,
-                    course: `${categories[Math.floor(Math.random() * categories.length)]} Preparation Course`,
-                    category: categories[Math.floor(Math.random() * categories.length)],
-                    date: date.toISOString(),
-                    status: statuses[Math.floor(Math.random() * statuses.length)]
-                });
-            }
-            
-            return {
-                totalRequests: Math.floor(Math.random() * 500) + 200,
-                couponsSent: Math.floor(Math.random() * 450) + 180,
-                conversionRate: `${Math.floor(Math.random() * 20) + 75}%`,
-                activeCoupon: 'YUGNA00001',
-                totalConversion: Math.floor(Math.random() * 300) + 100,
-                avgConversionTime: `${Math.floor(Math.random() * 5) + 1}h`,
-                topCategory: categories[Math.floor(Math.random() * categories.length)],
-                revenueImpact: `₹${Math.floor(Math.random() * 50000) + 20000}`,
-                notifications: Math.floor(Math.random() * 5),
-                recentRequests: recentRequests,
-                chartData: {
-                    requests: {
-                        labels: days,
-                        data: requestsData
-                    },
-                    categories: {
-                        labels: categories,
-                        data: categoriesData
-                    },
-                    conversion: {
-                        labels: days,
-                        data: conversionData
-                    },
-                    sources: {
-                        labels: ['Direct', 'Search', 'Social', 'Referral', 'Email'],
-                        data: sourcesData
-                    }
-                }
-            };
-        }
-        
-        function getMockRequestsData() {
-            const categories = ['NEET', 'JEE', 'UPSC', 'GATE', 'Banking', 'NDA', 'MBA', 'CLAT'];
-            const statuses = ['Sent', 'Pending', 'Failed'];
-            const names = [
-                'Rahul Sharma', 'Priya Patel', 'Amit Singh', 'Neha Gupta', 
-                'Vikram Joshi', 'Ananya Reddy', 'Karan Malhotra', 'Divya Iyer'
-            ];
-            
-            const requests = [];
-            
-            for (let i = 0; i < 20; i++) {
-                const randomDays = Math.floor(Math.random() * 30);
-                const date = new Date();
-                date.setDate(date.getDate() - randomDays);
-                
-                requests.push({
-                    name: names[Math.floor(Math.random() * names.length)],
-                    email: `${names[i % names.length].split(' ')[0].toLowerCase()}@example.com`,
-                    mobile: `9${Math.floor(Math.random() * 900000000) + 100000000}`,
-                    course: `${categories[Math.floor(Math.random() * categories.length)]} Preparation Course`,
-                    category: categories[Math.floor(Math.random() * categories.length)],
-                    date: date.toISOString(),
-                    status: statuses[Math.floor(Math.random() * statuses.length)]
-                });
-            }
-            
-            return requests;
-        }
-        
-        function getMockCouponHistory() {
-            const categories = ['NEET', 'JEE', 'UPSC', 'GATE', 'Banking', 'NDA', 'MBA', 'CLAT'];
-            const names = [
-                'Rahul Sharma', 'Priya Patel', 'Amit Singh', 'Neha Gupta', 
-                'Vikram Joshi', 'Ananya Reddy', 'Karan Malhotra', 'Divya Iyer'
-            ];
-            const discounts = ['10%', '15%', '20%', '25%', '30%'];
-            
-            const history = [];
-            
-            for (let i = 0; i < 15; i++) {
-                const randomDays = Math.floor(Math.random() * 90);
-                const date = new Date();
-                date.setDate(date.getDate() - randomDays);
-                
-                history.push({
-                    couponCode: i < 5 ? 'YUGNA00001' : `YUGNA${10000 + i}`,
-                    usedBy: names[Math.floor(Math.random() * names.length)],
-                    course: `${categories[Math.floor(Math.random() * categories.length)]} Preparation Course`,
-                    dateUsed: date.toISOString(),
-                    discount: discounts[Math.floor(Math.random() * discounts.length)]
-                });
-            }
-            
-            return history;
         }
     </script>
 </body>
