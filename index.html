@@ -835,7 +835,7 @@
     </style>
 </head>
 <body>
-   <!-- Login Page -->
+    <!-- Login Page -->
     <div class="login-container" id="loginPage">
         <div class="login-card">
             <div class="login-logo">
@@ -850,17 +850,15 @@
                 <div class="form-group">
                     <label class="form-label">Username</label>
                     <input type="text" class="form-control" id="username" placeholder="Enter your username" required>
-                    <div id="usernameError" class="login-error">Please enter username</div>
                 </div>
                 
                 <div class="form-group">
                     <label class="form-label">Password</label>
                     <input type="password" class="form-control" id="password" placeholder="Enter your password" required>
-                    <div id="passwordError" class="login-error">Please enter password</div>
                 </div>
                 
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary" id="loginBtn">
+                    <button type="submit" class="btn btn-primary">
                         <i class="fas fa-sign-in-alt"></i> Login
                     </button>
                 </div>
@@ -1416,90 +1414,21 @@
         let categoryChart = null;
         let conversionChart = null;
         let sourcesChart = null;
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbySb7wNdvsFgiF6f3CH8No4enNtnFezD_nodzKDA791wHo3zApQrKgThawp1uONnAHd/exec';
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbxhf-fOLxwfI_5oC730YqCu-PZqBq8rl0dEW_pPX9qfhCAqOG9JxLqH8JUpn8GsHqlE/exec';
         
         // Initialize when DOM is loaded
         document.addEventListener('DOMContentLoaded', function() {
             // Check if user is already logged in
             checkLoginStatus();
-               // Updated login function
-        async function loginUser(username, password) {
-            // Clear previous errors
-            document.getElementById('loginError').style.display = 'none';
-            document.getElementById('usernameError').style.display = 'none';
-            document.getElementById('passwordError').style.display = 'none';
             
-            // Validate inputs
-            if (!username) {
-                document.getElementById('usernameError').style.display = 'block';
-                return;
-            }
-            if (!password) {
-                document.getElementById('passwordError').style.display = 'block';
-                return;
-            }
-            
-            // Show loading state
-            const loginBtn = document.getElementById('loginBtn');
-            const originalBtnText = loginBtn.innerHTML;
-            loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Authenticating...';
-            loginBtn.disabled = true;
-            
-            try {
-                // Hash the password before sending (SHA-256)
-                const encoder = new TextEncoder();
-                const data = encoder.encode(password);
-                const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-                const hashArray = Array.from(new Uint8Array(hashBuffer));
-                const hashedPassword = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+            // Login form submission
+            document.getElementById('loginForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
                 
-                // Send login request
-                const response = await fetch(scriptURL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        action: 'login',
-                        username: username,
-                        password: hashedPassword // Sending hashed password
-                    })
-                });
-                
-                const data = await response.json();
-                
-                if (data.success) {
-                    // Login successful
-                    localStorage.setItem('isLoggedIn', 'true');
-                    localStorage.setItem('userData', JSON.stringify(data.user));
-                    currentUser = data.user;
-                    
-                    showDashboard();
-                    loadDashboardData();
-                } else {
-                    // Login failed
-                    showLoginError(data.message || 'Invalid username or password');
-                }
-            } catch (error) {
-                console.error('Login error:', error);
-                showLoginError('Network error. Please try again.');
-            } finally {
-                // Restore button state
-                loginBtn.innerHTML = originalBtnText;
-                loginBtn.disabled = false;
-            }
-        }
-
-        function showLoginError(message) {
-            const errorElement = document.getElementById('loginError');
-            errorElement.textContent = message;
-            errorElement.style.display = 'block';
-            
-            // Hide after 5 seconds
-            setTimeout(() => {
-                errorElement.style.display = 'none';
-            }, 5000);
-        }
+                loginUser(username, password);
+            });
             
             // Navigation links
             document.getElementById('dashboardLink').addEventListener('click', function(e) {
