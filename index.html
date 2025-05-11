@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PW Coupon Wallah - Admin Dashboard</title>
+    <title>PW Coupon System - Admin Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.css" rel="stylesheet">
     <style>
         :root {
             --primary: #1a1a1a;
@@ -45,198 +44,131 @@
             -webkit-font-smoothing: antialiased;
         }
         
-        /* Login Page Styles */
-        .login-container {
-            display: flex;
-            min-height: 100vh;
-            align-items: center;
-            justify-content: center;
-            background-color: var(--light);
-        }
-        
-        .login-card {
-            background: var(--white);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            width: 100%;
-            max-width: 400px;
-            padding: 2.5rem;
-            margin: 1rem;
-            border: 1px solid var(--border);
-        }
-        
-        .login-logo {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-        
-        .login-logo i {
-            font-size: 2.5rem;
-            color: var(--primary);
-            margin-bottom: 1rem;
-        }
-        
-        .login-logo h1 {
-            font-size: 1.75rem;
-            color: var(--primary);
-        }
-        
-        .login-form .form-group {
-            margin-bottom: 1.5rem;
-        }
-        
-        .login-form .form-label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
+        /* Header Styles */
+        header {
+            background-color: var(--white);
             color: var(--text);
+            padding: 1rem 0;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
         }
         
-        .login-form .form-control {
-            width: 100%;
-            padding: 0.85rem 1rem;
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            font-family: inherit;
-            font-size: 1rem;
-            transition: var(--transition);
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
         }
         
-        .login-form .form-control:focus {
-            border-color: var(--primary);
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(0,0,0,0.05);
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
         }
         
-        .login-form .btn {
-            width: 100%;
-            padding: 0.85rem;
-            border-radius: var(--radius);
-            border: none;
-            font-weight: 600;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: var(--transition);
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
             display: flex;
             align-items: center;
-            justify-content: center;
             gap: 0.5rem;
         }
         
-        .login-form .btn-primary {
-            background-color: var(--primary);
-            color: var(--white);
-        }
-        
-        .login-form .btn-primary:hover {
-            background-color: var(--secondary);
-        }
-        
-        .login-footer {
-            text-align: center;
-            margin-top: 1.5rem;
-            color: var(--gray);
-            font-size: 0.9rem;
-        }
-        
-        .alert {
-            padding: 0.85rem 1rem;
-            border-radius: var(--radius);
-            margin-bottom: 1.5rem;
-            font-size: 0.95rem;
-        }
-        
-        .alert-danger {
-            background-color: rgba(220,53,69,0.1);
-            color: var(--danger);
-            border: 1px solid rgba(220,53,69,0.2);
-        }
-        
-        /* Dashboard Layout */
-        .dashboard {
-            display: flex;
-            min-height: 100vh;
-        }
-        
-        /* Sidebar */
-        .sidebar {
-            width: 250px;
-            background-color: var(--primary);
-            color: white;
-            padding: 1.5rem 0;
-            position: fixed;
-            height: 100%;
-            transition: var(--transition);
-            z-index: 100;
-        }
-        
-        .sidebar-header {
-            padding: 0 1.5rem 1.5rem;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            margin-bottom: 1.5rem;
-        }
-        
-        .sidebar-logo {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: white;
-            text-decoration: none;
-        }
-        
-        .sidebar-logo i {
-            font-size: 1.5rem;
+        .logo-icon {
             color: var(--accent);
         }
         
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .user-avatar {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 50%;
+            background-color: var(--light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: var(--primary);
+            border: 1px solid var(--border);
+        }
+        
+        .logout-btn {
+            background: none;
+            border: none;
+            color: var(--gray);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .logout-btn:hover {
+            color: var(--primary);
+        }
+        
+        /* Sidebar */
+        .dashboard-container {
+            display: flex;
+            min-height: calc(100vh - 70px);
+        }
+        
+        .sidebar {
+            width: 250px;
+            background-color: var(--white);
+            border-right: 1px solid var(--border);
+            padding: 1.5rem 0;
+            transition: var(--transition);
+            position: sticky;
+            top: 70px;
+            height: calc(100vh - 70px);
+        }
+        
         .sidebar-menu {
-            padding: 0 1rem;
-        }
-        
-        .sidebar-menu h3 {
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: rgba(255,255,255,0.5);
-            margin-bottom: 1rem;
-            padding: 0 0.5rem;
-        }
-        
-        .sidebar-menu ul {
             list-style: none;
-            margin-bottom: 2rem;
         }
         
         .sidebar-menu li {
             margin-bottom: 0.25rem;
         }
         
-        .sidebar-menu a {
+        .sidebar-menu li a {
             display: flex;
             align-items: center;
-            gap: 0.75rem;
-            padding: 0.75rem 1rem;
-            color: rgba(255,255,255,0.8);
+            padding: 0.75rem 1.5rem;
+            color: var(--text);
             text-decoration: none;
-            border-radius: var(--radius);
             transition: var(--transition);
-            font-size: 0.95rem;
-        }
-        
-        .sidebar-menu a:hover {
-            background-color: rgba(255,255,255,0.1);
-            color: white;
-        }
-        
-        .sidebar-menu a.active {
-            background-color: rgba(255,255,255,0.15);
-            color: white;
             font-weight: 500;
+            font-size: 0.95rem;
+            gap: 0.75rem;
         }
         
-        .sidebar-menu a i {
+        .sidebar-menu li a:hover {
+            background-color: var(--light);
+            color: var(--primary);
+        }
+        
+        .sidebar-menu li a.active {
+            background-color: rgba(0,0,0,0.05);
+            color: var(--primary);
+            border-left: 3px solid var(--primary);
+        }
+        
+        .sidebar-menu li a i {
             width: 1.25rem;
             text-align: center;
         }
@@ -244,194 +176,114 @@
         /* Main Content */
         .main-content {
             flex: 1;
-            margin-left: 250px;
-            transition: var(--transition);
-        }
-        
-        /* Top Navigation */
-        .top-nav {
-            background-color: var(--white);
-            padding: 1rem 1.5rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: var(--shadow);
-            position: sticky;
-            top: 0;
-            z-index: 90;
-            border-bottom: 1px solid var(--border);
-        }
-        
-        .search-bar {
-            position: relative;
-            width: 300px;
-        }
-        
-        .search-bar input {
-            width: 100%;
-            padding: 0.65rem 1rem 0.65rem 2.5rem;
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            font-family: inherit;
-            font-size: 0.95rem;
-            transition: var(--transition);
-        }
-        
-        .search-bar input:focus {
-            border-color: var(--primary);
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(0,0,0,0.05);
-        }
-        
-        .search-bar i {
-            position: absolute;
-            left: 1rem;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--gray);
-        }
-        
-        .user-menu {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-        
-        .user-menu .notifications {
-            position: relative;
-        }
-        
-        .user-menu .notifications i {
-            font-size: 1.25rem;
-            color: var(--text);
-            cursor: pointer;
-        }
-        
-        .user-menu .notifications .badge {
-            position: absolute;
-            top: -5px;
-            right: -5px;
-            background-color: var(--danger);
-            color: white;
-            border-radius: 50%;
-            width: 18px;
-            height: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.65rem;
-            font-weight: 600;
-        }
-        
-        .user-profile {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            cursor: pointer;
-            position: relative;
-        }
-        
-        .user-profile-img {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background-color: var(--light);
-            background-size: cover;
-            border: 1px solid var(--border);
-        }
-        
-        .user-profile-name {
-            font-weight: 500;
-            font-size: 0.95rem;
-        }
-        
-        .user-profile-dropdown {
-            position: absolute;
-            top: 100%;
-            right: 0;
-            background-color: var(--white);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            padding: 0.5rem 0;
-            width: 200px;
-            z-index: 100;
-            opacity: 0;
-            visibility: hidden;
-            transition: var(--transition);
-            border: 1px solid var(--border);
-        }
-        
-        .user-profile:hover .user-profile-dropdown {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(5px);
-        }
-        
-        .user-profile-dropdown a {
-            display: block;
-            padding: 0.5rem 1rem;
-            color: var(--text);
-            text-decoration: none;
-            font-size: 0.9rem;
-            transition: var(--transition);
-        }
-        
-        .user-profile-dropdown a:hover {
-            background-color: var(--light);
-        }
-        
-        .user-profile-dropdown a i {
-            margin-right: 0.5rem;
-            width: 1rem;
-            text-align: center;
-        }
-        
-        /* Content Area */
-        .content-area {
-            padding: 1.5rem;
+            padding: 2rem;
+            background-color: var(--bg);
         }
         
         .page-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
         }
         
-        .page-header h2 {
+        .page-title {
             font-size: 1.75rem;
+            font-weight: 700;
             color: var(--primary);
-            font-weight: 600;
         }
         
-        .breadcrumb {
+        .page-actions {
             display: flex;
+            gap: 1rem;
+        }
+        
+        /* Button Styles */
+        .btn {
+            display: inline-flex;
             align-items: center;
+            justify-content: center;
             gap: 0.5rem;
-            color: var(--gray);
-            font-size: 0.9rem;
-        }
-        
-        .breadcrumb a {
-            color: var(--gray);
-            text-decoration: none;
+            padding: 0.85rem 1.75rem;
+            font-weight: 600;
+            border-radius: var(--radius);
             transition: var(--transition);
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 0.95rem;
+            border: none;
         }
         
-        .breadcrumb a:hover {
+        .btn-primary {
+            background-color: var(--primary);
+            color: var(--white);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .btn-secondary {
+            background-color: var(--white);
+            color: var(--primary);
+            border: 1px solid var(--border);
+        }
+        
+        .btn-secondary:hover {
+            background-color: var(--light);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+        
+        .btn-success {
+            background-color: var(--success);
+            color: white;
+        }
+        
+        .btn-danger {
+            background-color: var(--danger);
+            color: white;
+        }
+        
+        .btn-sm {
+            padding: 0.5rem 1rem;
+            font-size: 0.85rem;
+        }
+        
+        /* Cards */
+        .card {
+            background-color: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border);
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
             color: var(--primary);
         }
         
-        .breadcrumb i {
-            font-size: 0.7rem;
-        }
-        
-        /* Stats Cards */
+        /* Stats Grid */
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             gap: 1.5rem;
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
         }
         
         .stat-card {
@@ -445,341 +297,368 @@
         
         .stat-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
         
-        .stat-card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-        
-        .stat-card-title {
-            font-size: 0.95rem;
+        .stat-title {
+            font-size: 0.9rem;
             color: var(--gray);
-            font-weight: 500;
+            margin-bottom: 0.5rem;
         }
         
-        .stat-card-icon {
-            width: 2.5rem;
-            height: 2.5rem;
-            border-radius: var(--radius);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.25rem;
-        }
-        
-        .stat-card-icon.primary {
-            background-color: rgba(26,26,26,0.1);
-            color: var(--primary);
-        }
-        
-        .stat-card-icon.success {
-            background-color: rgba(40,167,69,0.1);
-            color: var(--success);
-        }
-        
-        .stat-card-icon.warning {
-            background-color: rgba(255,193,7,0.1);
-            color: var(--warning);
-        }
-        
-        .stat-card-icon.danger {
-            background-color: rgba(220,53,69,0.1);
-            color: var(--danger);
-        }
-        
-        .stat-card-value {
+        .stat-value {
             font-size: 1.75rem;
             font-weight: 700;
             color: var(--primary);
-            margin-bottom: 0.25rem;
+            margin-bottom: 0.5rem;
         }
         
-        .stat-card-change {
+        .stat-change {
             font-size: 0.85rem;
             display: flex;
             align-items: center;
             gap: 0.25rem;
         }
         
-        .stat-card-change.positive {
+        .stat-change.up {
             color: var(--success);
         }
         
-        .stat-card-change.negative {
+        .stat-change.down {
             color: var(--danger);
         }
         
-        /* Charts */
-        .chart-card {
-            background-color: var(--white);
-            border-radius: var(--radius);
-            padding: 1.5rem;
-            box-shadow: var(--shadow);
-            border: 1px solid var(--border);
-            margin-bottom: 1.5rem;
-        }
-        
-        .chart-card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-        }
-        
-        .chart-card-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--primary);
-        }
-        
-        .chart-card-actions {
-            display: flex;
-            gap: 0.5rem;
-        }
-        
-        .chart-card-actions select {
-            padding: 0.35rem 0.75rem;
-            border-radius: var(--radius);
-            border: 1px solid var(--border);
-            font-family: inherit;
-            font-size: 0.85rem;
-            background-color: var(--white);
-            color: var(--text);
-        }
-        
-        .chart-container {
-            position: relative;
-            height: 300px;
-            width: 100%;
-        }
-        
-        /* Recent Requests Table */
-        .table-card {
-            background-color: var(--white);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            border: 1px solid var(--border);
-            overflow: hidden;
-        }
-        
-        .table-card-header {
-            padding: 1.25rem 1.5rem;
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .table-card-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--primary);
-        }
-        
-        .table-card-actions {
-            display: flex;
-            gap: 0.5rem;
-        }
-        
+        /* Tables */
         .table-responsive {
             overflow-x: auto;
         }
         
-        table {
+        .table {
             width: 100%;
             border-collapse: collapse;
+            font-size: 0.95rem;
         }
         
-        thead th {
-            background-color: var(--light);
-            padding: 0.85rem 1rem;
-            text-align: left;
+        .table th {
+            background-color: var(--primary);
+            color: white;
             font-weight: 600;
-            font-size: 0.85rem;
-            color: var(--text);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            padding: 1rem;
+            text-align: left;
         }
         
-        tbody td {
+        .table td {
             padding: 1rem;
             border-bottom: 1px solid var(--border);
-            font-size: 0.9rem;
-            color: var(--text);
+            vertical-align: middle;
         }
         
-        tbody tr:last-child td {
+        .table tr:last-child td {
             border-bottom: none;
         }
         
-        tbody tr:hover {
-            background-color: var(--light);
+        .table tr:hover td {
+            background-color: rgba(0,0,0,0.02);
         }
         
         .status-badge {
             display: inline-block;
             padding: 0.35rem 0.75rem;
             border-radius: 50px;
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             font-weight: 600;
         }
         
         .status-badge.success {
-            background-color: rgba(40,167,69,0.1);
+            background-color: rgba(40, 167, 69, 0.1);
             color: var(--success);
         }
         
         .status-badge.warning {
-            background-color: rgba(255,193,7,0.1);
+            background-color: rgba(255, 193, 7, 0.1);
             color: var(--warning);
         }
         
         .status-badge.danger {
-            background-color: rgba(220,53,69,0.1);
+            background-color: rgba(220, 53, 69, 0.1);
             color: var(--danger);
         }
         
-        .action-btn {
-            background: none;
-            border: none;
-            color: var(--gray);
-            cursor: pointer;
-            font-size: 1rem;
-            transition: var(--transition);
-            padding: 0.25rem;
-        }
-        
-        .action-btn:hover {
-            color: var(--primary);
-        }
-        
-        /* Coupon Management */
-        .coupon-form {
-            background-color: var(--white);
-            border-radius: var(--radius);
-            padding: 1.5rem;
-            box-shadow: var(--shadow);
-            border: 1px solid var(--border);
-            margin-bottom: 1.5rem;
-        }
-        
-        .coupon-form .form-group {
+        /* Forms */
+        .form-group {
             margin-bottom: 1.25rem;
         }
         
-        .coupon-form .form-label {
-            display: block;
-            margin-bottom: 0.5rem;
+        .form-label {
             font-weight: 500;
+            margin-bottom: 0.5rem;
+            display: block;
+            color: var(--text);
+            font-size: 0.9rem;
+        }
+        
+        .form-control {
+            border-radius: 8px;
+            padding: 0.85rem 1rem;
+            border: 1px solid var(--border);
+            transition: var(--transition);
+            width: 100%;
+            box-sizing: border-box;
+            font-family: inherit;
+            font-size: 0.95rem;
+            background-color: var(--white);
             color: var(--text);
         }
         
-        .coupon-form .form-control {
-            width: 100%;
-            padding: 0.85rem 1rem;
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            font-family: inherit;
-            font-size: 0.95rem;
-            transition: var(--transition);
-        }
-        
-        .coupon-form .form-control:focus {
+        .form-control:focus {
             border-color: var(--primary);
-            outline: none;
             box-shadow: 0 0 0 3px rgba(0,0,0,0.05);
+            outline: none;
         }
         
-        .coupon-form .form-row {
+        .form-row {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1.25rem;
+        }
+        
+        .form-row .form-group {
+            flex: 1;
+            margin-bottom: 0;
+        }
+        
+        /* Date Range Picker */
+        .date-range-picker {
             display: flex;
             gap: 1rem;
-        }
-        
-        .coupon-form .form-row .form-group {
-            flex: 1;
-        }
-        
-        .coupon-form .btn {
-            padding: 0.85rem 1.75rem;
-            border-radius: var(--radius);
-            border: none;
-            font-weight: 600;
-            font-size: 0.95rem;
-            cursor: pointer;
-            transition: var(--transition);
-            display: inline-flex;
             align-items: center;
-            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .date-range-picker .form-control {
+            max-width: 180px;
+        }
+        
+        /* Charts */
+        .chart-container {
+            position: relative;
+            height: 350px;
+            width: 100%;
+            margin-bottom: 2rem;
+        }
+        
+        /* Tabs */
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 1.5rem;
+        }
+        
+        .tab {
+            padding: 0.75rem 1.5rem;
+            cursor: pointer;
+            font-weight: 500;
+            color: var(--gray);
+            border-bottom: 2px solid transparent;
+            transition: var(--transition);
+        }
+        
+        .tab.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        /* Filters */
+        .filters {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .filter-group {
+            display: flex;
+            align-items: center;
             gap: 0.5rem;
         }
         
-        .coupon-form .btn-primary {
-            background-color: var(--primary);
-            color: var(--white);
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
         }
         
-        .coupon-form .btn-primary:hover {
-            background-color: var(--secondary);
+        .page-item {
+            display: inline-flex;
         }
         
-        .coupon-form .btn-secondary {
-            background-color: var(--white);
-            color: var(--primary);
+        .page-link {
+            padding: 0.5rem 0.75rem;
             border: 1px solid var(--border);
+            color: var(--text);
+            text-decoration: none;
+            border-radius: 4px;
+            transition: var(--transition);
         }
         
-        .coupon-form .btn-secondary:hover {
+        .page-link:hover {
             background-color: var(--light);
         }
         
-        /* Toggle Switch */
-        .toggle-switch {
-            position: relative;
-            display: inline-block;
-            width: 50px;
-            height: 24px;
+        .page-link.active {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
         }
         
-        .toggle-switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
+        /* Alert */
+        .alert {
+            padding: 1rem;
+            border-radius: var(--radius);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
         }
         
-        .toggle-slider {
-            position: absolute;
-            cursor: pointer;
+        .alert-success {
+            background-color: rgba(40, 167, 69, 0.1);
+            color: var(--success);
+            border: 1px solid rgba(40, 167, 69, 0.2);
+        }
+        
+        .alert-danger {
+            background-color: rgba(220, 53, 69, 0.1);
+            color: var(--danger);
+            border: 1px solid rgba(220, 53, 69, 0.2);
+        }
+        
+        .alert-warning {
+            background-color: rgba(255, 193, 7, 0.1);
+            color: var(--warning);
+            border: 1px solid rgba(255, 193, 7, 0.2);
+        }
+        
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background-color: #ccc;
-            transition: .4s;
-            border-radius: 34px;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
         }
         
-        .toggle-slider:before {
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal-container {
+            background-color: var(--white);
+            border-radius: var(--radius);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 600px;
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        .modal-overlay.active .modal-container {
+            transform: translateY(0);
+        }
+        
+        .modal-header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            position: relative;
+        }
+        
+        .modal-header h3 {
+            margin: 0;
+            font-weight: 700;
+            font-size: 1.25rem;
+        }
+        
+        .close-btn {
             position: absolute;
-            content: "";
-            height: 16px;
-            width: 16px;
-            left: 4px;
-            bottom: 4px;
-            background-color: white;
-            transition: .4s;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: var(--transition);
+        }
+        
+        .close-btn:hover {
+            opacity: 1;
+        }
+        
+        .modal-body {
+            padding: 2rem;
+        }
+        
+        .modal-footer {
+            padding: 1.5rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+        }
+        
+        /* Loading State */
+        .loading-state {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        .loading-spinner {
+            width: 3rem;
+            height: 3rem;
+            border: 4px solid rgba(0,0,0,0.1);
+            border-left-color: var(--primary);
             border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1.5rem;
         }
         
-        input:checked + .toggle-slider {
-            background-color: var(--success);
+        .loading-text {
+            color: var(--text);
+            font-weight: 500;
+            margin-bottom: 0;
         }
         
-        input:checked + .toggle-slider:before {
-            transform: translateX(26px);
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
         
         /* Responsive Styles */
@@ -788,1009 +667,786 @@
                 width: 220px;
             }
             
-            .main-content {
-                margin-left: 220px;
+            .stats-grid {
+                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
             }
         }
         
         @media (max-width: 768px) {
-            .sidebar {
-                transform: translateX(-100%);
+            .dashboard-container {
+                flex-direction: column;
             }
             
-            .sidebar.active {
-                transform: translateX(0);
+            .sidebar {
+                width: 100%;
+                position: static;
+                height: auto;
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+                padding: 1rem 0;
+            }
+            
+            .sidebar-menu {
+                display: flex;
+                overflow-x: auto;
+                padding: 0 1rem;
+            }
+            
+            .sidebar-menu li {
+                margin-bottom: 0;
+                white-space: nowrap;
+            }
+            
+            .sidebar-menu li a {
+                padding: 0.75rem 1rem;
             }
             
             .main-content {
-                margin-left: 0;
-            }
-            
-            .mobile-menu-btn {
-                display: block;
+                padding: 1.5rem;
             }
             
             .stats-grid {
-                grid-template-columns: 1fr 1fr;
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 1rem;
+            }
+            
+            .form-row {
+                flex-direction: column;
+                gap: 1rem;
             }
         }
         
         @media (max-width: 576px) {
-            .stats-grid {
-                grid-template-columns: 1fr;
+            .header-container {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
             }
             
-            .login-card {
-                padding: 1.5rem;
+            .header-right {
+                flex-direction: column;
+                gap: 0.5rem;
             }
             
-            .search-bar {
-                width: 200px;
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
             }
             
-            .user-profile-name {
-                display: none;
+            .page-actions {
+                width: 100%;
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+            
+            .date-range-picker {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .date-range-picker .form-control {
+                max-width: 100%;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Login Page -->
-    <div class="login-container" id="loginPage">
-        <div class="login-card">
-            <div class="login-logo">
-                <i class="fas fa-tag"></i>
-                <h1>PW Coupon Wallah</h1>
-                <p>Admin Dashboard</p>
-            </div>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <a href="#" class="logo">
+                <i class="fas fa-tag logo-icon"></i>
+                <span>PW Coupon Admin</span>
+            </a>
             
-            <div id="loginError" class="alert alert-danger" style="display: none;"></div>
-            
-            <form class="login-form" id="loginForm">
-                <div class="form-group">
-                    <label class="form-label">Username</label>
-                    <input type="text" class="form-control" id="username" placeholder="Enter your username" required>
+            <div class="header-right">
+                <div class="user-info">
+                    <div class="user-avatar" id="userInitials">AD</div>
+                    <span id="userEmail">admin@example.com</span>
                 </div>
-                
-                <div class="form-group">
-                    <label class="form-label">Password</label>
-                    <input type="password" class="form-control" id="password" placeholder="Enter your password" required>
-                </div>
-                
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-sign-in-alt"></i> Login
-                    </button>
-                </div>
-            </form>
-            
-            <div class="login-footer">
-                <p>© 2025 PW Coupon Wallah. All rights reserved.</p>
+                <button class="logout-btn" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
             </div>
         </div>
-    </div>
-    
-    <!-- Dashboard -->
-    <div class="dashboard" id="dashboard" style="display: none;">
+    </header>
+
+    <!-- Dashboard Layout -->
+    <div class="dashboard-container">
         <!-- Sidebar -->
         <div class="sidebar">
-            <div class="sidebar-header">
-                <a href="#" class="sidebar-logo">
-                    <i class="fas fa-tag"></i>
-                    <span>PW Coupon</span>
-                </a>
-            </div>
-            
-            <div class="sidebar-menu">
-                <h3>Main Menu</h3>
-                <ul>
-                    <li>
-                        <a href="#" class="active" id="dashboardLink">
-                            <i class="fas fa-tachometer-alt"></i>
-                            <span>Dashboard</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" id="requestsLink">
-                            <i class="fas fa-envelope"></i>
-                            <span>Coupon Requests</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" id="couponsLink">
-                            <i class="fas fa-tags"></i>
-                            <span>Coupon Codes</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" id="analyticsLink">
-                            <i class="fas fa-chart-line"></i>
-                            <span>Analytics</span>
-                        </a>
-                    </li>
-                </ul>
-                
-                <h3>Settings</h3>
-                <ul>
-                    <li>
-                        <a href="#" id="settingsLink">
-                            <i class="fas fa-cog"></i>
-                            <span>Settings</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" id="logoutLink">
-                            <i class="fas fa-sign-out-alt"></i>
-                            <span>Logout</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
+            <ul class="sidebar-menu">
+                <li>
+                    <a href="#" class="active" data-tab="dashboard">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" data-tab="coupons">
+                        <i class="fas fa-tags"></i>
+                        <span>Coupons</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" data-tab="analytics">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Analytics</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" data-tab="settings">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" data-tab="users">
+                        <i class="fas fa-users"></i>
+                        <span>Users</span>
+                    </a>
+                </li>
+            </ul>
         </div>
-        
+
         <!-- Main Content -->
         <div class="main-content">
-            <!-- Top Navigation -->
-            <div class="top-nav">
-                <div class="search-bar">
-                    <i class="fas fa-search"></i>
-                    <input type="text" placeholder="Search...">
+            <!-- Dashboard Tab -->
+            <div class="tab-content active" id="dashboard-tab">
+                <div class="page-header">
+                    <h1 class="page-title">Dashboard Overview</h1>
+                    <div class="page-actions">
+                        <button class="btn btn-primary" id="refreshDashboard">
+                            <i class="fas fa-sync-alt"></i> Refresh
+                        </button>
+                    </div>
                 </div>
                 
-                <div class="user-menu">
-                    <div class="notifications">
-                        <i class="fas fa-bell"></i>
-                        <span class="badge" id="notificationCount">0</span>
+                <!-- Stats Cards -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-title">Total Coupons Sent</div>
+                        <div class="stat-value" id="totalCoupons">0</div>
+                        <div class="stat-change up">
+                            <i class="fas fa-arrow-up"></i>
+                            <span id="couponsChange">0%</span> from last week
+                        </div>
                     </div>
                     
-                    <div class="user-profile">
-                        <div class="user-profile-img" id="userProfileImg"></div>
-                        <div class="user-profile-name" id="userProfileName">Admin User</div>
-                        
-                        <div class="user-profile-dropdown">
-                            <a href="#">
-                                <i class="fas fa-user"></i>
-                                <span>Profile</span>
-                            </a>
-                            <a href="#">
-                                <i class="fas fa-cog"></i>
-                                <span>Settings</span>
-                            </a>
-                            <a href="#" id="dropdownLogoutLink">
-                                <i class="fas fa-sign-out-alt"></i>
-                                <span>Logout</span>
-                            </a>
+                    <div class="stat-card">
+                        <div class="stat-title">Successful Emails</div>
+                        <div class="stat-value" id="successEmails">0</div>
+                        <div class="stat-change up">
+                            <i class="fas fa-arrow-up"></i>
+                            <span id="emailsChange">0%</span> from last week
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-title">Top Course</div>
+                        <div class="stat-value" id="topCourse">-</div>
+                        <div class="stat-title" id="topCourseCount">0 enrollments</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-title">Recent Activity</div>
+                        <div class="stat-value" id="recentActivity">0</div>
+                        <div class="stat-title">coupons today</div>
+                    </div>
+                </div>
+                
+                <!-- Charts -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Coupon Usage Trends</h2>
+                        <div class="date-range-picker">
+                            <select class="form-control" id="timeRange">
+                                <option value="7">Last 7 Days</option>
+                                <option value="30">Last 30 Days</option>
+                                <option value="90">Last 90 Days</option>
+                                <option value="custom">Custom Range</option>
+                            </select>
+                            <input type="date" class="form-control" id="startDate" style="display: none;">
+                            <input type="date" class="form-control" id="endDate" style="display: none;">
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="couponsChart"></canvas>
+                    </div>
+                </div>
+                
+                <!-- Recent Coupons -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Recent Coupon Requests</h2>
+                        <button class="btn btn-secondary btn-sm" id="viewAllCoupons">
+                            <i class="fas fa-list"></i> View All
+                        </button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Course</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="recentCouponsTable">
+                                <!-- Data will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Coupons Tab -->
+            <div class="tab-content" id="coupons-tab">
+                <div class="page-header">
+                    <h1 class="page-title">Coupon Management</h1>
+                    <div class="page-actions">
+                        <button class="btn btn-primary" id="addCouponBtn">
+                            <i class="fas fa-plus"></i> Add Coupon
+                        </button>
+                        <button class="btn btn-secondary" id="exportCouponsBtn">
+                            <i class="fas fa-file-export"></i> Export
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Filters -->
+                <div class="filters">
+                    <div class="filter-group">
+                        <label class="form-label">Status:</label>
+                        <select class="form-control" id="filterStatus">
+                            <option value="all">All</option>
+                            <option value="sent">Sent</option>
+                            <option value="pending">Pending</option>
+                            <option value="failed">Failed</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label class="form-label">Course:</label>
+                        <select class="form-control" id="filterCourse">
+                            <option value="all">All Courses</option>
+                            <!-- Course options will be loaded here -->
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label class="form-label">Date Range:</label>
+                        <input type="date" class="form-control" id="filterStartDate">
+                        <span>to</span>
+                        <input type="date" class="form-control" id="filterEndDate">
+                    </div>
+                    
+                    <button class="btn btn-secondary btn-sm" id="applyFiltersBtn">
+                        <i class="fas fa-filter"></i> Apply
+                    </button>
+                    
+                    <button class="btn btn-secondary btn-sm" id="resetFiltersBtn">
+                        <i class="fas fa-redo"></i> Reset
+                    </button>
+                </div>
+                
+                <!-- Coupons Table -->
+                <div class="card">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Timestamp</th>
+                                    <th>Full Name</th>
+                                    <th>Email</th>
+                                    <th>Mobile</th>
+                                    <th>Course</th>
+                                    <th>Coupon Code</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="couponsTable">
+                                <!-- Data will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <!-- Pagination -->
+                    <div class="pagination" id="couponsPagination">
+                        <div class="page-item">
+                            <a href="#" class="page-link" data-page="prev">&laquo;</a>
+                        </div>
+                        <!-- Page numbers will be added here -->
+                        <div class="page-item">
+                            <a href="#" class="page-link" data-page="next">&raquo;</a>
                         </div>
                     </div>
                 </div>
             </div>
             
-            <!-- Content Area -->
-            <div class="content-area">
-                <!-- Dashboard Page -->
-                <div id="dashboardPage">
-                    <div class="page-header">
-                        <h2>Dashboard</h2>
-                        <div class="breadcrumb">
-                            <a href="#">Home</a>
-                            <i class="fas fa-chevron-right"></i>
-                            <span>Dashboard</span>
-                        </div>
+            <!-- Analytics Tab -->
+            <div class="tab-content" id="analytics-tab">
+                <div class="page-header">
+                    <h1 class="page-title">Analytics & Reports</h1>
+                    <div class="page-actions">
+                        <button class="btn btn-primary" id="generateReportBtn">
+                            <i class="fas fa-file-pdf"></i> Generate Report
+                        </button>
                     </div>
-                    
-                    <div class="stats-grid">
-                        <div class="stat-card">
-                            <div class="stat-card-header">
-                                <div class="stat-card-title">Total Requests</div>
-                                <div class="stat-card-icon primary">
-                                    <i class="fas fa-envelope"></i>
-                                </div>
-                            </div>
-                            <div class="stat-card-value" id="totalRequests">0</div>
-                            <div class="stat-card-change positive">
-                                <i class="fas fa-arrow-up"></i>
-                                <span id="requestsChange">0% from last week</span>
-                            </div>
-                        </div>
-                        
-                        <div class="stat-card">
-                            <div class="stat-card-header">
-                                <div class="stat-card-title">Coupons Sent</div>
-                                <div class="stat-card-icon success">
-                                    <i class="fas fa-tag"></i>
-                                </div>
-                            </div>
-                            <div class="stat-card-value" id="couponsSent">0</div>
-                            <div class="stat-card-change positive">
-                                <i class="fas fa-arrow-up"></i>
-                                <span id="couponsChange">0% from last week</span>
-                            </div>
-                        </div>
-                        
-                        <div class="stat-card">
-                            <div class="stat-card-header">
-                                <div class="stat-card-title">Conversion Rate</div>
-                                <div class="stat-card-icon warning">
-                                    <i class="fas fa-percentage"></i>
-                                </div>
-                            </div>
-                            <div class="stat-card-value" id="conversionRate">0%</div>
-                            <div class="stat-card-change negative">
-                                <i class="fas fa-arrow-down"></i>
-                                <span id="conversionChange">0% from last week</span>
-                            </div>
-                        </div>
-                        
-                        <div class="stat-card">
-                            <div class="stat-card-header">
-                                <div class="stat-card-title">Active Coupon</div>
-                                <div class="stat-card-icon danger">
-                                    <i class="fas fa-ticket-alt"></i>
-                                </div>
-                            </div>
-                            <div class="stat-card-value" id="activeCoupon">YUGNA00001</div>
-                            <div class="stat-card-change">
-                                <span id="couponStatusText">Default code</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="chart-card">
-                        <div class="chart-card-header">
-                            <div class="chart-card-title">Requests Last 30 Days</div>
-                            <div class="chart-card-actions">
-                                <select id="requestsChartFilter">
-                                    <option value="30">Last 30 Days</option>
-                                    <option value="7">Last 7 Days</option>
-                                    <option value="90">Last 90 Days</option>
-                                </select>
-                            </div>
+                </div>
+                
+                <div class="tabs">
+                    <div class="tab active" data-analytics-tab="courses">Courses</div>
+                    <div class="tab" data-analytics-tab="time">Time Analysis</div>
+                    <div class="tab" data-analytics-tab="geo">Geographic</div>
+                </div>
+                
+                <div class="tab-content active" id="courses-analytics">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">Course Popularity</h2>
                         </div>
                         <div class="chart-container">
-                            <canvas id="requestsChart"></canvas>
+                            <canvas id="coursesChart"></canvas>
                         </div>
                     </div>
                     
-                    <div class="chart-card">
-                        <div class="chart-card-header">
-                            <div class="chart-card-title">Requests by Course Category</div>
-                            <div class="chart-card-actions">
-                                <select id="categoryChartFilter">
-                                    <option value="all">All Time</option>
-                                    <option value="30">Last 30 Days</option>
-                                    <option value="7">Last 7 Days</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="chart-container">
-                            <canvas id="categoryChart"></canvas>
-                        </div>
-                    </div>
-                    
-                    <div class="table-card">
-                        <div class="table-card-header">
-                            <div class="table-card-title">Recent Coupon Requests</div>
-                            <div class="table-card-actions">
-                                <button class="btn btn-secondary" id="viewAllRequests">View All</button>
-                            </div>
-                        </div>
-                        
-                        <div class="table-responsive">
-                            <table id="recentRequestsTable">
-                                <thead>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Email</th>
-                                        <th>Course</th>
-                                        <th>Category</th>
-                                        <th>Date</th>
-                                        <th>Status</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="recentRequestsBody">
-                                    <tr>
-                                        <td colspan="7" style="text-align: center;">Loading data...</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Requests Page -->
-                <div id="requestsPage" style="display: none;">
-                    <div class="page-header">
-                        <h2>Coupon Requests</h2>
-                        <div class="breadcrumb">
-                            <a href="#">Home</a>
-                            <i class="fas fa-chevron-right"></i>
-                            <span>Coupon Requests</span>
-                        </div>
-                    </div>
-                    
-                    <div class="table-card">
-                        <div class="table-card-header">
-                            <div class="table-card-title">All Coupon Requests</div>
-                            <div class="table-card-actions">
-                                <select id="requestsFilter">
-                                    <option value="all">All Requests</option>
-                                    <option value="pending">Pending</option>
-                                    <option value="sent">Coupon Sent</option>
-                                    <option value="failed">Failed</option>
-                                </select>
-                                <button class="btn btn-secondary" id="exportRequests">Export</button>
-                            </div>
-                        </div>
-                        
-                        <div class="table-responsive">
-                            <table id="allRequestsTable">
-                                <thead>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Email</th>
-                                        <th>Mobile</th>
-                                        <th>Course</th>
-                                        <th>Category</th>
-                                        <th>Date</th>
-                                        <th>Status</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="allRequestsBody">
-                                    <tr>
-                                        <td colspan="8" style="text-align: center;">Loading data...</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Coupons Page -->
-                <div id="couponsPage" style="display: none;">
-                    <div class="page-header">
-                        <h2>Coupon Codes</h2>
-                        <div class="breadcrumb">
-                            <a href="#">Home</a>
-                            <i class="fas fa-chevron-right"></i>
-                            <span>Coupon Codes</span>
-                        </div>
-                    </div>
-                    
-                    <div class="coupon-form">
-                        <h3 style="margin-bottom: 1.5rem;">Manage Coupon Code</h3>
-                        <form id="couponManagementForm">
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label class="form-label">Current Coupon Code</label>
-                                    <input type="text" class="form-control" id="currentCouponCode" value="YUGNA00001" readonly>
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label">New Coupon Code</label>
-                                    <input type="text" class="form-control" id="newCouponCode" placeholder="Enter new coupon code">
-                                </div>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label class="form-label">Coupon Status</label>
-                                <div style="display: flex; align-items: center; gap: 1rem;">
-                                    <label class="toggle-switch">
-                                        <input type="checkbox" id="couponStatus" checked>
-                                        <span class="toggle-slider"></span>
-                                    </label>
-                                    <span id="couponStatusLabel">Active</span>
-                                </div>
-                            </div>
-                            
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-primary">Update Coupon</button>
-                                <button type="button" class="btn btn-secondary" id="resetCouponBtn">Reset to Default</button>
-                            </div>
-                        </form>
-                    </div>
-                    
-                    <div class="table-card">
-                        <div class="table-card-header">
-                            <div class="table-card-title">Coupon Usage History</div>
-                            <div class="table-card-actions">
-                                <select id="couponHistoryFilter">
-                                    <option value="all">All Time</option>
-                                    <option value="30">Last 30 Days</option>
-                                    <option value="7">Last 7 Days</option>
-                                </select>
-                            </div>
-                        </div>
-                        
-                        <div class="table-responsive">
-                            <table id="couponHistoryTable">
-                                <thead>
-                                    <tr>
-                                        <th>Coupon Code</th>
-                                        <th>Used By</th>
-                                        <th>Course</th>
-                                        <th>Date Used</th>
-                                        <th>Discount Applied</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="couponHistoryBody">
-                                    <tr>
-                                        <td colspan="5" style="text-align: center;">Loading data...</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Analytics Page -->
-                <div id="analyticsPage" style="display: none;">
-                    <div class="page-header">
-                        <h2>Analytics</h2>
-                        <div class="breadcrumb">
-                            <a href="#">Home</a>
-                            <i class="fas fa-chevron-right"></i>
-                            <span>Analytics</span>
-                        </div>
-                    </div>
-                    
-                    <div class="stats-grid">
-                        <div class="stat-card">
-                            <div class="stat-card-header">
-                                <div class="stat-card-title">Total Conversion</div>
-                                <div class="stat-card-icon primary">
-                                    <i class="fas fa-check-circle"></i>
-                                </div>
-                            </div>
-                            <div class="stat-card-value" id="totalConversion">0</div>
-                            <div class="stat-card-change positive">
-                                <i class="fas fa-arrow-up"></i>
-                                <span id="conversionChangeText">0% from last month</span>
-                            </div>
-                        </div>
-                        
-                        <div class="stat-card">
-                            <div class="stat-card-header">
-                                <div class="stat-card-title">Avg. Conversion Time</div>
-                                <div class="stat-card-icon success">
-                                    <i class="fas fa-clock"></i>
-                                </div>
-                            </div>
-                            <div class="stat-card-value" id="avgConversionTime">0h</div>
-                            <div class="stat-card-change negative">
-                                <i class="fas fa-arrow-down"></i>
-                                <span id="timeChangeText">0% from last month</span>
-                            </div>
-                        </div>
-                        
-                        <div class="stat-card">
-                            <div class="stat-card-header">
-                                <div class="stat-card-title">Top Course Category</div>
-                                <div class="stat-card-icon warning">
-                                    <i class="fas fa-star"></i>
-                                </div>
-                            </div>
-                            <div class="stat-card-value" id="topCategory">NEET</div>
-                            <div class="stat-card-change">
-                                <span id="categoryPercent">0% of total requests</span>
-                            </div>
-                        </div>
-                        
-                        <div class="stat-card">
-                            <div class="stat-card-header">
-                                <div class="stat-card-title">Revenue Impact</div>
-                                <div class="stat-card-icon danger">
-                                    <i class="fas fa-rupee-sign"></i>
-                                </div>
-                            </div>
-                            <div class="stat-card-value" id="revenueImpact">₹0</div>
-                            <div class="stat-card-change positive">
-                                <i class="fas fa-arrow-up"></i>
-                                <span>Estimated savings</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="chart-card">
-                        <div class="chart-card-header">
-                            <div class="chart-card-title">Conversion Rate Trend</div>
-                            <div class="chart-card-actions">
-                                <select id="conversionChartFilter">
-                                    <option value="30">Last 30 Days</option>
-                                    <option value="7">Last 7 Days</option>
-                                    <option value="90">Last 90 Days</option>
-                                </select>
-                            </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">Course Conversion Rates</h2>
                         </div>
                         <div class="chart-container">
                             <canvas id="conversionChart"></canvas>
                         </div>
                     </div>
-                    
-                    <div class="chart-card">
-                        <div class="chart-card-header">
-                            <div class="chart-card-title">Request Sources</div>
-                            <div class="chart-card-actions">
-                                <select id="sourcesChartFilter">
-                                    <option value="all">All Time</option>
-                                    <option value="30">Last 30 Days</option>
-                                    <option value="7">Last 7 Days</option>
-                                </select>
-                            </div>
+                </div>
+                
+                <div class="tab-content" id="time-analytics">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">Daily Activity</h2>
                         </div>
                         <div class="chart-container">
-                            <canvas id="sourcesChart"></canvas>
+                            <canvas id="dailyChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">Hourly Activity</h2>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="hourlyChart"></canvas>
                         </div>
                     </div>
                 </div>
                 
-                <!-- Settings Page -->
-                <div id="settingsPage" style="display: none;">
-                    <div class="page-header">
-                        <h2>Settings</h2>
-                        <div class="breadcrumb">
-                            <a href="#">Home</a>
-                            <i class="fas fa-chevron-right"></i>
-                            <span>Settings</span>
+                <div class="tab-content" id="geo-analytics">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">Geographic Distribution</h2>
+                        </div>
+                        <div class="chart-container">
+                            <div id="map" style="height: 100%; width: 100%;"></div>
                         </div>
                     </div>
-                    
-                    <div class="coupon-form">
-                        <h3 style="margin-bottom: 1.5rem;">Admin Settings</h3>
-                        <form id="adminSettingsForm">
-                            <div class="form-group">
-                                <label class="form-label">Admin Email</label>
-                                <input type="email" class="form-control" id="adminEmail" value="admin@example.com">
-                            </div>
-                            
-                            <div class="form-group">
-                                <label class="form-label">Notification Preferences</label>
-                                <div style="display: flex; flex-direction: column; gap: 0.75rem;">
-                                    <div style="display: flex; align-items: center; gap: 1rem;">
-                                        <label class="toggle-switch">
-                                            <input type="checkbox" id="emailNotifications" checked>
-                                            <span class="toggle-slider"></span>
-                                        </label>
-                                        <span>Email Notifications</span>
-                                    </div>
-                                    
-                                    <div style="display: flex; align-items: center; gap: 1rem;">
-                                        <label class="toggle-switch">
-                                            <input type="checkbox" id="dailyReports" checked>
-                                            <span class="toggle-slider"></span>
-                                        </label>
-                                        <span>Daily Reports</span>
-                                    </div>
-                                    
-                                    <div style="display: flex; align-items: center; gap: 1rem;">
-                                        <label class="toggle-switch">
-                                            <input type="checkbox" id="weeklySummaries">
-                                            <span class="toggle-slider"></span>
-                                        </label>
-                                        <span>Weekly Summaries</span>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-primary">Save Settings</button>
-                            </div>
-                        </form>
+                </div>
+            </div>
+            
+            <!-- Settings Tab -->
+            <div class="tab-content" id="settings-tab">
+                <div class="page-header">
+                    <h1 class="page-title">System Settings</h1>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Email Template</h2>
                     </div>
-                    
-                    <div class="coupon-form" style="margin-top: 1.5rem;">
-                        <h3 style="margin-bottom: 1.5rem;">Change Password</h3>
-                        <form id="changePasswordForm">
-                            <div class="form-group">
-                                <label class="form-label">Current Password</label>
-                                <input type="password" class="form-control" id="currentPassword" placeholder="Enter current password">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label class="form-label">Email Subject</label>
+                            <input type="text" class="form-control" id="emailSubject" value="Your Exclusive Physics Wallah Discount is Ready">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Email Body (HTML)</label>
+                            <textarea class="form-control" id="emailBody" rows="12" style="font-family: monospace;">
+<!-- Email template HTML will be loaded here -->
+                            </textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Default Coupon Code</label>
+                            <input type="text" class="form-control" id="defaultCouponCode" value="YUGNA00001">
+                        </div>
+                        
+                        <button class="btn btn-primary" id="saveSettingsBtn">
+                            <i class="fas fa-save"></i> Save Settings
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">System Configuration</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label class="form-label">Google Drive Folder URL</label>
+                            <input type="text" class="form-control" id="driveFolderUrl" placeholder="https://drive.google.com/your-folder">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Data Retention (Days)</label>
+                            <input type="number" class="form-control" id="dataRetention" value="365">
+                        </div>
+                        
+                        <div class="form-group">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="enableNotifications">
+                                <label class="form-check-label" for="enableNotifications">Enable Email Notifications</label>
                             </div>
-                            
-                            <div class="form-group">
-                                <label class="form-label">New Password</label>
-                                <input type="password" class="form-control" id="newPassword" placeholder="Enter new password">
-                            </div>
-                            
-                            <div class="form-group">
-                                <label class="form-label">Confirm New Password</label>
-                                <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm new password">
-                            </div>
-                            
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-primary">Change Password</button>
-                            </div>
-                        </form>
+                        </div>
+                        
+                        <button class="btn btn-primary" id="saveConfigBtn">
+                            <i class="fas fa-save"></i> Save Configuration
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Users Tab -->
+            <div class="tab-content" id="users-tab">
+                <div class="page-header">
+                    <h1 class="page-title">User Management</h1>
+                    <div class="page-actions">
+                        <button class="btn btn-primary" id="addUserBtn">
+                            <i class="fas fa-user-plus"></i> Add User
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Role</th>
+                                    <th>Last Login</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="usersTable">
+                                <!-- Data will be loaded here -->
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+    <!-- Add Coupon Modal -->
+    <div class="modal-overlay" id="addCouponModal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3>Add New Coupon</h3>
+                <button class="close-btn" id="closeCouponModal">&times;</button>
+            </div>
+            
+            <div class="modal-body">
+                <form id="couponForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Full Name</label>
+                            <input type="text" class="form-control" id="couponName" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" id="couponEmail" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Mobile Number</label>
+                            <input type="tel" class="form-control" id="couponMobile" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Course Category</label>
+                            <select class="form-control" id="couponCategory" required>
+                                <!-- Options will be loaded here -->
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Course Name</label>
+                            <input type="text" class="form-control" id="couponCourseName" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Coupon Code</label>
+                            <input type="text" class="form-control" id="couponCode" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Send Email Notification</label>
+                        <select class="form-control" id="couponSendEmail">
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancelCouponBtn">Cancel</button>
+                <button class="btn btn-primary" id="saveCouponBtn">Save Coupon</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add User Modal -->
+    <div class="modal-overlay" id="addUserModal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3>Add New User</h3>
+                <button class="close-btn" id="closeUserModal">&times;</button>
+            </div>
+            
+            <div class="modal-body">
+                <form id="userForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Full Name</label>
+                            <input type="text" class="form-control" id="userName" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" id="userEmail" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Password</label>
+                            <input type="password" class="form-control" id="userPassword" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Confirm Password</label>
+                            <input type="password" class="form-control" id="userConfirmPassword" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Role</label>
+                        <select class="form-control" id="userRole" required>
+                            <option value="admin">Admin</option>
+                            <option value="editor">Editor</option>
+                            <option value="viewer">Viewer</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancelUserBtn">Cancel</button>
+                <button class="btn btn-primary" id="saveUserBtn">Save User</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Modal -->
+    <div class="modal-overlay" id="loadingModal">
+        <div class="modal-container" style="max-width: 400px; text-align: center;">
+            <div class="modal-body">
+                <div class="loading-spinner"></div>
+                <p class="loading-text">Processing your request...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="modal-overlay" id="successModal">
+        <div class="modal-container" style="max-width: 400px; text-align: center;">
+            <div class="modal-body">
+                <div class="success-icon">
+                    <i class="fas fa-check"></i>
+                </div>
+                <h4 id="successTitle">Success!</h4>
+                <p id="successMessage">Operation completed successfully.</p>
+                <button class="btn btn-primary" id="successOkBtn">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Error Modal -->
+    <div class="modal-overlay" id="errorModal">
+        <div class="modal-container" style="max-width: 400px; text-align: center;">
+            <div class="modal-body">
+                <div class="error-icon">
+                    <i class="fas fa-exclamation"></i>
+                </div>
+                <h4 id="errorTitle">Error!</h4>
+                <p id="errorMessage">An error occurred while processing your request.</p>
+                <button class="btn btn-primary" id="errorOkBtn">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         // Global variables
-        let currentUser = null;
-        let requestsChart = null;
-        let categoryChart = null;
-        let conversionChart = null;
-        let sourcesChart = null;
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbyK0UCH_ljKg1y0_jYTBES7H-7glQD2g6uGJ0vVnqbag8vGTjECjw6xDAwit9Vwt9Jlzg/exec';
+        let currentUser = {};
+        let allCoupons = [];
+        let allCourses = [];
+        let allUsers = [];
+        let currentPage = 1;
+        const itemsPerPage = 10;
+        
+        // Google Apps Script deployment URL
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbwTX-qRzDG-01628NxnJPeqDBjzXeGgwWRywhlQ1rIw-soWNUjbgLwA1sYG6jMFTIwG/exec';
         
         // Initialize when DOM is loaded
         document.addEventListener('DOMContentLoaded', function() {
-            // Check if user is already logged in
-            checkLoginStatus();
+            // Set current user (in a real app, this would come from authentication)
+            currentUser = {
+                name: 'Admin User',
+                email: 'admin@example.com',
+                role: 'admin'
+            };
             
-            // Login form submission
-            document.getElementById('loginForm').addEventListener('submit', function(e) {
-                e.preventDefault();
-                const username = document.getElementById('username').value;
-                const password = document.getElementById('password').value;
-                
-                loginUser(username, password);
-            });
+            document.getElementById('userInitials').textContent = getInitials(currentUser.name);
+            document.getElementById('userEmail').textContent = currentUser.email;
             
-            // Navigation links
-            document.getElementById('dashboardLink').addEventListener('click', function(e) {
-                e.preventDefault();
-                showPage('dashboardPage');
-                updateActiveNav(this);
-                loadDashboardData();
-            });
+            // Tab navigation
+            setupTabNavigation();
             
-            document.getElementById('requestsLink').addEventListener('click', function(e) {
-                e.preventDefault();
-                showPage('requestsPage');
-                updateActiveNav(this);
-                loadAllRequests();
-            });
+            // Initialize charts
+            initCharts();
             
-            document.getElementById('couponsLink').addEventListener('click', function(e) {
-                e.preventDefault();
-                showPage('couponsPage');
-                updateActiveNav(this);
-                loadCouponHistory();
-            });
+            // Load initial data
+            loadDashboardData();
+            loadCouponsData();
+            loadCoursesData();
+            loadUsersData();
+            loadSettings();
             
-            document.getElementById('analyticsLink').addEventListener('click', function(e) {
-                e.preventDefault();
-                showPage('analyticsPage');
-                updateActiveNav(this);
-                updateAnalyticsCharts();
-            });
-            
-            document.getElementById('settingsLink').addEventListener('click', function(e) {
-                e.preventDefault();
-                showPage('settingsPage');
-                updateActiveNav(this);
-            });
-            
-            // Logout links
-            document.getElementById('logoutLink').addEventListener('click', function(e) {
-                e.preventDefault();
-                logoutUser();
-            });
-            
-            document.getElementById('dropdownLogoutLink').addEventListener('click', function(e) {
-                e.preventDefault();
-                logoutUser();
-            });
-            
-            // Coupon management form
-            document.getElementById('couponManagementForm').addEventListener('submit', function(e) {
-                e.preventDefault();
-                updateCouponCode();
-            });
-            
-            document.getElementById('resetCouponBtn').addEventListener('click', function() {
-                resetCouponCode();
-            });
-            
-            document.getElementById('couponStatus').addEventListener('change', function() {
-                document.getElementById('couponStatusLabel').textContent = this.checked ? 'Active' : 'Inactive';
-            });
-            
-            // Settings forms
-            document.getElementById('adminSettingsForm').addEventListener('submit', function(e) {
-                e.preventDefault();
-                saveSettings();
-            });
-            
-            document.getElementById('changePasswordForm').addEventListener('submit', function(e) {
-                e.preventDefault();
-                changePassword();
-            });
-            
-            // Chart filters
-            document.getElementById('requestsChartFilter').addEventListener('change', function() {
-                updateRequestsChart(this.value);
-            });
-            
-            document.getElementById('categoryChartFilter').addEventListener('change', function() {
-                updateCategoryChart(this.value);
-            });
-            
-            document.getElementById('requestsFilter').addEventListener('change', function() {
-                loadAllRequests(this.value);
-            });
-            
-            document.getElementById('couponHistoryFilter').addEventListener('change', function() {
-                loadCouponHistory(this.value);
-            });
-            
-            document.getElementById('conversionChartFilter').addEventListener('change', function() {
-                updateConversionChart(this.value);
-            });
-            
-            document.getElementById('sourcesChartFilter').addEventListener('change', function() {
-                updateSourcesChart(this.value);
-            });
-            
-            // View all requests button
-            document.getElementById('viewAllRequests').addEventListener('click', function(e) {
-                e.preventDefault();
-                document.getElementById('requestsLink').click();
-            });
+            // Event listeners
+            setupEventListeners();
         });
         
-        // Check login status
-        function checkLoginStatus() {
-            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-            
-            if (isLoggedIn) {
-                // Try to get user data from localStorage
-                const userData = localStorage.getItem('userData');
-                if (userData) {
-                    currentUser = JSON.parse(userData);
-                    showDashboard();
-                    loadDashboardData();
-                } else {
-                    logoutUser();
-                }
-            }
+        // Helper functions
+        function getInitials(name) {
+            return name.split(' ').map(n => n[0]).join('').toUpperCase();
         }
         
-        // Show login page
-        function showLogin() {
-            document.getElementById('loginPage').style.display = 'flex';
-            document.getElementById('dashboard').style.display = 'none';
+        function showLoading() {
+            document.getElementById('loadingModal').classList.add('active');
         }
         
-        // Show dashboard
-        function showDashboard() {
-            document.getElementById('loginPage').style.display = 'none';
-            document.getElementById('dashboard').style.display = 'flex';
-            
-            // Update user profile
-            if (currentUser) {
-                document.getElementById('userProfileName').textContent = currentUser.name;
-                document.getElementById('userProfileImg').style.backgroundImage = `url('${currentUser.avatar}')`;
-            }
-            
-            // Show dashboard by default
-            showPage('dashboardPage');
-            document.getElementById('dashboardLink').classList.add('active');
+        function hideLoading() {
+            document.getElementById('loadingModal').classList.remove('active');
         }
         
-        // Login user
-        function loginUser(username, password) {
-            // Show loading state
-            const loginBtn = document.getElementById('loginForm').querySelector('button');
-            const originalBtnText = loginBtn.innerHTML;
-            loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Authenticating...';
-            loginBtn.disabled = true;
-            
-            // Clear any previous error
-            document.getElementById('loginError').style.display = 'none';
-            
-            // Send login request
-            fetch(scriptURL, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    action: 'login',
-                    username: username,
-                    password: password
-                })
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                if (data.success) {
-                    // Login successful
-                    localStorage.setItem('isLoggedIn', 'true');
-                    localStorage.setItem('userData', JSON.stringify(data.user));
-                    currentUser = data.user;
+        function showSuccess(title, message) {
+            document.getElementById('successTitle').textContent = title;
+            document.getElementById('successMessage').textContent = message;
+            document.getElementById('successModal').classList.add('active');
+        }
+        
+        function showError(title, message) {
+            document.getElementById('errorTitle').textContent = title;
+            document.getElementById('errorMessage').textContent = message;
+            document.getElementById('errorModal').classList.add('active');
+        }
+        
+        function closeAllModals() {
+            document.querySelectorAll('.modal-overlay').forEach(modal => {
+                modal.classList.remove('active');
+            });
+        }
+        
+        // Tab navigation
+        function setupTabNavigation() {
+            // Main tabs
+            document.querySelectorAll('.sidebar-menu li a').forEach(tab => {
+                tab.addEventListener('click', function(e) {
+                    e.preventDefault();
                     
-                    showDashboard();
-                    loadDashboardData();
-                } else {
-                    // Login failed
-                    showLoginError(data.message || 'Invalid username or password');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                showLoginError('An error occurred during login. Please try again.');
-            })
-            .finally(() => {
-                loginBtn.innerHTML = originalBtnText;
-                loginBtn.disabled = false;
-            });
-        }
-        
-        // Show login error
-        function showLoginError(message) {
-            const errorElement = document.getElementById('loginError');
-            errorElement.textContent = message;
-            errorElement.style.display = 'block';
-            
-            setTimeout(() => {
-                errorElement.style.display = 'none';
-            }, 5000);
-        }
-        
-        // Logout user
-        function logoutUser() {
-            localStorage.removeItem('isLoggedIn');
-            localStorage.removeItem('userData');
-            currentUser = null;
-            showLogin();
-        }
-        
-        // Show specific page
-        function showPage(pageId) {
-            // Hide all pages
-            document.querySelectorAll('.main-content > div[id$="Page"]').forEach(page => {
-                page.style.display = 'none';
-            });
-            
-            // Show requested page
-            document.getElementById(pageId).style.display = 'block';
-        }
-        
-        // Update active navigation link
-        function updateActiveNav(activeLink) {
-            // Remove active class from all links
-            document.querySelectorAll('.sidebar-menu a').forEach(link => {
-                link.classList.remove('active');
-            });
-            
-            // Add active class to clicked link
-            activeLink.classList.add('active');
-        }
-        
-        // Load dashboard data
-        function loadDashboardData() {
-            // Show loading state
-            const dashboardPage = document.getElementById('dashboardPage');
-            const loadingHTML = '<div style="text-align: center; padding: 2rem;"><i class="fas fa-spinner fa-spin"></i> Loading dashboard data...</div>';
-            dashboardPage.innerHTML = loadingHTML;
-            
-            // Fetch dashboard data
-            fetch(scriptURL, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    action: 'getDashboardData'
-                })
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                if (data.success === false) {
-                    throw new Error(data.message || 'Failed to load dashboard data');
-                }
-                updateDashboardStats(data);
-                updateRecentRequests(data.recentRequests);
-                initCharts(data.chartData);
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                dashboardPage.innerHTML = '<div class="alert alert-danger">Failed to load dashboard data. Please try again.</div>';
-            });
-        }
-        
-        // Update dashboard stats
-        function updateDashboardStats(data) {
-            document.getElementById('totalRequests').textContent = data.totalRequests || '0';
-            document.getElementById('couponsSent').textContent = data.couponsSent || '0';
-            document.getElementById('conversionRate').textContent = data.conversionRate || '0%';
-            document.getElementById('activeCoupon').textContent = data.activeCoupon || 'YUGNA00001';
-            document.getElementById('totalConversion').textContent = data.totalConversion || '0';
-            document.getElementById('avgConversionTime').textContent = data.avgConversionTime || '0h';
-            document.getElementById('topCategory').textContent = data.topCategory || 'NEET';
-            document.getElementById('revenueImpact').textContent = data.revenueImpact || '₹0';
-            document.getElementById('notificationCount').textContent = data.notifications || '0';
-            
-            // Update change percentages (these would come from your backend in a real app)
-            document.getElementById('requestsChange').textContent = '12% from last week';
-            document.getElementById('couponsChange').textContent = '8% from last week';
-            document.getElementById('conversionChange').textContent = '2% from last week';
-            document.getElementById('conversionChangeText').textContent = '15% from last month';
-            document.getElementById('timeChangeText').textContent = '10% from last month';
-            document.getElementById('categoryPercent').textContent = '35% of total requests';
-        }
-        
-        // Update recent requests table
-        function updateRecentRequests(requests) {
-            const tbody = document.getElementById('recentRequestsBody');
-            tbody.innerHTML = '';
-            
-            if (!requests || requests.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="7" style="text-align: center;">No recent requests found</td></tr>';
-                return;
-            }
-            
-            requests.forEach(request => {
-                const row = document.createElement('tr');
-                
-                // Status badge
-                let statusBadge = '';
-                if (request.status === 'Sent') {
-                    statusBadge = '<span class="status-badge success">Sent</span>';
-                } else if (request.status === 'Pending') {
-                    statusBadge = '<span class="status-badge warning">Pending</span>';
-                } else {
-                    statusBadge = '<span class="status-badge danger">Failed</span>';
-                }
-                
-                // Format date
-                const requestDate = new Date(request.date);
-                const formattedDate = requestDate.toLocaleDateString('en-IN', {
-                    day: '2-digit',
-                    month: 'short',
-                    year: 'numeric'
+                    // Remove active class from all tabs
+                    document.querySelectorAll('.sidebar-menu li a').forEach(t => {
+                        t.classList.remove('active');
+                    });
+                    
+                    // Add active class to clicked tab
+                    this.classList.add('active');
+                    
+                    // Hide all tab contents
+                    document.querySelectorAll('.tab-content').forEach(content => {
+                        content.classList.remove('active');
+                    });
+                    
+                    // Show selected tab content
+                    const tabId = this.getAttribute('data-tab') + '-tab';
+                    document.getElementById(tabId).classList.add('active');
                 });
-                
-                row.innerHTML = `
-                    <td>${request.name}</td>
-                    <td>${request.email}</td>
-                    <td>${request.course}</td>
-                    <td>${request.category}</td>
-                    <td>${formattedDate}</td>
-                    <td>${statusBadge}</td>
-                    <td>
-                        <button class="action-btn" title="View Details">
-                            <i class="fas fa-eye"></i>
-                        </button>
-                        <button class="action-btn" title="Resend Coupon">
-                            <i class="fas fa-paper-plane"></i>
-                        </button>
-                    </td>
-                `;
-                
-                tbody.appendChild(row);
+            });
+            
+            // Analytics sub-tabs
+            document.querySelectorAll('[data-analytics-tab]').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // Remove active class from all tabs
+                    document.querySelectorAll('[data-analytics-tab]').forEach(t => {
+                        t.classList.remove('active');
+                    });
+                    
+                    // Add active class to clicked tab
+                    this.classList.add('active');
+                    
+                    // Hide all tab contents
+                    document.querySelectorAll('.analytics-tab-content').forEach(content => {
+                        content.classList.remove('active');
+                    });
+                    
+                    // Show selected tab content
+                    const tabId = this.getAttribute('data-analytics-tab') + '-analytics';
+                    document.getElementById(tabId).classList.add('active');
+                });
             });
         }
         
-        // Initialize charts
-        function initCharts(chartData) {
-            // Requests chart
-            const requestsCtx = document.getElementById('requestsChart').getContext('2d');
-            requestsChart = new Chart(requestsCtx, {
+        // Charts initialization
+        function initCharts() {
+            // Coupons chart
+            const couponsCtx = document.getElementById('couponsChart').getContext('2d');
+            window.couponsChart = new Chart(couponsCtx, {
                 type: 'line',
                 data: {
-                    labels: chartData.requests.labels,
+                    labels: [],
                     datasets: [{
-                        label: 'Coupon Requests',
-                        data: chartData.requests.data,
-                        borderColor: '#1a1a1a',
-                        backgroundColor: 'rgba(26, 26, 26, 0.1)',
-                        tension: 0.4,
-                        fill: true
+                        label: 'Coupons Sent',
+                        data: [],
+                        borderColor: '#6c63ff',
+                        backgroundColor: 'rgba(108, 99, 255, 0.1)',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.4
                     }]
                 },
                 options: {
@@ -1803,49 +1459,23 @@
                     },
                     scales: {
                         y: {
-                            beginAtZero: true,
-                            grid: {
-                                color: 'rgba(0, 0, 0, 0.05)'
-                            }
-                        },
-                        x: {
-                            grid: {
-                                display: false
-                            }
+                            beginAtZero: true
                         }
                     }
                 }
             });
             
-            // Category chart
-            const categoryCtx = document.getElementById('categoryChart').getContext('2d');
-            categoryChart = new Chart(categoryCtx, {
+            // Courses chart
+            const coursesCtx = document.getElementById('coursesChart').getContext('2d');
+            window.coursesChart = new Chart(coursesCtx, {
                 type: 'bar',
                 data: {
-                    labels: chartData.categories.labels,
+                    labels: [],
                     datasets: [{
-                        label: 'Requests by Category',
-                        data: chartData.categories.data,
-                        backgroundColor: [
-                            'rgba(26, 26, 26, 0.7)',
-                            'rgba(40, 167, 69, 0.7)',
-                            'rgba(255, 193, 7, 0.7)',
-                            'rgba(220, 53, 69, 0.7)',
-                            'rgba(23, 162, 184, 0.7)',
-                            'rgba(108, 117, 125, 0.7)',
-                            'rgba(111, 66, 193, 0.7)',
-                            'rgba(253, 126, 20, 0.7)'
-                        ],
-                        borderColor: [
-                            'rgba(26, 26, 26, 1)',
-                            'rgba(40, 167, 69, 1)',
-                            'rgba(255, 193, 7, 1)',
-                            'rgba(220, 53, 69, 1)',
-                            'rgba(23, 162, 184, 1)',
-                            'rgba(108, 117, 125, 1)',
-                            'rgba(111, 66, 193, 1)',
-                            'rgba(253, 126, 20, 1)'
-                        ],
+                        label: 'Coupons by Course',
+                        data: [],
+                        backgroundColor: '#6c63ff',
+                        borderColor: '#6c63ff',
                         borderWidth: 1
                     }]
                 },
@@ -1859,15 +1489,7 @@
                     },
                     scales: {
                         y: {
-                            beginAtZero: true,
-                            grid: {
-                                color: 'rgba(0, 0, 0, 0.05)'
-                            }
-                        },
-                        x: {
-                            grid: {
-                                display: false
-                            }
+                            beginAtZero: true
                         }
                     }
                 }
@@ -1875,70 +1497,16 @@
             
             // Conversion chart
             const conversionCtx = document.getElementById('conversionChart').getContext('2d');
-            conversionChart = new Chart(conversionCtx, {
-                type: 'line',
-                data: {
-                    labels: chartData.conversion.labels,
-                    datasets: [{
-                        label: 'Conversion Rate',
-                        data: chartData.conversion.data,
-                        borderColor: '#28a745',
-                        backgroundColor: 'rgba(40, 167, 69, 0.1)',
-                        tension: 0.4,
-                        fill: true
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            display: false
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            grid: {
-                                color: 'rgba(0, 0, 0, 0.05)'
-                            },
-                            ticks: {
-                                callback: function(value) {
-                                    return value + '%';
-                                }
-                            }
-                        },
-                        x: {
-                            grid: {
-                                display: false
-                            }
-                        }
-                    }
-                }
-            });
-            
-            // Sources chart
-            const sourcesCtx = document.getElementById('sourcesChart').getContext('2d');
-            sourcesChart = new Chart(sourcesCtx, {
+            window.conversionChart = new Chart(conversionCtx, {
                 type: 'doughnut',
                 data: {
-                    labels: chartData.sources.labels,
+                    labels: ['Successful', 'Failed', 'Pending'],
                     datasets: [{
-                        label: 'Request Sources',
-                        data: chartData.sources.data,
+                        data: [0, 0, 0],
                         backgroundColor: [
-                            'rgba(26, 26, 26, 0.7)',
-                            'rgba(40, 167, 69, 0.7)',
-                            'rgba(255, 193, 7, 0.7)',
-                            'rgba(220, 53, 69, 0.7)',
-                            'rgba(23, 162, 184, 0.7)'
-                        ],
-                        borderColor: [
-                            'rgba(26, 26, 26, 1)',
-                            'rgba(40, 167, 69, 1)',
-                            'rgba(255, 193, 7, 1)',
-                            'rgba(220, 53, 69, 1)',
-                            'rgba(23, 162, 184, 1)'
+                            '#28a745',
+                            '#dc3545',
+                            '#ffc107'
                         ],
                         borderWidth: 1
                     }]
@@ -1953,707 +1521,915 @@
                     }
                 }
             });
-        }
-        
-        // Update requests chart
-        function updateRequestsChart(days) {
-            // Show loading state
-            const chartContainer = document.getElementById('requestsChart').parentElement;
-            const originalHTML = chartContainer.innerHTML;
-            chartContainer.innerHTML = '<div style="text-align: center; padding: 2rem;"><i class="fas fa-spinner fa-spin"></i> Loading chart data...</div>';
             
-            // Fetch updated data
-            fetch(scriptURL, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
+            // Daily chart
+            const dailyCtx = document.getElementById('dailyChart').getContext('2d');
+            window.dailyChart = new Chart(dailyCtx, {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: 'Coupons Sent',
+                        data: [],
+                        borderColor: '#6c63ff',
+                        backgroundColor: 'rgba(108, 99, 255, 0.1)',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.4
+                    }]
                 },
-                body: JSON.stringify({
-                    action: 'getDashboardData',
-                    filter: days
-                })
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
                 }
-                return response.json();
-            })
-            .then(data => {
-                if (data.success === false) {
-                    throw new Error(data.message || 'Failed to load chart data');
+            });
+            
+            // Hourly chart
+            const hourlyCtx = document.getElementById('hourlyChart').getContext('2d');
+            window.hourlyChart = new Chart(hourlyCtx, {
+                type: 'bar',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: 'Coupons by Hour',
+                        data: [],
+                        backgroundColor: '#6c63ff',
+                        borderColor: '#6c63ff',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
                 }
-                
-                // Update chart data
-                requestsChart.data.labels = data.chartData.requests.labels;
-                requestsChart.data.datasets[0].data = data.chartData.requests.data;
-                requestsChart.update();
-                
-                // Restore original HTML
-                chartContainer.innerHTML = originalHTML;
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                chartContainer.innerHTML = '<div class="alert alert-danger">Failed to load chart data</div>';
             });
         }
         
-        // Update category chart
-        function updateCategoryChart(filter) {
-            // Show loading state
-            const chartContainer = document.getElementById('categoryChart').parentElement;
-            const originalHTML = chartContainer.innerHTML;
-            chartContainer.innerHTML = '<div style="text-align: center; padding: 2rem;"><i class="fas fa-spinner fa-spin"></i> Loading chart data...</div>';
+        // Data loading functions
+        function loadDashboardData() {
+            showLoading();
             
-            // Fetch updated data
-            fetch(scriptURL, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    action: 'getDashboardData',
-                    filter: filter
-                })
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                if (data.success === false) {
-                    throw new Error(data.message || 'Failed to load chart data');
-                }
-                
-                // Update chart data
-                categoryChart.data.labels = data.chartData.categories.labels;
-                categoryChart.data.datasets[0].data = data.chartData.categories.data;
-                categoryChart.update();
-                
-                // Restore original HTML
-                chartContainer.innerHTML = originalHTML;
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                chartContainer.innerHTML = '<div class="alert alert-danger">Failed to load chart data</div>';
-            });
-        }
-        
-        // Update conversion chart
-        function updateConversionChart(days) {
-            // Show loading state
-            const chartContainer = document.getElementById('conversionChart').parentElement;
-            const originalHTML = chartContainer.innerHTML;
-            chartContainer.innerHTML = '<div style="text-align: center; padding: 2rem;"><i class="fas fa-spinner fa-spin"></i> Loading chart data...</div>';
-            
-            // Fetch updated data
-            fetch(scriptURL, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    action: 'getDashboardData',
-                    filter: days
-                })
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                if (data.success === false) {
-                    throw new Error(data.message || 'Failed to load chart data');
-                }
-                
-                // Update chart data
-                conversionChart.data.labels = data.chartData.conversion.labels;
-                conversionChart.data.datasets[0].data = data.chartData.conversion.data;
-                conversionChart.update();
-                
-                // Restore original HTML
-                chartContainer.innerHTML = originalHTML;
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                chartContainer.innerHTML = '<div class="alert alert-danger">Failed to load chart data</div>';
-            });
-        }
-        
-        // Update sources chart
-        function updateSourcesChart(filter) {
-            // Show loading state
-            const chartContainer = document.getElementById('sourcesChart').parentElement;
-            const originalHTML = chartContainer.innerHTML;
-            chartContainer.innerHTML = '<div style="text-align: center; padding: 2rem;"><i class="fas fa-spinner fa-spin"></i> Loading chart data...</div>';
-            
-            // Fetch updated data
-            fetch(scriptURL, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    action: 'getDashboardData',
-                    filter: filter
-                })
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                if (data.success === false) {
-                    throw new Error(data.message || 'Failed to load chart data');
-                }
-                
-                // Update chart data
-                sourcesChart.data.labels = data.chartData.sources.labels;
-                sourcesChart.data.datasets[0].data = data.chartData.sources.data;
-                sourcesChart.update();
-                
-                // Restore original HTML
-                chartContainer.innerHTML = originalHTML;
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                chartContainer.innerHTML = '<div class="alert alert-danger">Failed to load chart data</div>';
-            });
-        }
-        
-        // Update analytics charts
-        function updateAnalyticsCharts() {
-            // Show loading state
-            const analyticsPage = document.getElementById('analyticsPage');
-            const loadingHTML = '<div style="text-align: center; padding: 2rem;"><i class="fas fa-spinner fa-spin"></i> Loading analytics data...</div>';
-            analyticsPage.innerHTML = loadingHTML;
-            
-            // Fetch updated data
-            fetch(scriptURL, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    action: 'getDashboardData'
-                })
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                if (data.success === false) {
-                    throw new Error(data.message || 'Failed to load analytics data');
-                }
-                
-                // Update stats
-                document.getElementById('totalConversion').textContent = data.totalConversion || '0';
-                document.getElementById('avgConversionTime').textContent = data.avgConversionTime || '0h';
-                document.getElementById('topCategory').textContent = data.topCategory || 'NEET';
-                document.getElementById('revenueImpact').textContent = data.revenueImpact || '₹0';
-                
-                // Update charts
-                conversionChart.data.labels = data.chartData.conversion.labels;
-                conversionChart.data.datasets[0].data = data.chartData.conversion.data;
-                conversionChart.update();
-                
-                sourcesChart.data.labels = data.chartData.sources.labels;
-                sourcesChart.data.datasets[0].data = data.chartData.sources.data;
-                sourcesChart.update();
-                
-                // Restore original content
-                analyticsPage.innerHTML = `
-                    <div class="page-header">
-                        <h2>Analytics</h2>
-                        <div class="breadcrumb">
-                            <a href="#">Home</a>
-                            <i class="fas fa-chevron-right"></i>
-                            <span>Analytics</span>
-                        </div>
-                    </div>
+            fetch(scriptURL + '?action=getDashboardData')
+                .then(response => response.json())
+                .then(data => {
+                    // Update stats
+                    document.getElementById('totalCoupons').textContent = data.totalCoupons;
+                    document.getElementById('successEmails').textContent = data.successEmails;
+                    document.getElementById('couponsChange').textContent = data.couponsChange + '%';
+                    document.getElementById('emailsChange').textContent = data.emailsChange + '%';
                     
-                    <div class="stats-grid">
-                        <div class="stat-card">
-                            <div class="stat-card-header">
-                                <div class="stat-card-title">Total Conversion</div>
-                                <div class="stat-card-icon primary">
-                                    <i class="fas fa-check-circle"></i>
-                                </div>
-                            </div>
-                            <div class="stat-card-value" id="totalConversion">${data.totalConversion || '0'}</div>
-                            <div class="stat-card-change positive">
-                                <i class="fas fa-arrow-up"></i>
-                                <span id="conversionChangeText">15% from last month</span>
-                            </div>
-                        </div>
-                        
-                        <div class="stat-card">
-                            <div class="stat-card-header">
-                                <div class="stat-card-title">Avg. Conversion Time</div>
-                                <div class="stat-card-icon success">
-                                    <i class="fas fa-clock"></i>
-                                </div>
-                            </div>
-                            <div class="stat-card-value" id="avgConversionTime">${data.avgConversionTime || '0h'}</div>
-                            <div class="stat-card-change negative">
-                                <i class="fas fa-arrow-down"></i>
-                                <span id="timeChangeText">10% from last month</span>
-                            </div>
-                        </div>
-                        
-                        <div class="stat-card">
-                            <div class="stat-card-header">
-                                <div class="stat-card-title">Top Course Category</div>
-                                <div class="stat-card-icon warning">
-                                    <i class="fas fa-star"></i>
-                                </div>
-                            </div>
-                            <div class="stat-card-value" id="topCategory">${data.topCategory || 'NEET'}</div>
-                            <div class="stat-card-change">
-                                <span id="categoryPercent">35% of total requests</span>
-                            </div>
-                        </div>
-                        
-                        <div class="stat-card">
-                            <div class="stat-card-header">
-                                <div class="stat-card-title">Revenue Impact</div>
-                                <div class="stat-card-icon danger">
-                                    <i class="fas fa-rupee-sign"></i>
-                                </div>
-                            </div>
-                            <div class="stat-card-value" id="revenueImpact">${data.revenueImpact || '₹0'}</div>
-                            <div class="stat-card-change positive">
-                                <i class="fas fa-arrow-up"></i>
-                                <span>Estimated savings</span>
-                            </div>
-                        </div>
-                    </div>
+                    if (data.topCourse) {
+                        document.getElementById('topCourse').textContent = data.topCourse.name;
+                        document.getElementById('topCourseCount').textContent = data.topCourse.count + ' enrollments';
+                    }
                     
-                    <div class="chart-card">
-                        <div class="chart-card-header">
-                            <div class="chart-card-title">Conversion Rate Trend</div>
-                            <div class="chart-card-actions">
-                                <select id="conversionChartFilter">
-                                    <option value="30">Last 30 Days</option>
-                                    <option value="7">Last 7 Days</option>
-                                    <option value="90">Last 90 Days</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="chart-container">
-                            <canvas id="conversionChart"></canvas>
-                        </div>
-                    </div>
+                    document.getElementById('recentActivity').textContent = data.recentActivity;
                     
-                    <div class="chart-card">
-                        <div class="chart-card-header">
-                            <div class="chart-card-title">Request Sources</div>
-                            <div class="chart-card-actions">
-                                <select id="sourcesChartFilter">
-                                    <option value="all">All Time</option>
-                                    <option value="30">Last 30 Days</option>
-                                    <option value="7">Last 7 Days</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="chart-container">
-                            <canvas id="sourcesChart"></canvas>
-                        </div>
-                    </div>
-                `;
-                
-                // Reattach event listeners
-                document.getElementById('conversionChartFilter').addEventListener('change', function() {
-                    updateConversionChart(this.value);
+                    // Update charts
+                    updateCouponsChart(data.trends);
+                    updateRecentCouponsTable(data.recentCoupons);
+                    
+                    hideLoading();
+                })
+                .catch(error => {
+                    hideLoading();
+                    showError('Error', 'Failed to load dashboard data');
+                    console.error('Error:', error);
                 });
-                
-                document.getElementById('sourcesChartFilter').addEventListener('change', function() {
-                    updateSourcesChart(this.value);
-                });
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                analyticsPage.innerHTML = '<div class="alert alert-danger">Failed to load analytics data. Please try again.</div>';
-            });
         }
         
-        // Load all requests
-        function loadAllRequests(filter = 'all') {
-            const tbody = document.getElementById('allRequestsBody');
-            tbody.innerHTML = '<tr><td colspan="8" style="text-align: center;"><i class="fas fa-spinner fa-spin"></i> Loading requests...</td></tr>';
+        function loadCouponsData(page = 1, filters = {}) {
+            showLoading();
+            currentPage = page;
             
-            // Fetch requests data
-            fetch(scriptURL, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    action: 'getRequests',
-                    filter: filter
-                })
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                if (data.success === false) {
-                    throw new Error(data.message || 'Failed to load requests');
-                }
-                
-                updateAllRequestsTable(data.requests);
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                tbody.innerHTML = '<tr><td colspan="8" style="text-align: center;" class="alert alert-danger">Failed to load requests. Please try again.</td></tr>';
-            });
-        }
-        
-        // Update all requests table
-        function updateAllRequestsTable(requests) {
-            const tbody = document.getElementById('allRequestsBody');
-            tbody.innerHTML = '';
+            const params = new URLSearchParams();
+            params.append('action', 'getCoupons');
+            params.append('page', page);
+            params.append('perPage', itemsPerPage);
             
-            if (!requests || requests.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="8" style="text-align: center;">No requests found</td></tr>';
-                return;
+            if (filters.status && filters.status !== 'all') {
+                params.append('status', filters.status);
             }
             
-            requests.forEach(request => {
+            if (filters.course && filters.course !== 'all') {
+                params.append('course', filters.course);
+            }
+            
+            if (filters.startDate) {
+                params.append('startDate', filters.startDate);
+            }
+            
+            if (filters.endDate) {
+                params.append('endDate', filters.endDate);
+            }
+            
+            fetch(scriptURL + '?' + params.toString())
+                .then(response => response.json())
+                .then(data => {
+                    allCoupons = data.coupons;
+                    updateCouponsTable(data.coupons);
+                    updatePagination(data.total, page);
+                    
+                    // Update course filter options
+                    const courseFilter = document.getElementById('filterCourse');
+                    courseFilter.innerHTML = '<option value="all">All Courses</option>';
+                    
+                    data.courses.forEach(course => {
+                        const option = document.createElement('option');
+                        option.value = course;
+                        option.textContent = course;
+                        courseFilter.appendChild(option);
+                    });
+                    
+                    hideLoading();
+                })
+                .catch(error => {
+                    hideLoading();
+                    showError('Error', 'Failed to load coupons data');
+                    console.error('Error:', error);
+                });
+        }
+        
+        function loadCoursesData() {
+            fetch(scriptURL + '?action=getCoursesData')
+                .then(response => response.json())
+                .then(data => {
+                    allCourses = data.courses;
+                    updateCoursesChart(data.courses);
+                    updateConversionChart(data.conversion);
+                    
+                    // Update course dropdowns
+                    const courseDropdowns = [
+                        document.getElementById('couponCategory'),
+                        document.getElementById('filterCourse')
+                    ];
+                    
+                    courseDropdowns.forEach(dropdown => {
+                        if (dropdown) {
+                            dropdown.innerHTML = '';
+                            data.courses.forEach(course => {
+                                const option = document.createElement('option');
+                                option.value = course.name;
+                                option.textContent = course.name;
+                                dropdown.appendChild(option);
+                            });
+                        }
+                    });
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+        
+        function loadUsersData() {
+            fetch(scriptURL + '?action=getUsers')
+                .then(response => response.json())
+                .then(data => {
+                    allUsers = data.users;
+                    updateUsersTable(data.users);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+        
+        function loadSettings() {
+            fetch(scriptURL + '?action=getSettings')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.settings) {
+                        document.getElementById('emailSubject').value = data.settings.emailSubject || '';
+                        document.getElementById('emailBody').value = data.settings.emailBody || '';
+                        document.getElementById('defaultCouponCode').value = data.settings.defaultCouponCode || '';
+                        document.getElementById('driveFolderUrl').value = data.settings.driveFolderUrl || '';
+                        document.getElementById('dataRetention').value = data.settings.dataRetention || '365';
+                        document.getElementById('enableNotifications').checked = data.settings.enableNotifications || false;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+        
+        // Table update functions
+        function updateRecentCouponsTable(coupons) {
+            const tableBody = document.getElementById('recentCouponsTable');
+            tableBody.innerHTML = '';
+            
+            coupons.forEach(coupon => {
                 const row = document.createElement('tr');
+                
+                // Format date
+                const date = new Date(coupon.timestamp);
+                const formattedDate = date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
                 
                 // Status badge
                 let statusBadge = '';
-                if (request.status === 'Sent') {
+                if (coupon.emailSent === 'Sent') {
                     statusBadge = '<span class="status-badge success">Sent</span>';
-                } else if (request.status === 'Pending') {
-                    statusBadge = '<span class="status-badge warning">Pending</span>';
-                } else {
+                } else if (coupon.emailSent === 'Failed') {
                     statusBadge = '<span class="status-badge danger">Failed</span>';
+                } else {
+                    statusBadge = '<span class="status-badge warning">Pending</span>';
                 }
                 
-                // Format date
-                const requestDate = new Date(request.timestamp || request.date);
-                const formattedDate = requestDate.toLocaleDateString('en-IN', {
-                    day: '2-digit',
-                    month: 'short',
-                    year: 'numeric'
-                });
-                
                 row.innerHTML = `
-                    <td>${request.name}</td>
-                    <td>${request.email}</td>
-                    <td>${request.mobile || 'N/A'}</td>
-                    <td>${request.course}</td>
-                    <td>${request.category}</td>
                     <td>${formattedDate}</td>
+                    <td>${coupon.fullName}</td>
+                    <td>${coupon.email}</td>
+                    <td>${coupon.courseCategory}</td>
                     <td>${statusBadge}</td>
                     <td>
-                        <button class="action-btn" title="View Details">
+                        <button class="btn btn-secondary btn-sm" data-id="${coupon.id}" onclick="viewCouponDetails('${coupon.id}')">
+                            <i class="fas fa-eye"></i> View
+                        </button>
+                    </td>
+                `;
+                
+                tableBody.appendChild(row);
+            });
+        }
+        
+        function updateCouponsTable(coupons) {
+            const tableBody = document.getElementById('couponsTable');
+            tableBody.innerHTML = '';
+            
+            coupons.forEach(coupon => {
+                const row = document.createElement('tr');
+                
+                // Format date
+                const date = new Date(coupon.timestamp);
+                const formattedDate = date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
+                
+                // Status badge
+                let statusBadge = '';
+                if (coupon.emailSent === 'Sent') {
+                    statusBadge = '<span class="status-badge success">Sent</span>';
+                } else if (coupon.emailSent === 'Failed') {
+                    statusBadge = '<span class="status-badge danger">Failed</span>';
+                } else {
+                    statusBadge = '<span class="status-badge warning">Pending</span>';
+                }
+                
+                row.innerHTML = `
+                    <td>${formattedDate}</td>
+                    <td>${coupon.fullName}</td>
+                    <td>${coupon.email}</td>
+                    <td>${coupon.mobile}</td>
+                    <td>${coupon.courseCategory}</td>
+                    <td>${coupon.couponCode}</td>
+                    <td>${statusBadge}</td>
+                    <td>
+                        <button class="btn btn-secondary btn-sm" data-id="${coupon.id}" onclick="viewCouponDetails('${coupon.id}')">
                             <i class="fas fa-eye"></i>
                         </button>
-                        <button class="action-btn" title="Resend Coupon">
+                        <button class="btn btn-primary btn-sm" data-id="${coupon.id}" onclick="resendCouponEmail('${coupon.id}')">
                             <i class="fas fa-paper-plane"></i>
                         </button>
-                        <button class="action-btn" title="Delete" style="color: #dc3545;">
+                        <button class="btn btn-danger btn-sm" data-id="${coupon.id}" onclick="deleteCoupon('${coupon.id}')">
                             <i class="fas fa-trash"></i>
                         </button>
                     </td>
                 `;
                 
-                tbody.appendChild(row);
+                tableBody.appendChild(row);
             });
         }
         
-        // Load coupon history
-        function loadCouponHistory(filter = 'all') {
-            const tbody = document.getElementById('couponHistoryBody');
-            tbody.innerHTML = '<tr><td colspan="5" style="text-align: center;"><i class="fas fa-spinner fa-spin"></i> Loading coupon history...</td></tr>';
+        function updateUsersTable(users) {
+            const tableBody = document.getElementById('usersTable');
+            tableBody.innerHTML = '';
             
-            // Fetch coupon history data
-            fetch(scriptURL, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    action: 'getCouponHistory',
-                    filter: filter
-                })
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                if (data.success === false) {
-                    throw new Error(data.message || 'Failed to load coupon history');
-                }
-                
-                updateCouponHistoryTable(data.history);
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                tbody.innerHTML = '<tr><td colspan="5" style="text-align: center;" class="alert alert-danger">Failed to load coupon history. Please try again.</td></tr>';
-            });
-        }
-        
-        // Update coupon history table
-        function updateCouponHistoryTable(history) {
-            const tbody = document.getElementById('couponHistoryBody');
-            tbody.innerHTML = '';
-            
-            if (!history || history.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="5" style="text-align: center;">No coupon usage history found</td></tr>';
-                return;
-            }
-            
-            history.forEach(item => {
+            users.forEach(user => {
                 const row = document.createElement('tr');
                 
-                // Format date
-                const usedDate = new Date(item.dateUsed || item.timestamp);
-                const formattedDate = usedDate.toLocaleDateString('en-IN', {
-                    day: '2-digit',
-                    month: 'short',
-                    year: 'numeric'
-                });
+                // Format last login
+                const lastLogin = user.lastLogin ? new Date(user.lastLogin).toLocaleString() : 'Never';
+                
+                // Status badge
+                const statusBadge = user.active ? 
+                    '<span class="status-badge success">Active</span>' : 
+                    '<span class="status-badge danger">Inactive</span>';
+                
+                // Actions based on role
+                let actions = '';
+                if (currentUser.role === 'admin') {
+                    actions = `
+                        <button class="btn btn-secondary btn-sm" data-id="${user.id}" onclick="editUser('${user.id}')">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn btn-danger btn-sm" data-id="${user.id}" onclick="deleteUser('${user.id}')">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    `;
+                } else {
+                    actions = '<span class="text-muted">No actions</span>';
+                }
                 
                 row.innerHTML = `
-                    <td>${item.couponCode}</td>
-                    <td>${item.usedBy}</td>
-                    <td>${item.course}</td>
-                    <td>${formattedDate}</td>
-                    <td>${item.discount || item.discountApplied || 'N/A'}</td>
+                    <td>${user.name}</td>
+                    <td>${user.email}</td>
+                    <td>${user.role}</td>
+                    <td>${lastLogin}</td>
+                    <td>${statusBadge}</td>
+                    <td>${actions}</td>
                 `;
                 
-                tbody.appendChild(row);
+                tableBody.appendChild(row);
             });
         }
         
-        // Update coupon code
-        function updateCouponCode() {
-            const newCode = document.getElementById('newCouponCode').value;
-            const isActive = document.getElementById('couponStatus').checked;
+        // Chart update functions
+        function updateCouponsChart(data) {
+            const labels = data.map(item => item.date);
+            const values = data.map(item => item.count);
             
-            if (!newCode && !isActive) {
-                alert('Please enter a new coupon code or change the status');
-                return;
+            window.couponsChart.data.labels = labels;
+            window.couponsChart.data.datasets[0].data = values;
+            window.couponsChart.update();
+        }
+        
+        function updateCoursesChart(data) {
+            const labels = data.map(item => item.name);
+            const values = data.map(item => item.count);
+            
+            window.coursesChart.data.labels = labels;
+            window.coursesChart.data.datasets[0].data = values;
+            window.coursesChart.update();
+        }
+        
+        function updateConversionChart(data) {
+            window.conversionChart.data.datasets[0].data = [
+                data.successful || 0,
+                data.failed || 0,
+                data.pending || 0
+            ];
+            window.conversionChart.update();
+        }
+        
+        function updateDailyChart(data) {
+            const labels = data.map(item => item.date);
+            const values = data.map(item => item.count);
+            
+            window.dailyChart.data.labels = labels;
+            window.dailyChart.data.datasets[0].data = values;
+            window.dailyChart.update();
+        }
+        
+        function updateHourlyChart(data) {
+            const labels = data.map(item => item.hour + ':00');
+            const values = data.map(item => item.count);
+            
+            window.hourlyChart.data.labels = labels;
+            window.hourlyChart.data.datasets[0].data = values;
+            window.hourlyChart.update();
+        }
+        
+        // Pagination
+        function updatePagination(totalItems, currentPage) {
+            const pagination = document.getElementById('couponsPagination');
+            const totalPages = Math.ceil(totalItems / itemsPerPage);
+            
+            // Clear existing page numbers (keep prev/next buttons)
+            const pageItems = pagination.querySelectorAll('.page-item:not(:first-child):not(:last-child)');
+            pageItems.forEach(item => item.remove());
+            
+            // Add page numbers
+            for (let i = 1; i <= totalPages; i++) {
+                const pageItem = document.createElement('div');
+                pageItem.className = 'page-item';
+                
+                const pageLink = document.createElement('a');
+                pageLink.className = 'page-link' + (i === currentPage ? ' active' : '');
+                pageLink.href = '#';
+                pageLink.textContent = i;
+                pageLink.setAttribute('data-page', i);
+                
+                pageLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    loadCouponsData(i, getCurrentFilters());
+                });
+                
+                pageItem.appendChild(pageLink);
+                pagination.insertBefore(pageItem, pagination.lastElementChild);
             }
             
-            // Show loading state
-            const submitBtn = document.getElementById('couponManagementForm').querySelector('button[type="submit"]');
-            const originalBtnText = submitBtn.innerHTML;
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Updating...';
-            submitBtn.disabled = true;
+            // Update prev/next buttons
+            const prevBtn = pagination.querySelector('[data-page="prev"]');
+            const nextBtn = pagination.querySelector('[data-page="next"]');
             
-            // Send coupon update request
-            fetch(scriptURL, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    action: 'updateCoupon',
-                    newCode: newCode,
-                    isActive: isActive
-                })
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
+            prevBtn.classList.toggle('disabled', currentPage === 1);
+            nextBtn.classList.toggle('disabled', currentPage === totalPages);
+            
+            prevBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                if (currentPage > 1) {
+                    loadCouponsData(currentPage - 1, getCurrentFilters());
                 }
-                return response.json();
-            })
-            .then(data => {
-                if (data.success) {
-                    alert('Coupon code updated successfully!');
-                    document.getElementById('currentCouponCode').value = data.newCode || 'YUGNA00001';
-                    document.getElementById('newCouponCode').value = '';
-                    loadCouponHistory();
-                } else {
-                    alert(data.message || 'Failed to update coupon code');
+            });
+            
+            nextBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                if (currentPage < totalPages) {
+                    loadCouponsData(currentPage + 1, getCurrentFilters());
                 }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('An error occurred while updating the coupon code');
-            })
-            .finally(() => {
-                submitBtn.innerHTML = originalBtnText;
-                submitBtn.disabled = false;
             });
         }
         
-        // Reset coupon code
-        function resetCouponCode() {
-            if (confirm('Are you sure you want to reset the coupon code to default?')) {
-                // Show loading state
-                const resetBtn = document.getElementById('resetCouponBtn');
-                const originalBtnText = resetBtn.innerHTML;
-                resetBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Resetting...';
-                resetBtn.disabled = true;
+        // Filter functions
+        function getCurrentFilters() {
+            return {
+                status: document.getElementById('filterStatus').value,
+                course: document.getElementById('filterCourse').value,
+                startDate: document.getElementById('filterStartDate').value,
+                endDate: document.getElementById('filterEndDate').value
+            };
+        }
+        
+        // Event listeners setup
+        function setupEventListeners() {
+            // Close buttons
+            document.querySelectorAll('.close-btn, .btn-secondary[id$="Btn"]').forEach(btn => {
+                btn.addEventListener('click', closeAllModals);
+            });
+            
+            // OK buttons for success/error modals
+            document.getElementById('successOkBtn').addEventListener('click', closeAllModals);
+            document.getElementById('errorOkBtn').addEventListener('click', closeAllModals);
+            
+            // Refresh dashboard
+            document.getElementById('refreshDashboard').addEventListener('click', loadDashboardData);
+            
+            // View all coupons
+            document.getElementById('viewAllCoupons').addEventListener('click', function() {
+                document.querySelector('.sidebar-menu li a[data-tab="coupons"]').click();
+            });
+            
+            // Add coupon button
+            document.getElementById('addCouponBtn').addEventListener('click', function() {
+                document.getElementById('addCouponModal').classList.add('active');
+            });
+            
+            // Save coupon button
+            document.getElementById('saveCouponBtn').addEventListener('click', function() {
+                const couponData = {
+                    fullName: document.getElementById('couponName').value,
+                    email: document.getElementById('couponEmail').value,
+                    mobile: document.getElementById('couponMobile').value,
+                    courseName: document.getElementById('couponCourseName').value,
+                    courseCategory: document.getElementById('couponCategory').value,
+                    couponCode: document.getElementById('couponCode').value,
+                    sendEmail: document.getElementById('couponSendEmail').value
+                };
                 
-                // Send coupon reset request
+                if (!couponData.fullName || !couponData.email || !couponData.mobile || 
+                    !couponData.courseName || !couponData.courseCategory || !couponData.couponCode) {
+                    showError('Error', 'Please fill all required fields');
+                    return;
+                }
+                
+                showLoading();
+                
                 fetch(scriptURL, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        action: 'resetCoupon'
+                        action: 'addCoupon',
+                        data: couponData
                     })
                 })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
+                .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        alert('Coupon code reset to default successfully!');
-                        document.getElementById('currentCouponCode').value = 'YUGNA00001';
-                        document.getElementById('newCouponCode').value = '';
-                        document.getElementById('couponStatus').checked = true;
-                        document.getElementById('couponStatusLabel').textContent = 'Active';
-                        loadCouponHistory();
+                        showSuccess('Success', 'Coupon added successfully');
+                        loadCouponsData();
+                        closeAllModals();
                     } else {
-                        alert(data.message || 'Failed to reset coupon code');
+                        showError('Error', data.message || 'Failed to add coupon');
                     }
                 })
                 .catch(error => {
+                    showError('Error', 'Failed to add coupon');
                     console.error('Error:', error);
-                    alert('An error occurred while resetting the coupon code');
                 })
                 .finally(() => {
-                    resetBtn.innerHTML = originalBtnText;
-                    resetBtn.disabled = false;
+                    hideLoading();
                 });
-            }
-        }
-        
-        // Save settings
-        function saveSettings() {
-            const email = document.getElementById('adminEmail').value;
-            const emailNotifications = document.getElementById('emailNotifications').checked;
-            const dailyReports = document.getElementById('dailyReports').checked;
-            const weeklySummaries = document.getElementById('weeklySummaries').checked;
+            });
             
-            // Show loading state
-            const submitBtn = document.getElementById('adminSettingsForm').querySelector('button[type="submit"]');
-            const originalBtnText = submitBtn.innerHTML;
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
-            submitBtn.disabled = true;
+            // Apply filters
+            document.getElementById('applyFiltersBtn').addEventListener('click', function() {
+                loadCouponsData(1, getCurrentFilters());
+            });
             
-            // Send settings update request
-            fetch(scriptURL, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    action: 'saveSettings',
-                    email: email,
-                    emailNotifications: emailNotifications,
-                    dailyReports: dailyReports,
-                    weeklySummaries: weeklySummaries
-                })
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
+            // Reset filters
+            document.getElementById('resetFiltersBtn').addEventListener('click', function() {
+                document.getElementById('filterStatus').value = 'all';
+                document.getElementById('filterCourse').value = 'all';
+                document.getElementById('filterStartDate').value = '';
+                document.getElementById('filterEndDate').value = '';
+                loadCouponsData(1, getCurrentFilters());
+            });
+            
+            // Export coupons
+            document.getElementById('exportCouponsBtn').addEventListener('click', function() {
+                showLoading();
+                
+                const filters = getCurrentFilters();
+                const params = new URLSearchParams();
+                
+                if (filters.status && filters.status !== 'all') {
+                    params.append('status', filters.status);
                 }
-                return response.json();
-            })
-            .then(data => {
-                if (data.success) {
-                    alert('Settings saved successfully!');
+                
+                if (filters.course && filters.course !== 'all') {
+                    params.append('course', filters.course);
+                }
+                
+                if (filters.startDate) {
+                    params.append('startDate', filters.startDate);
+                }
+                
+                if (filters.endDate) {
+                    params.append('endDate', filters.endDate);
+                }
+                
+                params.append('action', 'exportCoupons');
+                
+                fetch(scriptURL + '?' + params.toString())
+                    .then(response => response.blob())
+                    .then(blob => {
+                        const url = window.URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = 'coupons_export.csv';
+                        document.body.appendChild(a);
+                        a.click();
+                        window.URL.revokeObjectURL(url);
+                        document.body.removeChild(a);
+                    })
+                    .catch(error => {
+                        showError('Error', 'Failed to export coupons');
+                        console.error('Error:', error);
+                    })
+                    .finally(() => {
+                        hideLoading();
+                    });
+            });
+            
+            // Time range selector
+            document.getElementById('timeRange').addEventListener('change', function() {
+                const value = this.value;
+                const startDate = document.getElementById('startDate');
+                const endDate = document.getElementById('endDate');
+                
+                if (value === 'custom') {
+                    startDate.style.display = 'block';
+                    endDate.style.display = 'block';
                 } else {
-                    alert(data.message || 'Failed to save settings');
+                    startDate.style.display = 'none';
+                    endDate.style.display = 'none';
+                    
+                    // Load data for selected range
+                    fetch(scriptURL + '?action=getTrends&range=' + value)
+                        .then(response => response.json())
+                        .then(data => {
+                            updateCouponsChart(data);
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
                 }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('An error occurred while saving settings');
-            })
-            .finally(() => {
-                submitBtn.innerHTML = originalBtnText;
-                submitBtn.disabled = false;
+            });
+            
+            // Add user button
+            document.getElementById('addUserBtn').addEventListener('click', function() {
+                document.getElementById('addUserModal').classList.add('active');
+            });
+            
+            // Save user button
+            document.getElementById('saveUserBtn').addEventListener('click', function() {
+                const userData = {
+                    name: document.getElementById('userName').value,
+                    email: document.getElementById('userEmail').value,
+                    password: document.getElementById('userPassword').value,
+                    confirmPassword: document.getElementById('userConfirmPassword').value,
+                    role: document.getElementById('userRole').value
+                };
+                
+                if (!userData.name || !userData.email || !userData.password || !userData.confirmPassword) {
+                    showError('Error', 'Please fill all required fields');
+                    return;
+                }
+                
+                if (userData.password !== userData.confirmPassword) {
+                    showError('Error', 'Passwords do not match');
+                    return;
+                }
+                
+                showLoading();
+                
+                fetch(scriptURL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        action: 'addUser',
+                        data: userData
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        showSuccess('Success', 'User added successfully');
+                        loadUsersData();
+                        closeAllModals();
+                    } else {
+                        showError('Error', data.message || 'Failed to add user');
+                    }
+                })
+                .catch(error => {
+                    showError('Error', 'Failed to add user');
+                    console.error('Error:', error);
+                })
+                .finally(() => {
+                    hideLoading();
+                });
+            });
+            
+            // Save settings
+            document.getElementById('saveSettingsBtn').addEventListener('click', function() {
+                const settings = {
+                    emailSubject: document.getElementById('emailSubject').value,
+                    emailBody: document.getElementById('emailBody').value,
+                    defaultCouponCode: document.getElementById('defaultCouponCode').value
+                };
+                
+                showLoading();
+                
+                fetch(scriptURL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        action: 'saveSettings',
+                        data: settings
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        showSuccess('Success', 'Settings saved successfully');
+                    } else {
+                        showError('Error', data.message || 'Failed to save settings');
+                    }
+                })
+                .catch(error => {
+                    showError('Error', 'Failed to save settings');
+                    console.error('Error:', error);
+                })
+                .finally(() => {
+                    hideLoading();
+                });
+            });
+            
+            // Save config
+            document.getElementById('saveConfigBtn').addEventListener('click', function() {
+                const config = {
+                    driveFolderUrl: document.getElementById('driveFolderUrl').value,
+                    dataRetention: document.getElementById('dataRetention').value,
+                    enableNotifications: document.getElementById('enableNotifications').checked
+                };
+                
+                showLoading();
+                
+                fetch(scriptURL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        action: 'saveConfig',
+                        data: config
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        showSuccess('Success', 'Configuration saved successfully');
+                    } else {
+                        showError('Error', data.message || 'Failed to save configuration');
+                    }
+                })
+                .catch(error => {
+                    showError('Error', 'Failed to save configuration');
+                    console.error('Error:', error);
+                })
+                .finally(() => {
+                    hideLoading();
+                });
+            });
+            
+            // Generate report
+            document.getElementById('generateReportBtn').addEventListener('click', function() {
+                showLoading();
+                
+                fetch(scriptURL + '?action=generateReport')
+                    .then(response => response.blob())
+                    .then(blob => {
+                        const url = window.URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = 'coupons_report.pdf';
+                        document.body.appendChild(a);
+                        a.click();
+                        window.URL.revokeObjectURL(url);
+                        document.body.removeChild(a);
+                    })
+                    .catch(error => {
+                        showError('Error', 'Failed to generate report');
+                        console.error('Error:', error);
+                    })
+                    .finally(() => {
+                        hideLoading();
+                    });
+            });
+            
+            // Logout
+            document.getElementById('logoutBtn').addEventListener('click', function() {
+                // In a real app, this would clear session and redirect to login
+                alert('Logout functionality would be implemented here');
             });
         }
         
-        // Change password
-        function changePassword() {
-            const currentPassword = document.getElementById('currentPassword').value;
-            const newPassword = document.getElementById('newPassword').value;
-            const confirmPassword = document.getElementById('confirmPassword').value;
-            
-            if (newPassword !== confirmPassword) {
-                alert('New password and confirm password do not match');
+        // Action functions
+        function viewCouponDetails(id) {
+            const coupon = allCoupons.find(c => c.id === id);
+            if (coupon) {
+                const details = `
+                    <h3>Coupon Details</h3>
+                    <p><strong>Name:</strong> ${coupon.fullName}</p>
+                    <p><strong>Email:</strong> ${coupon.email}</p>
+                    <p><strong>Mobile:</strong> ${coupon.mobile}</p>
+                    <p><strong>Course:</strong> ${coupon.courseCategory} - ${coupon.courseName}</p>
+                    <p><strong>Coupon Code:</strong> ${coupon.couponCode}</p>
+                    <p><strong>Status:</strong> ${coupon.emailSent}</p>
+                    <p><strong>Date:</strong> ${new Date(coupon.timestamp).toLocaleString()}</p>
+                `;
+                
+                document.getElementById('successTitle').textContent = 'Coupon Details';
+                document.getElementById('successMessage').innerHTML = details;
+                document.getElementById('successOkBtn').style.display = 'block';
+                document.getElementById('successModal').classList.add('active');
+            }
+        }
+        
+        function resendCouponEmail(id) {
+            if (!confirm('Are you sure you want to resend this coupon email?')) {
                 return;
             }
             
-            if (newPassword.length < 8) {
-                alert('Password must be at least 8 characters long');
-                return;
-            }
+            showLoading();
             
-            // Show loading state
-            const submitBtn = document.getElementById('changePasswordForm').querySelector('button[type="submit"]');
-            const originalBtnText = submitBtn.innerHTML;
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Changing...';
-            submitBtn.disabled = true;
-            
-            // Send password change request
             fetch(scriptURL, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    action: 'changePassword',
-                    currentPassword: currentPassword,
-                    newPassword: newPassword
+                    action: 'resendCouponEmail',
+                    id: id
                 })
             })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
+            .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    alert('Password changed successfully!');
-                    document.getElementById('currentPassword').value = '';
-                    document.getElementById('newPassword').value = '';
-                    document.getElementById('confirmPassword').value = '';
+                    showSuccess('Success', 'Coupon email resent successfully');
+                    loadCouponsData(currentPage, getCurrentFilters());
                 } else {
-                    alert(data.message || 'Failed to change password');
+                    showError('Error', data.message || 'Failed to resend coupon email');
                 }
             })
             .catch(error => {
+                showError('Error', 'Failed to resend coupon email');
                 console.error('Error:', error);
-                alert('An error occurred while changing password');
             })
             .finally(() => {
-                submitBtn.innerHTML = originalBtnText;
-                submitBtn.disabled = false;
+                hideLoading();
+            });
+        }
+        
+        function deleteCoupon(id) {
+            if (!confirm('Are you sure you want to delete this coupon? This action cannot be undone.')) {
+                return;
+            }
+            
+            showLoading();
+            
+            fetch(scriptURL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    action: 'deleteCoupon',
+                    id: id
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showSuccess('Success', 'Coupon deleted successfully');
+                    loadCouponsData(currentPage, getCurrentFilters());
+                } else {
+                    showError('Error', data.message || 'Failed to delete coupon');
+                }
+            })
+            .catch(error => {
+                showError('Error', 'Failed to delete coupon');
+                console.error('Error:', error);
+            })
+            .finally(() => {
+                hideLoading();
+            });
+        }
+        
+        function editUser(id) {
+            const user = allUsers.find(u => u.id === id);
+            if (user) {
+                document.getElementById('userName').value = user.name;
+                document.getElementById('userEmail').value = user.email;
+                document.getElementById('userRole').value = user.role;
+                
+                // Clear password fields
+                document.getElementById('userPassword').value = '';
+                document.getElementById('userConfirmPassword').value = '';
+                
+                // Change modal title and save button
+                document.querySelector('#addUserModal .modal-header h3').textContent = 'Edit User';
+                document.getElementById('saveUserBtn').textContent = 'Update User';
+                document.getElementById('saveUserBtn').setAttribute('data-id', id);
+                
+                document.getElementById('addUserModal').classList.add('active');
+            }
+        }
+        
+        function deleteUser(id) {
+            if (!confirm('Are you sure you want to delete this user? This action cannot be undone.')) {
+                return;
+            }
+            
+            showLoading();
+            
+            fetch(scriptURL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    action: 'deleteUser',
+                    id: id
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showSuccess('Success', 'User deleted successfully');
+                    loadUsersData();
+                } else {
+                    showError('Error', data.message || 'Failed to delete user');
+                }
+            })
+            .catch(error => {
+                showError('Error', 'Failed to delete user');
+                console.error('Error:', error);
+            })
+            .finally(() => {
+                hideLoading();
             });
         }
     </script>
